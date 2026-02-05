@@ -7,9 +7,38 @@ export type CompositeQuestion = {
   factors: number[];
 };
 
-export type GameState = "idle" | "playing" | "correct" | "incorrect" | "gameover";
+export type GameState = "idle" | "playing" | "gameover";
 
-export function generateCompositeNumber(rng: () => number = Math.random): CompositeQuestion {
+export type CompositeNumberOptions = {
+  rng?: () => number;
+  roundIndex?: number;
+};
+
+const COMPOSITE_QUESTIONS: CompositeQuestion[] = (() => {
+  const questions: CompositeQuestion[] = [];
+  for (let i = 0; i < PRIMES_UNDER_50.length - 2; i += 1) {
+    for (let j = i + 1; j < PRIMES_UNDER_50.length - 1; j += 1) {
+      for (let k = j + 1; k < PRIMES_UNDER_50.length; k += 1) {
+        const factors = [PRIMES_UNDER_50[i], PRIMES_UNDER_50[j], PRIMES_UNDER_50[k]];
+        questions.push({
+          number: factors[0] * factors[1] * factors[2],
+          factors,
+        });
+      }
+    }
+  }
+  questions.sort((a, b) => a.number - b.number);
+  return questions;
+})();
+
+export function generateCompositeNumber(options: CompositeNumberOptions = {}): CompositeQuestion {
+  const { rng = Math.random, roundIndex } = options;
+  if (roundIndex !== undefined) {
+    const safeIndex = Math.max(0, Math.min(Math.floor(roundIndex), COMPOSITE_QUESTIONS.length - 1));
+    const question = COMPOSITE_QUESTIONS[safeIndex];
+    return { number: question.number, factors: [...question.factors] };
+  }
+
   const primes = [...PRIMES_UNDER_50];
   for (let i = primes.length - 1; i > 0; i -= 1) {
     const j = Math.floor(rng() * (i + 1));
@@ -22,8 +51,10 @@ export function generateCompositeNumber(rng: () => number = Math.random): Compos
 
 export function isCorrectSelection(selection: number[], factors: number[]) {
   if (selection.length !== factors.length) return false;
-  for (let i = 0; i < selection.length; i += 1) {
-    if (selection[i] !== factors[i]) return false;
+  const sortedSelection = [...selection].sort((a, b) => a - b);
+  const sortedFactors = [...factors].sort((a, b) => a - b);
+  for (let i = 0; i < sortedSelection.length; i += 1) {
+    if (sortedSelection[i] !== sortedFactors[i]) return false;
   }
   return true;
 }
@@ -33,3 +64,4 @@ export function formatTime(seconds: number) {
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
+

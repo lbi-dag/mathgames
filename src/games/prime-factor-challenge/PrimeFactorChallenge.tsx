@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { Check, Play, RefreshCw, Timer, Trophy, X } from "lucide-react";
+import { Play, RefreshCw, Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   type CompositeQuestion,
@@ -13,12 +13,17 @@ import {
 import styles from "./PrimeFactorChallenge.module.css";
 
 export default function PrimeFactorChallenge() {
-  const [question, setQuestion] = useState<CompositeQuestion>(() => generateCompositeNumber());
+  const [question, setQuestion] = useState<CompositeQuestion>(() => generateCompositeNumber({ roundIndex: 0 }));
   const [selectedPrimes, setSelectedPrimes] = useState<Set<number>>(new Set());
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
   const [score, setScore] = useState(0);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
+  const [roundIndex, setRoundIndex] = useState(0);
+  const [feedback, setFeedback] = useState<{ message: string; type: "" | "correct" | "wrong" }>({
+    message: "",
+    type: "",
+  });
 
   const timerRef = useRef<number | null>(null);
 
@@ -28,7 +33,7 @@ export default function PrimeFactorChallenge() {
   }, [questionsAnswered, score]);
 
   useEffect(() => {
-    if (gameState !== "playing" && gameState !== "correct" && gameState !== "incorrect") {
+    if (gameState !== "playing") {
       return undefined;
     }
 
@@ -38,6 +43,7 @@ export default function PrimeFactorChallenge() {
           if (timerRef.current) {
             window.clearInterval(timerRef.current);
           }
+          setFeedback({ message: "", type: "" });
           setGameState("gameover");
           return 0;
         }
@@ -52,17 +58,19 @@ export default function PrimeFactorChallenge() {
     };
   }, [gameState]);
 
-  const resetRound = useCallback(() => {
-    setQuestion(generateCompositeNumber());
+  const resetRound = useCallback((nextIndex: number) => {
+    setQuestion(generateCompositeNumber({ roundIndex: nextIndex }));
     setSelectedPrimes(new Set());
   }, []);
 
   const startGame = useCallback(() => {
-    resetRound();
+    setRoundIndex(0);
+    resetRound(0);
     setGameState("playing");
     setTimeLeft(GAME_DURATION_SECONDS);
     setScore(0);
     setQuestionsAnswered(0);
+    setFeedback({ message: "", type: "" });
   }, [resetRound]);
 
   const togglePrime = (prime: number) => {
@@ -89,13 +97,14 @@ export default function PrimeFactorChallenge() {
     if (isCorrect) {
       setScore((prev) => prev + 1);
     }
-    setGameState(isCorrect ? "correct" : "incorrect");
+    setFeedback({
+      message: isCorrect ? "Correct!" : `Missed: ${question.number} = ${question.factors.join(" × ")}`,
+      type: isCorrect ? "correct" : "wrong",
+    });
+    const nextIndex = roundIndex + 1;
+    setRoundIndex(nextIndex);
+    resetRound(nextIndex);
   };
-
-  const handleNextQuestion = useCallback(() => {
-    resetRound();
-    setGameState("playing");
-  }, [resetRound]);
 
   const handleNewGame = useCallback(() => {
     startGame();
@@ -186,40 +195,25 @@ export default function PrimeFactorChallenge() {
           })}
         </div>
 
-        {gameState !== "playing" && gameState !== "idle" && (
+        {feedback.message && gameState === "playing" && (
           <div
-            className={[
-              styles.resultCard,
-              gameState === "gameover"
-                ? styles.resultNeutral
-                : gameState === "correct"
-                  ? styles.resultCorrect
-                  : styles.resultWrong,
-            ].join(" ")}
+            className={`${styles.feedback} ${
+              feedback.type === "correct" ? styles.feedbackCorrect : feedback.type === "wrong" ? styles.feedbackWrong : ""
+            }`}
           >
+            {feedback.message}
+          </div>
+        )}
+
+        {gameState === "gameover" && (
+          <div className={`${styles.resultCard} ${styles.resultNeutral}`}>
             <div className={styles.resultTitle}>
-              {gameState === "gameover" ? (
-                <Trophy className={styles.statIcon} />
-              ) : gameState === "correct" ? (
-                <Check className={styles.statIcon} />
-              ) : (
-                <X className={styles.statIcon} />
-              )}
-              {gameState === "gameover" ? "Time's up!" : gameState === "correct" ? "Correct!" : "Not quite..."}
+              <Trophy className={styles.statIcon} />
+              Time's up!
             </div>
-            {gameState === "gameover" ? (
-              <>
-                <p className={styles.resultScore}>{score}</p>
-                <p className={styles.resultEquation}>
-                  out of {questionsAnswered} questions correct
-                </p>
-                {questionsAnswered > 0 && <p className={styles.footerRow}>Accuracy: {accuracy}%</p>}
-              </>
-            ) : (
-              <p className={styles.resultEquation}>
-                {question.number} = {question.factors.join(" × ")}
-              </p>
-            )}
+            <p className={styles.resultScore}>{score}</p>
+            <p className={styles.resultEquation}>out of {questionsAnswered} questions correct</p>
+            {questionsAnswered > 0 && <p className={styles.footerRow}>Accuracy: {accuracy}%</p>}
           </div>
         )}
 
@@ -238,11 +232,7 @@ export default function PrimeFactorChallenge() {
             >
               Submit Answer
             </button>
-          ) : gameState === "idle" ? null : (
-            <button type="button" className={styles.secondaryAction} onClick={handleNextQuestion}>
-              Next Question
-            </button>
-          )}
+          ) : null}
         </div>
 
         <div className={styles.footerRow}>Pick exactly three primes to match the composite number.</div>

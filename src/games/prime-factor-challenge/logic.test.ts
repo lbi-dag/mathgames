@@ -3,7 +3,7 @@ import { formatTime, generateCompositeNumber, isCorrectSelection, PRIMES_UNDER_5
 
 describe("generateCompositeNumber", () => {
   test("returns product of three unique primes", () => {
-    const { number, factors } = generateCompositeNumber(() => 0.1);
+    const { number, factors } = generateCompositeNumber({ rng: () => 0.1 });
     const unique = new Set(factors);
     const product = factors.reduce((acc, f) => acc * f, 1);
 
@@ -14,15 +14,21 @@ describe("generateCompositeNumber", () => {
       expect(PRIMES_UNDER_50).toContain(prime);
     });
   });
+
+  test("returns increasing composites by round index", () => {
+    const first = generateCompositeNumber({ roundIndex: 0 });
+    const second = generateCompositeNumber({ roundIndex: 1 });
+    const third = generateCompositeNumber({ roundIndex: 2 });
+
+    expect(first.number).toBeLessThan(second.number);
+    expect(second.number).toBeLessThan(third.number);
+  });
 });
 
 describe("isCorrectSelection", () => {
-  test("accepts exact sorted match", () => {
+  test("accepts match in any order", () => {
     expect(isCorrectSelection([2, 3, 5], [2, 3, 5])).toBe(true);
-  });
-
-  test("rejects when order differs", () => {
-    expect(isCorrectSelection([5, 3, 2], [2, 3, 5])).toBe(false);
+    expect(isCorrectSelection([5, 3, 2], [2, 3, 5])).toBe(true);
   });
 
   test("rejects when length differs", () => {
@@ -39,3 +45,5 @@ describe("formatTime", () => {
     expect(formatTime(83)).toBe("1:23");
   });
 });
+
+
