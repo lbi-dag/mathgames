@@ -1,4 +1,5 @@
 import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { evaluateAnswer, generateQuestion, type Question, type Stats } from "./logic";
 import styles from "../../styles/NumberSenseSprint.module.css";
@@ -270,6 +271,7 @@ export default function NumberSenseSprint() {
     if (timeLeft === null) return "--";
     return `${timeLeft}s`;
   }, [currentMode, timeLeft]);
+  const isLowTime = MODES[currentMode].hasTimer && timeLeft !== null && timeLeft <= 10;
 
   const accuracyLabel = `Score: ${stats.totalCorrect} / ${stats.totalAnswered}`;
 
@@ -307,9 +309,9 @@ export default function NumberSenseSprint() {
         </div>
 
         <div className={styles.infoRow}>
-          <div className={styles.pill}>
-            <span className={styles.pillLabel}>Score</span>
-            <span className={styles.pillValue}>{stats.score}</span>
+          <div className={styles.statPill}>
+            <Trophy className={styles.statIcon} />
+            {stats.score}/{stats.totalAnswered}
           </div>
           <div className={styles.pill}>
             <span className={styles.pillLabel}>Streak</span>
@@ -327,9 +329,13 @@ export default function NumberSenseSprint() {
             <span className={styles.pillLabel}>Lives</span>
             <span className={styles.pillValue}>{lives ?? 0}</span>
           </div>
-          <div className={`${styles.pill} ${styles.pillMuted} ${MODES[currentMode].hasTimer ? "" : styles.hidden}`}>
-            <span className={styles.pillLabel}>Time</span>
-            <span className={`${styles.pillValue} ${styles.timer}`}>{timerDisplay}</span>
+          <div
+            className={`${styles.statPill} ${styles.timerPill} ${
+              isLowTime ? styles.statPillAlert : ""
+            } ${MODES[currentMode].hasTimer ? "" : styles.hidden}`}
+          >
+            <Timer className={styles.statIcon} />
+            <span className={`${styles.timerText} ${isLowTime ? "" : styles.timerTextQuiet}`}>{timerDisplay}</span>
           </div>
         </div>
 

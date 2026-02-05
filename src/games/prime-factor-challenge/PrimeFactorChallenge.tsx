@@ -18,7 +18,7 @@ export default function PrimeFactorChallenge() {
   const [gameState, setGameState] = useState<GameState>("idle");
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION_SECONDS);
   const [score, setScore] = useState(0);
-  const [questionsAnswered, setQuestionsAnswered] = useState(0);
+  const [totalAnswered, setTotalAnswered] = useState(0);
   const [roundIndex, setRoundIndex] = useState(0);
   const [feedback, setFeedback] = useState<{ message: string; type: "" | "correct" | "wrong" }>({
     message: "",
@@ -28,9 +28,9 @@ export default function PrimeFactorChallenge() {
   const timerRef = useRef<number | null>(null);
 
   const accuracy = useMemo(() => {
-    if (questionsAnswered === 0) return 0;
-    return Math.round((score / questionsAnswered) * 100);
-  }, [questionsAnswered, score]);
+    if (totalAnswered === 0) return 0;
+    return Math.round((score / totalAnswered) * 100);
+  }, [score, totalAnswered]);
 
   useEffect(() => {
     if (gameState !== "playing") {
@@ -69,7 +69,7 @@ export default function PrimeFactorChallenge() {
     setGameState("playing");
     setTimeLeft(GAME_DURATION_SECONDS);
     setScore(0);
-    setQuestionsAnswered(0);
+    setTotalAnswered(0);
     setFeedback({ message: "", type: "" });
   }, [resetRound]);
 
@@ -93,7 +93,7 @@ export default function PrimeFactorChallenge() {
     const selected = Array.from(selectedPrimes).sort((a, b) => a - b);
     const isCorrect = isCorrectSelection(selected, question.factors);
 
-    setQuestionsAnswered((prev) => prev + 1);
+    setTotalAnswered((prev) => prev + 1);
     if (isCorrect) {
       setScore((prev) => prev + 1);
     }
@@ -154,7 +154,7 @@ export default function PrimeFactorChallenge() {
           </div>
           <div className={styles.statPill}>
             <Trophy className={styles.statIcon} />
-            {score}/{questionsAnswered}
+            {score}/{totalAnswered}
           </div>
         </div>
 
@@ -212,8 +212,8 @@ export default function PrimeFactorChallenge() {
               Time's up!
             </div>
             <p className={styles.resultScore}>{score}</p>
-            <p className={styles.resultEquation}>out of {questionsAnswered} questions correct</p>
-            {questionsAnswered > 0 && <p className={styles.footerRow}>Accuracy: {accuracy}%</p>}
+            <p className={styles.resultEquation}>out of {totalAnswered} questions correct</p>
+            {totalAnswered > 0 && <p className={styles.footerRow}>Accuracy: {accuracy}%</p>}
           </div>
         )}
 
