@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { generateCompositeNumber, isCorrectSelection, PRIMES_UNDER_50 } from "./logic";
+import { formatTime, generateCompositeNumber, isCorrectSelection, PRIMES_UNDER_50 } from "./logic";
 
 describe("generateCompositeNumber", () => {
   test("returns product of three unique primes", () => {
@@ -23,5 +23,19 @@ describe("isCorrectSelection", () => {
 
   test("rejects when order differs", () => {
     expect(isCorrectSelection([5, 3, 2], [2, 3, 5])).toBe(false);
+  });
+
+  test("rejects when length differs", () => {
+    expect(isCorrectSelection([2, 3], [2, 3, 5])).toBe(false);
+  });
+});
+
+describe("formatTime", () => {
+  test("formats under a minute", () => {
+    expect(formatTime(7)).toBe("0:07");
+  });
+
+  test("formats minutes and seconds", () => {
+    expect(formatTime(83)).toBe("1:23");
   });
 });

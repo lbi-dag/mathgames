@@ -18,7 +18,24 @@ export default function LandingGallery() {
 
       <article className={styles.card}>
         <div className={styles.thumb} aria-hidden="true">
-          <span>&times;</span>
+          <svg viewBox="0 0 120 120" role="img" aria-label="">
+            <defs>
+              <linearGradient id="primeBadgeGradient" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#4f46e5" />
+                <stop offset="100%" stopColor="#c7f4d9" />
+              </linearGradient>
+            </defs>
+            <circle cx="60" cy="60" r="40" fill="url(#primeBadgeGradient)" opacity="0.9" />
+            <circle cx="60" cy="60" r="28" fill="#fff7ef" />
+            <path
+              d="M44 64l8-14 8 14 8-14"
+              stroke="#2b2f8f"
+              strokeWidth="6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill="none"
+            />
+          </svg>
         </div>
         <h2>Prime Factor Challenge</h2>
         <p>Pick the three primes that multiply into the target number before time runs out.</p>
