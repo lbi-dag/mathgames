@@ -10,7 +10,7 @@ export default function About() {
       pageClassName={pageShell.pageShell}
       contentClassName={pageShell.content}
       sidebarAction={
-        <Link className={styles.aboutLink} to="/">
+        <Link className={styles.backLink} to="/">
           <span>&larr;</span>
           Back to Games
         </Link>
