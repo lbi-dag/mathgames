@@ -19,47 +19,6 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
-  gap: var(--space-6);
-  align-items: center;
-}
-
-.hero h1 {
-  font-family: "Fraunces", "Times New Roman", serif;
-  font-size: clamp(2.2rem, 3vw, 3.1rem);
-  margin: 0 0 var(--space-3);
-}
-
-.hero p {
-  margin: 0;
-  font-size: var(--text-md);
-  color: #3c3a34;
-  line-height: 1.7;
-}
-
-.heroCard {
-  background: var(--card);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-5);
-  box-shadow: var(--shadow);
-  display: grid;
-  gap: var(--space-3);
-}
-
-.heroCard h2 {
-  margin: 0;
-  font-size: var(--text-md);
-}
-
-.heroCard p {
-  margin: 0;
-  color: #4c4a43;
-  line-height: 1.6;
-  font-size: var(--text-sm);
-}
-
 .timeline {
   display: grid;
   gap: var(--space-4);
@@ -99,12 +58,6 @@
   font-size: var(--text-sm);
 }
 
-.values {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-4);
-}
-
 .valueCard {
   background: #fff9f1;
   border-radius: var(--radius-md);
@@ -122,17 +75,4 @@
   font-size: var(--text-sm);
   color: #4c4a43;
   line-height: 1.6;
-}
-
-.footerNote {
-  font-size: var(--text-sm);
-  color: #4c4a43;
-  line-height: 1.6;
-  max-width: 620px;
-}
-
-@media (max-width: 920px) {
-  .hero {
-    grid-template-columns: 1fr;
-  }
 }

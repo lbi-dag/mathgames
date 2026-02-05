@@ -1,0 +1,59 @@
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.heroTitle {
+  font-family: "Fraunces", "Times New Roman", serif;
+  font-size: clamp(2.2rem, 3vw, 3.1rem);
+  margin: 0 0 var(--space-3);
+}
+
+.heroCopy {
+  margin: 0;
+  font-size: var(--text-md);
+  color: #3c3a34;
+  line-height: 1.7;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-5);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: var(--space-3);
+}
+
+.cardTitle {
+  margin: 0;
+  font-size: var(--text-md);
+}
+
+.cardBody {
+  margin: 0;
+  color: #4c4a43;
+  line-height: 1.6;
+  font-size: var(--text-sm);
+}
+
+.gridAuto {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--space-4);
+}
+
+.bodyNote {
+  font-size: var(--text-sm);
+  color: #4c4a43;
+  line-height: 1.6;
+  max-width: 620px;
+}
+
+@media (max-width: 920px) {
+  .hero {
+    grid-template-columns: 1fr;
+  }
+}
