@@ -105,61 +105,6 @@ export default function PrimeFactorChallenge() {
   const selectionCountClass =
     selectedPrimes.size === 3 ? `${styles.selectionCount} ${styles.selectionReady}` : styles.selectionCount;
 
-  if (gameState === "idle") {
-    return (
-      <div className={styles.page}>
-        <div className={styles.card}>
-          <header className={styles.header}>
-            <h1 className={styles.title}>Prime Factor Challenge</h1>
-            <p className={styles.subtitle}>Find the 3 prime factors of composite numbers</p>
-          </header>
-          <div className={styles.intro}>
-            <span className={styles.introIcon}>
-              <Timer className={styles.statIcon} />
-            </span>
-            <p>You have 60 seconds to answer as many questions as you can.</p>
-            <p className={styles.footerRow}>Each question asks you to find exactly 3 prime factors.</p>
-          </div>
-          <div className={styles.actions}>
-            <button type="button" className={styles.primaryAction} onClick={startGame}>
-              <Play className={styles.statIcon} />
-              Start Game
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (gameState === "gameover") {
-    return (
-      <div className={styles.page}>
-        <div className={styles.card}>
-          <header className={styles.header}>
-            <h1 className={styles.title}>Time&apos;s Up!</h1>
-            <p className={styles.subtitle}>Great effort. Here are your results.</p>
-          </header>
-          <div className={styles.intro}>
-            <span className={styles.introIcon}>
-              <Trophy className={styles.statIcon} />
-            </span>
-            <p className={styles.targetNumber}>{score}</p>
-            <p>
-              out of {questionsAnswered} questions correct
-            </p>
-            {questionsAnswered > 0 && <p className={styles.footerRow}>Accuracy: {accuracy}%</p>}
-          </div>
-          <div className={styles.actions}>
-            <button type="button" className={styles.primaryAction} onClick={handleNewGame}>
-              <RefreshCw className={styles.statIcon} />
-              Play Again
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className={styles.page}>
       <div className={styles.card}>
@@ -172,10 +117,31 @@ export default function PrimeFactorChallenge() {
           <p className={styles.subtitle}>Find the 3 prime factors of the number below</p>
         </header>
 
-        <div className={styles.statsRow}>
-          <div className={`${styles.statPill} ${timeLeft <= 10 ? styles.statPillAlert : ""}`}>
+        <div className={styles.intro}>
+          <span className={styles.introIcon}>
             <Timer className={styles.statIcon} />
-            {formatTime(timeLeft)}
+          </span>
+          <p>You have 60 seconds to answer as many questions as you can.</p>
+          <p className={styles.footerRow}>Each question asks you to find exactly 3 prime factors.</p>
+          <div className={styles.actions}>
+            <button
+              type="button"
+              className={styles.primaryAction}
+              onClick={startGame}
+              disabled={gameState === "playing"}
+            >
+              <Play className={styles.statIcon} />
+              {gameState === "playing" ? "Running..." : "Start Game"}
+            </button>
+          </div>
+        </div>
+
+        <div className={styles.statsRow}>
+          <div className={`${styles.statPill} ${styles.timerPill} ${timeLeft <= 10 ? styles.statPillAlert : ""}`}>
+            <Timer className={styles.statIcon} />
+            <span className={`${styles.timerText} ${timeLeft <= 10 ? "" : styles.timerTextQuiet}`}>
+              {formatTime(timeLeft)}
+            </span>
           </div>
           <div className={styles.statPill}>
             <Trophy className={styles.statIcon} />
@@ -220,25 +186,50 @@ export default function PrimeFactorChallenge() {
           })}
         </div>
 
-        {gameState !== "playing" && (
+        {gameState !== "playing" && gameState !== "idle" && (
           <div
             className={[
               styles.resultCard,
-              gameState === "correct" ? styles.resultCorrect : styles.resultWrong,
+              gameState === "gameover"
+                ? styles.resultNeutral
+                : gameState === "correct"
+                  ? styles.resultCorrect
+                  : styles.resultWrong,
             ].join(" ")}
           >
             <div className={styles.resultTitle}>
-              {gameState === "correct" ? <Check className={styles.statIcon} /> : <X className={styles.statIcon} />}
-              {gameState === "correct" ? "Correct!" : "Not quite..."}
+              {gameState === "gameover" ? (
+                <Trophy className={styles.statIcon} />
+              ) : gameState === "correct" ? (
+                <Check className={styles.statIcon} />
+              ) : (
+                <X className={styles.statIcon} />
+              )}
+              {gameState === "gameover" ? "Time's up!" : gameState === "correct" ? "Correct!" : "Not quite..."}
             </div>
-            <p className={styles.resultEquation}>
-              {question.number} = {question.factors.join(" × ")}
-            </p>
+            {gameState === "gameover" ? (
+              <>
+                <p className={styles.resultScore}>{score}</p>
+                <p className={styles.resultEquation}>
+                  out of {questionsAnswered} questions correct
+                </p>
+                {questionsAnswered > 0 && <p className={styles.footerRow}>Accuracy: {accuracy}%</p>}
+              </>
+            ) : (
+              <p className={styles.resultEquation}>
+                {question.number} = {question.factors.join(" × ")}
+              </p>
+            )}
           </div>
         )}
 
         <div className={styles.actions}>
-          {gameState === "playing" ? (
+          {gameState === "gameover" ? (
+            <button type="button" className={styles.primaryAction} onClick={handleNewGame}>
+              <RefreshCw className={styles.statIcon} />
+              Play Again
+            </button>
+          ) : gameState === "playing" ? (
             <button
               type="button"
               className={styles.primaryAction}
@@ -247,7 +238,7 @@ export default function PrimeFactorChallenge() {
             >
               Submit Answer
             </button>
-          ) : (
+          ) : gameState === "idle" ? null : (
             <button type="button" className={styles.secondaryAction} onClick={handleNextQuestion}>
               Next Question
             </button>
