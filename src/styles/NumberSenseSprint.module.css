@@ -1,0 +1,357 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at top, #f5f5ff, #dde7ff);
+  padding: 24px 16px;
+}
+
+.gameContainer {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 24px 24px 28px;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.brandRow {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+
+.siteLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: #111827;
+}
+
+.siteLogo:focus-visible {
+  outline: 2px solid #eef2ff;
+  outline-offset: 3px;
+  border-radius: 12px;
+}
+
+.logoMark {
+  width: 34px;
+  height: 34px;
+  flex: 0 0 auto;
+}
+
+.logoRing {
+  fill: rgba(79, 70, 229, 0.18);
+  stroke: #4f46e5;
+  stroke-width: 2.6;
+}
+
+.logoPlus {
+  stroke: #4f46e5;
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.logoDot {
+  fill: #4f46e5;
+}
+
+.logoText {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+.gameHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 12px;
+}
+
+.modeArea {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.modeToggle {
+  background: #f3f4f6;
+  border-radius: 999px;
+  padding: 4px;
+  display: inline-flex;
+  gap: 4px;
+}
+
+.modeBtn {
+  border: none;
+  background: transparent;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #4b5563;
+  transition: background 0.1s ease, color 0.1s ease, box-shadow 0.1s ease;
+}
+
+.modeBtnActive {
+  background: #4f46e5;
+  color: #ffffff;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.25);
+}
+
+.modeBtn:hover:not(.modeBtnActive) {
+  color: #111827;
+  background: #e5e7eb;
+}
+
+.title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.backLink span {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: #eef2ff;
+}
+
+.tag {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #eef2ff;
+  color: #3730a3;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.subtitle {
+  font-size: 0.85rem;
+  color: #6b7280;
+  margin-bottom: 16px;
+}
+
+.infoRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+  gap: 10px;
+  font-size: 0.9rem;
+  flex-wrap: wrap;
+}
+
+.pill {
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #f3f4f6;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pillHighlight {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.pillMuted {
+  background: #eef2ff;
+  color: #3730a3;
+}
+
+.pillLabel {
+  color: #6b7280;
+  font-size: 0.75rem;
+}
+
+.pillValue {
+  font-weight: 600;
+}
+
+.timer {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #dc2626;
+}
+
+.questionCard {
+  margin-top: 8px;
+  margin-bottom: 16px;
+  padding: 18px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eef2ff, #e0f2fe);
+  text-align: center;
+}
+
+.questionLabel {
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #4b5563;
+  margin-bottom: 4px;
+}
+
+.questionText {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.answerForm {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.answerInput {
+  flex: 1 1 180px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  font-size: 1rem;
+  outline: none;
+  text-align: center;
+  min-width: 0;
+}
+
+.answerInput:focus {
+  border-color: #4f46e5;
+  box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
+}
+
+.btn {
+  border-radius: 999px;
+  border: none;
+  padding: 10px 16px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: 600;
+  transition: transform 0.05s ease, box-shadow 0.1s ease, background 0.1s ease;
+  white-space: nowrap;
+}
+
+.btnPrimary {
+  background: #4f46e5;
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3);
+}
+
+.btnPrimary:hover {
+  background: #4338ca;
+}
+
+.btnPrimary:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
+}
+
+.btnSecondary {
+  background: #e5e7eb;
+  color: #111827;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.statusRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  margin-top: 6px;
+  margin-bottom: 10px;
+}
+
+.feedback {
+  min-height: 20px;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.feedbackCorrect {
+  color: #16a34a;
+}
+
+.feedbackWrong {
+  color: #dc2626;
+}
+
+.history {
+  font-size: 0.78rem;
+  color: #6b7280;
+  max-height: 56px;
+  overflow-y: auto;
+  margin-top: 4px;
+  border-top: 1px dashed #e5e7eb;
+  padding-top: 4px;
+}
+
+.historyEntry {
+  margin-bottom: 2px;
+}
+
+.historyEntryCorrect {
+  color: #16a34a;
+}
+
+.historyEntryWrong {
+  color: #dc2626;
+}
+
+.footerNote {
+  margin-top: 12px;
+  font-size: 0.75rem;
+  color: #9ca3af;
+  text-align: center;
+}
+
+.hidden {
+  display: none !important;
+}
+
+@media (max-width: 520px) {
+  .gameContainer {
+    margin: 16px;
+    padding: 18px 16px 22px;
+  }
+
+  .questionText {
+    font-size: 1.6rem;
+  }
+
+  .title {
+    font-size: 1.05rem;
+  }
+
+  .buttonRow {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
