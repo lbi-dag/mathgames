@@ -279,8 +279,6 @@ export default function NumberSenseSprint() {
       ? "Go for speed. Answer as many questions as you can before the clock hits zero."
       : "Three lives. Difficulty increases as you score.";
 
-  const accuracyLabel = `Score: ${stats.totalCorrect} / ${stats.totalAnswered}`;
-
   return (
     <div className={styles.page}>
       <div className={styles.card}>
@@ -387,7 +385,6 @@ export default function NumberSenseSprint() {
           </div>
         </form>
 
-        <div className={styles.footerRow}>{accuracyLabel}</div>
         <div className={styles.actions}>
           <button type="button" className={styles.secondaryAction} onClick={resetBestScore}>
             Reset Best
