@@ -32,7 +32,6 @@ const MODES: Record<ModeKey, ModeConfig> = {
   sprint: {
     label: "Sprint",
     tag: "Sprint Mode",
-    subtitle: "60-second mental math warm-up",
     hasTimer: true,
     startingLives: null,
     bestKey: `${BEST_KEY_PREFIX}sprint`,
@@ -40,7 +39,6 @@ const MODES: Record<ModeKey, ModeConfig> = {
   survival: {
     label: "Survival",
     tag: "Survival Mode",
-    subtitle: "3 lives. Questions ramp up in difficulty.",
     hasTimer: false,
     startingLives: 3,
     bestKey: `${BEST_KEY_PREFIX}survival`,
@@ -88,7 +86,7 @@ export default function NumberSenseSprint() {
 
   const startLabel = useMemo(() => {
     if (isRunning) return "Running...";
-    return hasPlayed ? "Play Again" : "Start";
+    return hasPlayed ? "Play Again" : "Start Game";
   }, [hasPlayed, isRunning]);
   const bestScore = readStoredBestScore(currentMode);
 
@@ -292,14 +290,10 @@ export default function NumberSenseSprint() {
             Back to games
           </Link>
           <h1 className={styles.title}>Number Sense Sprint</h1>
-          <p className={styles.subtitle}>{MODES[currentMode].subtitle}</p>
         </header>
         <div className={styles.intro}>
-          <span className={styles.introIcon}>
-            {MODES[currentMode].hasTimer ? <Timer className={styles.statIcon} /> : <Trophy className={styles.statIcon} />}
-          </span>
-          <p>{introMessage}</p>
           <div className={styles.modeRow}>
+                          <div className={styles.tag}>Game Mode:</div>
             <div className={styles.modeToggle}>
               <button
                 type="button"
@@ -308,6 +302,7 @@ export default function NumberSenseSprint() {
               >
                 Sprint
               </button>
+
               <button
                 type="button"
                 className={`${styles.modeBtn} ${currentMode === "survival" ? styles.modeBtnActive : ""}`}
@@ -316,7 +311,8 @@ export default function NumberSenseSprint() {
                 Survival
               </button>
             </div>
-            <div className={styles.tag}>{MODES[currentMode].tag}</div>
+          
+          <div className={styles.introMessage}>{introMessage}</div>
           </div>
           <div className={styles.actions}>
             <button

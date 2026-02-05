@@ -68,6 +68,12 @@
   border-radius: var(--radius-md);
 }
 
+.introMessage {
+  text-align: center;
+  width: 100%;
+  margin: 0;
+}
+
 .introIcon {
   display: inline-flex;
   align-items: center;
