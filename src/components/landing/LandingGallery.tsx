@@ -16,6 +16,18 @@ export default function LandingGallery() {
         </Link>
       </article>
 
+      <article className={styles.card}>
+        <div className={styles.thumb} aria-hidden="true">
+          <span>&times;</span>
+        </div>
+        <h2>Prime Factor Challenge</h2>
+        <p>Pick the three primes that multiply into the target number before time runs out.</p>
+        <Link to="/games/prime-factor-challenge">
+          <span>&#9654;</span>
+          Play now
+        </Link>
+      </article>
+
       <article className={`${styles.card} ${styles.upcoming}`} aria-label="Coming soon game">
         <div className={`${styles.thumb} ${styles.thumbUpcoming}`} aria-hidden="true">
           <svg viewBox="0 0 140 140" role="img" aria-label="">
