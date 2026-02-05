@@ -1,0 +1,14 @@
+:root {
+  --paper: #f6efe3;
+  --ink: #0e1111;
+  --accent: #ff7b3e;
+  --accent-deep: #ff4d2a;
+  --accent-soft: #ffd6c2;
+  --logo-ring: rgba(255, 123, 62, 0.18);
+  --mint: #c7f4d9;
+  --violet: #2b2f8f;
+  --side: #11141a;
+  --side-ink: #f4efe6;
+  --card: #fffdf9;
+  --shadow: 0 18px 40px rgba(15, 12, 6, 0.18);
+}
