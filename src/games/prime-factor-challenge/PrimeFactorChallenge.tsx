@@ -20,7 +20,7 @@ export default function PrimeFactorChallenge() {
   const [score, setScore] = useState(0);
   const [questionsAnswered, setQuestionsAnswered] = useState(0);
 
-  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const timerRef = useRef<number | null>(null);
 
   const accuracy = useMemo(() => {
     if (questionsAnswered === 0) return 0;
