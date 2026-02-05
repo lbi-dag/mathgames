@@ -1,13 +1,13 @@
 .sidebar {
   background: linear-gradient(160deg, #0b0c12 0%, #171a27 55%, #1d2236 100%);
   color: var(--side-ink);
-  padding: 28px 28px 24px;
+  padding: var(--space-7) var(--space-7) var(--space-6);
   position: relative;
   overflow: hidden;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: 12px;
+  gap: var(--space-3);
 }
 
 .sidebar::before {
@@ -24,7 +24,7 @@
 .siteLogo {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
+  gap: var(--space-2);
   text-decoration: none;
   color: var(--side-ink);
   position: relative;
@@ -61,7 +61,7 @@
 
 .logoText {
   font-family: "Fraunces", "Times New Roman", serif;
-  font-size: 1.35rem;
+  font-size: var(--text-lg);
   font-weight: 700;
   letter-spacing: 0.02em;
 }

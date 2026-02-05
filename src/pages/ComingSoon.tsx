@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import SidebarLayout from "../components/SidebarLayout";
+import pageShell from "../styles/PageShell.module.css";
 import styles from "../styles/ComingSoon.module.css";
 
 export default function ComingSoon() {
   return (
     <SidebarLayout
-      pageClassName={styles.page}
-      contentClassName={styles.content}
+      pageClassName={pageShell.pageShell}
+      contentClassName={pageShell.content}
       sidebarAction={
         <Link className={styles.backLink} to="/">
           <span>&larr;</span>

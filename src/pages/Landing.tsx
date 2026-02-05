@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import SidebarLayout from "../components/SidebarLayout";
+import pageShell from "../styles/PageShell.module.css";
 import styles from "../styles/Landing.module.css";
 
 export default function Landing() {
   return (
     <SidebarLayout
-      pageClassName={styles.page}
-      contentClassName={styles.content}
+      pageClassName={pageShell.pageShell}
+      contentClassName={pageShell.content}
       sidebarClassName={styles.sidebarLarge}
       sidebarBody={
         <div className={styles.manifesto}>

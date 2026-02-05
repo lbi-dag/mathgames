@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import SidebarLayout from "../components/SidebarLayout";
+import pageShell from "../styles/PageShell.module.css";
 import styles from "../styles/About.module.css";
 
 export default function About() {
   return (
     <SidebarLayout
-      pageClassName={styles.page}
-      contentClassName={styles.content}
+      pageClassName={pageShell.pageShell}
+      contentClassName={pageShell.content}
       sidebarAction={
         <Link className={styles.aboutLink} to="/">
           <span>&larr;</span>
