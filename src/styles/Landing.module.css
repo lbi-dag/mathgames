@@ -27,8 +27,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: var(--space-7);
+  height: var(--space-7);
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.12);
 }
@@ -135,8 +135,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  width: var(--space-7);
+  height: var(--space-7);
   border-radius: 50%;
   background: var(--mint);
   color: #0b3a20;
@@ -219,7 +219,7 @@
 
 @media (max-width: 860px) {
   .sidebarLarge {
-    padding: 32px 28px;
+    padding: var(--space-8) var(--space-7);
   }
 
   .manifesto {
