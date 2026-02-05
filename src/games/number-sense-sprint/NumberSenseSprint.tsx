@@ -9,7 +9,6 @@ type ModeKey = "sprint" | "survival";
 type ModeConfig = {
   label: string;
   tag: string;
-  subtitle: string;
   hasTimer: boolean;
   startingLives: number | null;
   bestKey: string;
