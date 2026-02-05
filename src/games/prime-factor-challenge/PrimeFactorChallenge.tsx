@@ -127,11 +127,7 @@ export default function PrimeFactorChallenge() {
         </header>
 
         <div className={styles.intro}>
-          <span className={styles.introIcon}>
-            <Timer className={styles.statIcon} />
-          </span>
           <p>You have 60 seconds to answer as many questions as you can.</p>
-          <p className={styles.footerRow}>Each question asks you to find exactly 3 prime factors.</p>
           <div className={styles.actions}>
             <button
               type="button"
