@@ -56,18 +56,14 @@ function calculateDifficulty(mode: ModeKey, totalCorrect: number) {
   return clampDifficulty(1 + Math.floor(totalCorrect / 4));
 }
 
-function getStoredBestScore(mode: ModeKey) {
+function readStoredBestScore(mode: ModeKey) {
   if (typeof window === "undefined") return 0;
   const key = MODES[mode].bestKey;
   const stored = window.localStorage.getItem(key);
   const baseBest = stored ? parseInt(stored, 10) || 0 : 0;
   const legacy = mode === "sprint" ? window.localStorage.getItem(LEGACY_SPRINT_KEY) : null;
   const legacyBest = legacy ? parseInt(legacy, 10) || 0 : 0;
-  const best = Math.max(baseBest, legacyBest);
-  if (mode === "sprint" && best > baseBest) {
-    window.localStorage.setItem(key, String(best));
-  }
-  return best;
+  return Math.max(baseBest, legacyBest);
 }
 
 export default function NumberSenseSprint() {
@@ -82,30 +78,35 @@ export default function NumberSenseSprint() {
   const [timeLeft, setTimeLeft] = useState<number | null>(SPRINT_TIME_SECONDS);
   const [isRunning, setIsRunning] = useState(false);
   const [lives, setLives] = useState<number | null>(MODES.sprint.startingLives);
-  const [bestScore, setBestScore] = useState(0);
   const [answerInput, setAnswerInput] = useState("");
   const [hasPlayed, setHasPlayed] = useState(false);
 
   const answerInputRef = useRef<HTMLInputElement>(null);
   const historyId = useRef(0);
+  const timeLeftRef = useRef<number | null>(SPRINT_TIME_SECONDS);
 
   const startLabel = useMemo(() => {
     if (isRunning) return "Running...";
     return hasPlayed ? "Play Again" : "Start";
   }, [hasPlayed, isRunning]);
+  const bestScore = readStoredBestScore(currentMode);
 
   useEffect(() => {
-    const best = getStoredBestScore(currentMode);
-    setBestScore(best);
+    timeLeftRef.current = timeLeft;
+  }, [timeLeft]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (currentMode !== "sprint") return;
+    const key = MODES[currentMode].bestKey;
+    const stored = window.localStorage.getItem(key);
+    const baseBest = stored ? parseInt(stored, 10) || 0 : 0;
+    const legacy = window.localStorage.getItem(LEGACY_SPRINT_KEY);
+    const legacyBest = legacy ? parseInt(legacy, 10) || 0 : 0;
+    if (legacyBest > baseBest) {
+      window.localStorage.setItem(key, String(legacyBest));
+    }
   }, [currentMode]);
-
-  useEffect(() => {
-    if (!isRunning || !MODES[currentMode].hasTimer) return;
-    const intervalId = window.setInterval(() => {
-      setTimeLeft((prev) => (prev === null ? prev : Math.max(0, prev - 1)));
-    }, 1000);
-    return () => window.clearInterval(intervalId);
-  }, [currentMode, isRunning]);
 
   useEffect(() => {
     if (isRunning) {
@@ -141,7 +142,6 @@ export default function NumberSenseSprint() {
       if (mode === "sprint") {
         window.localStorage.setItem(LEGACY_SPRINT_KEY, String(newScore));
       }
-      setBestScore(newScore);
       showFeedback("New personal best!", "correct");
     }
   }, [showFeedback]);
@@ -185,10 +185,18 @@ export default function NumberSenseSprint() {
 
   useEffect(() => {
     if (!isRunning || !MODES[currentMode].hasTimer) return;
-    if (timeLeft !== null && timeLeft <= 0) {
-      endGame("time");
-    }
-  }, [currentMode, endGame, isRunning, timeLeft]);
+    const intervalId = window.setInterval(() => {
+      const current = timeLeftRef.current;
+      if (current === null) return;
+      const next = Math.max(0, current - 1);
+      timeLeftRef.current = next;
+      setTimeLeft(next);
+      if (next === 0) {
+        endGame("time");
+      }
+    }, 1000);
+    return () => window.clearInterval(intervalId);
+  }, [currentMode, endGame, isRunning]);
 
   const handleAnswerSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -243,7 +251,6 @@ export default function NumberSenseSprint() {
   const resetBestScore = () => {
     if (typeof window === "undefined") return;
     window.localStorage.removeItem(MODES[currentMode].bestKey);
-    setBestScore(0);
     showFeedback("Best score reset for this mode.", "");
   };
 
