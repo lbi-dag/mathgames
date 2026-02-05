@@ -10,7 +10,7 @@
     var(--paper);
 }
 
-.gameContainer {
+.card {
   width: 100%;
   max-width: 720px;
   background: #ffffff;
@@ -21,68 +21,71 @@
   gap: var(--space-6);
 }
 
-.brandRow {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: var(--space-2);
+.header {
+  text-align: center;
+  display: grid;
+  gap: var(--space-2);
 }
 
-.siteLogo {
+.title {
+  font-family: "Fraunces", "Times New Roman", serif;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+  color: #3c3a34;
+  font-size: var(--text-md);
+}
+
+.backLink {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: #4f46e5;
   text-decoration: none;
-  color: #111827;
+  font-weight: 600;
 }
 
-.siteLogo:focus-visible {
-  outline: 2px solid #eef2ff;
-  outline-offset: 3px;
-  border-radius: var(--radius-sm);
-}
-
-.logoMark {
-  width: 34px;
-  height: 34px;
-  flex: 0 0 auto;
-}
-
-.logoRing {
-  fill: rgba(79, 70, 229, 0.18);
-  stroke: #4f46e5;
-  stroke-width: 2.6;
-}
-
-.logoPlus {
-  stroke: #4f46e5;
-  stroke-width: 3;
-  stroke-linecap: round;
-}
-
-.logoDot {
-  fill: #4f46e5;
-}
-
-.logoText {
-  font-size: var(--text-md);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-.gameHeader {
-  display: flex;
-  justify-content: space-between;
+.backLink span {
+  display: inline-flex;
+  width: var(--space-7);
+  height: var(--space-7);
+  border-radius: 50%;
   align-items: center;
-  margin-bottom: var(--space-3);
-  gap: var(--space-3);
+  justify-content: center;
+  background: #eef2ff;
 }
 
-.modeArea {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
+.intro {
+  text-align: center;
+  display: grid;
   gap: var(--space-2);
+  padding: var(--space-2);
+  background: #f3f4ff;
+  border-radius: var(--radius-md);
+}
+
+.introIcon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  background: #eef2ff;
+  color: #4f46e5;
+}
+
+.modeRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  align-items: center;
+  justify-content: center;
 }
 
 .modeToggle {
@@ -116,32 +119,6 @@
   background: #e5e7eb;
 }
 
-.title {
-  font-family: "Fraunces", "Times New Roman", serif;
-  font-size: clamp(2rem, 3vw, 2.6rem);
-  font-weight: 700;
-}
-
-.backLink {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--text-sm);
-  color: #4f46e5;
-  text-decoration: none;
-  font-weight: 600;
-}
-
-.backLink span {
-  display: inline-flex;
-  width: var(--space-7);
-  height: var(--space-7);
-  border-radius: 50%;
-  align-items: center;
-  justify-content: center;
-  background: #eef2ff;
-}
-
 .tag {
   font-size: var(--text-sm);
   padding: var(--space-1) var(--space-2);
@@ -152,20 +129,53 @@
   letter-spacing: 0.06em;
 }
 
-.subtitle {
-  font-size: var(--text-sm);
-  color: #3c3a34;
-  margin-bottom: var(--space-4);
+.actions {
+  display: flex;
+  justify-content: center;
 }
 
-.infoRow {
+.primaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-6);
+  background: #4f46e5;
+  color: #ffffff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.28);
+}
+
+.primaryAction:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-6);
+  background: #e5e7eb;
+  color: #111827;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.statsRow {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-3);
   gap: var(--space-4);
-  font-size: var(--text-sm);
-  flex-wrap: wrap;
 }
 
 .statPill {
@@ -203,24 +213,9 @@
   height: 20px;
 }
 
-.pill {
-  padding: var(--space-2) var(--space-4);
-  border-radius: 999px;
-  background: #f3f4f6;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-weight: 600;
-}
-
 .pillHighlight {
   background: #fef2f2;
   color: #b91c1c;
-}
-
-.pillMuted {
-  background: #eef2ff;
-  color: #3730a3;
 }
 
 .pillLabel {
@@ -232,45 +227,57 @@
   font-weight: 600;
 }
 
-.questionCard {
-  padding: var(--space-6) var(--space-4);
-  border-radius: var(--radius-md);
-  background: #eef2ff;
+.progressTrack {
+  width: 100%;
+  height: 8px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, #4f46e5, #2b2f8f);
+  transition: width 0.2s ease;
+}
+
+.target {
   text-align: center;
+  padding: var(--space-6) var(--space-4);
+  background: #eef2ff;
+  border-radius: var(--radius-md);
   display: grid;
   gap: var(--space-2);
 }
 
-.questionLabel {
+.targetLabel {
+  margin: 0;
   font-size: var(--text-sm);
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
   color: #6b7280;
-  margin-bottom: var(--space-1);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
-.questionText {
+.targetNumber {
+  margin: 0;
   font-size: clamp(2.2rem, 4vw, 2.8rem);
   font-weight: 700;
   color: var(--violet);
 }
 
 .answerForm {
-  display: flex;
-  gap: var(--space-2);
-  align-items: center;
-  flex-wrap: wrap;
+  display: grid;
+  gap: var(--space-3);
 }
 
 .answerInput {
-  flex: 1 1 180px;
+  width: 100%;
   padding: var(--space-3) var(--space-4);
   border-radius: 999px;
   border: 1px solid #d1d5db;
   font-size: var(--text-md);
   outline: none;
   text-align: center;
-  min-width: 0;
 }
 
 .answerInput:focus {
@@ -278,61 +285,30 @@
   box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.15);
 }
 
-.btn {
-  border-radius: 999px;
-  border: none;
-  padding: var(--space-3) var(--space-6);
+.footerRow {
+  text-align: center;
   font-size: var(--text-sm);
-  cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.05s ease, box-shadow 0.1s ease, background 0.1s ease;
-  white-space: nowrap;
-}
-
-.btnPrimary {
-  background: #4f46e5;
-  color: #ffffff;
-  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.28);
-}
-
-.btnPrimary:hover {
-  background: #4338ca;
-}
-
-.btnPrimary:active {
-  transform: translateY(1px);
-  box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
-}
-
-.btnSecondary {
-  background: #e5e7eb;
-  color: #111827;
-}
-
-.buttonRow {
-  display: flex;
-  gap: var(--space-2);
-  flex-shrink: 0;
-}
-
-.statusRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: var(--text-sm);
+  color: #6b7280;
 }
 
 .feedback {
-  min-height: var(--space-5);
+  text-align: center;
   font-size: var(--text-sm);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+  background: #f3f4f6;
+  color: #111827;
 }
 
 .feedbackCorrect {
-  color: #16a34a;
+  background: rgba(34, 197, 94, 0.12);
+  color: #15803d;
 }
 
 .feedbackWrong {
-  color: #dc2626;
+  background: rgba(239, 68, 68, 0.12);
+  color: #b91c1c;
 }
 
 .history {
@@ -340,12 +316,15 @@
   color: #6b7280;
   max-height: var(--space-14);
   overflow-y: auto;
-  border-top: 1px dashed #e5e7eb;
-  padding-top: var(--space-1);
+  border-radius: var(--radius-md);
+  background: #f9fafb;
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-1);
 }
 
 .historyEntry {
-  margin-bottom: var(--space-1);
+  margin: 0;
 }
 
 .historyEntryCorrect {
@@ -356,22 +335,16 @@
   color: #dc2626;
 }
 
-.footerNote {
-  font-size: var(--text-sm);
-  color: #6b7280;
-  text-align: center;
-}
-
 .hidden {
   display: none !important;
 }
 
 @media (max-width: 520px) {
-  .gameContainer {
+  .card {
     padding: var(--space-5);
   }
 
-  .questionText {
+  .targetNumber {
     font-size: 2rem;
   }
 
@@ -379,8 +352,7 @@
     font-size: var(--text-xl);
   }
 
-  .buttonRow {
-    width: 100%;
-    justify-content: space-between;
+  .statsRow {
+    justify-content: center;
   }
 }

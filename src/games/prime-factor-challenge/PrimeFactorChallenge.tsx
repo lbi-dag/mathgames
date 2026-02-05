@@ -123,11 +123,13 @@ export default function PrimeFactorChallenge() {
             Back to games
           </Link>
           <h1 className={styles.title}>Prime Factor Challenge</h1>
-          <p className={styles.subtitle}>Find the 3 prime factors of the number below</p>
         </header>
 
         <div className={styles.intro}>
-          <p>You have 60 seconds to answer as many questions as you can.</p>
+          <p>
+            Find the 3 prime factors of the number.<br></br>
+            Answer as many questions as you can within 60 seconds.
+          </p>
           <div className={styles.actions}>
             <button
               type="button"

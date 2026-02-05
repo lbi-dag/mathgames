@@ -272,22 +272,34 @@ export default function NumberSenseSprint() {
     return `${timeLeft}s`;
   }, [currentMode, timeLeft]);
   const isLowTime = MODES[currentMode].hasTimer && timeLeft !== null && timeLeft <= 10;
+  const timeProgress = useMemo(() => {
+    if (!MODES[currentMode].hasTimer || timeLeft === null) return 0;
+    return Math.max(0, Math.min(100, (timeLeft / SPRINT_TIME_SECONDS) * 100));
+  }, [currentMode, timeLeft]);
+  const introMessage =
+    currentMode === "sprint"
+      ? "Go for speed. Answer as many questions as you can before the clock hits zero."
+      : "Three lives. Difficulty increases as you score.";
 
   const accuracyLabel = `Score: ${stats.totalCorrect} / ${stats.totalAnswered}`;
 
   return (
     <div className={styles.page}>
-      <div className={styles.gameContainer}>
-        <div className={styles.gameHeader}>
-          <div>
-            <Link className={styles.backLink} to="/">
-              <span>&larr;</span>
-              Back to games
-            </Link>
-            <div className={styles.title}>Number Sense Sprint</div>
-            <div className={styles.subtitle}>{MODES[currentMode].subtitle}</div>
-          </div>
-          <div className={styles.modeArea}>
+      <div className={styles.card}>
+        <header className={styles.header}>
+          <Link className={styles.backLink} to="/">
+            <span>&larr;</span>
+            Back to games
+          </Link>
+          <h1 className={styles.title}>Number Sense Sprint</h1>
+          <p className={styles.subtitle}>{MODES[currentMode].subtitle}</p>
+        </header>
+        <div className={styles.intro}>
+          <span className={styles.introIcon}>
+            {MODES[currentMode].hasTimer ? <Timer className={styles.statIcon} /> : <Trophy className={styles.statIcon} />}
+          </span>
+          <p>{introMessage}</p>
+          <div className={styles.modeRow}>
             <div className={styles.modeToggle}>
               <button
                 type="button"
@@ -306,23 +318,33 @@ export default function NumberSenseSprint() {
             </div>
             <div className={styles.tag}>{MODES[currentMode].tag}</div>
           </div>
+          <div className={styles.actions}>
+            <button
+              type="button"
+              className={styles.primaryAction}
+              disabled={isRunning}
+              onClick={startGame}
+            >
+              {startLabel}
+            </button>
+          </div>
         </div>
 
-        <div className={styles.infoRow}>
+        <div className={styles.statsRow}>
           <div className={styles.statPill}>
             <Trophy className={styles.statIcon} />
             {stats.score}/{stats.totalAnswered}
           </div>
-          <div className={styles.pill}>
+          <div className={styles.statPill}>
             <span className={styles.pillLabel}>Streak</span>
             <span className={styles.pillValue}>{stats.streak}</span>
           </div>
-          <div className={styles.pill}>
+          <div className={styles.statPill}>
             <span className={styles.pillLabel}>Best</span>
             <span className={styles.pillValue}>{bestScore}</span>
           </div>
           <div
-            className={`${styles.pill} ${styles.pillHighlight} ${
+            className={`${styles.statPill} ${styles.pillHighlight} ${
               currentMode === "survival" ? "" : styles.hidden
             }`}
           >
@@ -339,9 +361,15 @@ export default function NumberSenseSprint() {
           </div>
         </div>
 
-        <div className={styles.questionCard}>
-          <div className={styles.questionLabel}>Current Question</div>
-          <div className={styles.questionText}>{currentQuestion ? currentQuestion.text : "Press Start"}</div>
+        {MODES[currentMode].hasTimer && (
+          <div className={styles.progressTrack}>
+            <div className={styles.progressBar} style={{ width: `${timeProgress}%` }} />
+          </div>
+        )}
+
+        <div className={styles.target}>
+          <p className={styles.targetLabel}>Current Question</p>
+          <p className={styles.targetNumber}>{currentQuestion ? currentQuestion.text : "Press Start"}</p>
         </div>
 
         <form className={styles.answerForm} onSubmit={handleAnswerSubmit}>
@@ -356,39 +384,33 @@ export default function NumberSenseSprint() {
             disabled={!isRunning}
             ref={answerInputRef}
           />
-          <div className={styles.buttonRow}>
-            <button
-              type="button"
-              className={`${styles.btn} ${isRunning ? styles.btnSecondary : styles.btnPrimary}`}
-              disabled={isRunning}
-              onClick={startGame}
-            >
-              {startLabel}
-            </button>
-            <button
-              type="submit"
-              className={`${styles.btn} ${isRunning ? styles.btnPrimary : styles.btnSecondary}`}
-              disabled={!isRunning}
-            >
-              Submit
+          <div className={styles.actions}>
+            <button type="submit" className={styles.primaryAction} disabled={!isRunning}>
+              Submit Answer
             </button>
           </div>
         </form>
 
-        <div className={styles.statusRow}>
-          <div>{accuracyLabel}</div>
-          <button type="button" className={`${styles.btn} ${styles.btnSecondary}`} onClick={resetBestScore}>
+        <div className={styles.footerRow}>{accuracyLabel}</div>
+        <div className={styles.actions}>
+          <button type="button" className={styles.secondaryAction} onClick={resetBestScore}>
             Reset Best
           </button>
         </div>
 
-        <div
-          className={`${styles.feedback} ${
-            feedback.type === "correct" ? styles.feedbackCorrect : feedback.type === "wrong" ? styles.feedbackWrong : ""
-          }`}
-        >
-          {feedback.message}
-        </div>
+        {feedback.message && (
+          <div
+            className={`${styles.feedback} ${
+              feedback.type === "correct"
+                ? styles.feedbackCorrect
+                : feedback.type === "wrong"
+                  ? styles.feedbackWrong
+                  : ""
+            }`}
+          >
+            {feedback.message}
+          </div>
+        )}
 
         <div className={styles.history}>
           {history.map((entry) => (
@@ -405,7 +427,7 @@ export default function NumberSenseSprint() {
           ))}
         </div>
 
-        <div className={styles.footerNote}>Pro tip: tap Submit or press Enter after each answer.</div>
+        <div className={styles.footerRow}>Pro tip: tap Submit or press Enter after each answer.</div>
       </div>
     </div>
   );
