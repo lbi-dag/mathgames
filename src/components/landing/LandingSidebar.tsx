@@ -18,5 +18,3 @@ export function LandingSidebarAction() {
     </Link>
   );
 }
-
-export const landingSidebarClassName = styles.sidebarLarge;

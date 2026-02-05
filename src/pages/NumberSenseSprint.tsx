@@ -1,4 +1,4 @@
-import { type FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { evaluateAnswer, generateQuestion, type Question, type Stats } from "../games/number-sense-sprint/logic";
 import styles from "../styles/NumberSenseSprint.module.css";
@@ -108,13 +108,6 @@ export default function NumberSenseSprint() {
   }, [currentMode, isRunning]);
 
   useEffect(() => {
-    if (!isRunning || !MODES[currentMode].hasTimer) return;
-    if (timeLeft !== null && timeLeft <= 0) {
-      endGame("time");
-    }
-  }, [currentMode, isRunning, timeLeft]);
-
-  useEffect(() => {
     if (isRunning) {
       answerInputRef.current?.focus();
     }
@@ -127,9 +120,9 @@ export default function NumberSenseSprint() {
     });
   };
 
-  const showFeedback = (message: string, type: "" | "correct" | "wrong") => {
+  const showFeedback = useCallback((message: string, type: "" | "correct" | "wrong") => {
     setFeedback({ message, type });
-  };
+  }, []);
 
   const resetStateForMode = (mode: ModeKey) => {
     setStats({ score: 0, streak: 0, totalAnswered: 0, totalCorrect: 0 });
@@ -138,7 +131,7 @@ export default function NumberSenseSprint() {
     setCurrentQuestion(null);
   };
 
-  const saveBestScore = (mode: ModeKey, newScore: number) => {
+  const saveBestScore = useCallback((mode: ModeKey, newScore: number) => {
     if (typeof window === "undefined") return;
     const key = MODES[mode].bestKey;
     const stored = window.localStorage.getItem(key);
@@ -151,7 +144,7 @@ export default function NumberSenseSprint() {
       setBestScore(newScore);
       showFeedback("New personal best!", "correct");
     }
-  };
+  }, [showFeedback]);
 
   const startGame = () => {
     if (isRunning) return;
@@ -169,23 +162,33 @@ export default function NumberSenseSprint() {
     setCurrentQuestion(initialQuestion);
   };
 
-  const endGame = (reason: "time" | "out_of_lives" | "manual", finalStats: Stats = stats) => {
-    if (!isRunning) return;
-    setIsRunning(false);
-    if (MODES[currentMode].hasTimer) {
-      setTimeLeft((prev) => (prev === null ? 0 : Math.max(0, prev)));
+  const endGame = useCallback(
+    (reason: "time" | "out_of_lives" | "manual", finalStats: Stats = stats) => {
+      if (!isRunning) return;
+      setIsRunning(false);
+      if (MODES[currentMode].hasTimer) {
+        setTimeLeft((prev) => (prev === null ? 0 : Math.max(0, prev)));
+      }
+      let message = "";
+      if (currentMode === "sprint") {
+        message = `Time! Final score: ${finalStats.score} | Score: ${finalStats.totalCorrect}/${finalStats.totalAnswered}`;
+      } else if (reason === "out_of_lives") {
+        message = `Out of lives! Final score: ${finalStats.score} | Correct: ${finalStats.totalCorrect}/${finalStats.totalAnswered}`;
+      } else {
+        message = `Final score: ${finalStats.score} | Correct: ${finalStats.totalCorrect}/${finalStats.totalAnswered}`;
+      }
+      showFeedback(message, "");
+      saveBestScore(currentMode, finalStats.score);
+    },
+    [currentMode, isRunning, saveBestScore, showFeedback, stats]
+  );
+
+  useEffect(() => {
+    if (!isRunning || !MODES[currentMode].hasTimer) return;
+    if (timeLeft !== null && timeLeft <= 0) {
+      endGame("time");
     }
-    let message = "";
-    if (currentMode === "sprint") {
-      message = `Time! Final score: ${finalStats.score} | Score: ${finalStats.totalCorrect}/${finalStats.totalAnswered}`;
-    } else if (reason === "out_of_lives") {
-      message = `Out of lives! Final score: ${finalStats.score} | Correct: ${finalStats.totalCorrect}/${finalStats.totalAnswered}`;
-    } else {
-      message = `Final score: ${finalStats.score} | Correct: ${finalStats.totalCorrect}/${finalStats.totalAnswered}`;
-    }
-    showFeedback(message, "");
-    saveBestScore(currentMode, finalStats.score);
-  };
+  }, [currentMode, endGame, isRunning, timeLeft]);
 
   const handleAnswerSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();

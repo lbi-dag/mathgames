@@ -5,8 +5,8 @@ import LandingHero from "../components/landing/LandingHero";
 import {
   LandingSidebarAction,
   LandingSidebarBody,
-  landingSidebarClassName,
 } from "../components/landing/LandingSidebar";
+import { landingSidebarClassName } from "../components/landing/LandingSidebarClassName";
 import pageShell from "../styles/PageShell.module.css";
 
 export default function Landing() {
