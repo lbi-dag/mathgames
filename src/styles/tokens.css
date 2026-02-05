@@ -1,0 +1,36 @@
+:root {
+  --paper: #f6efe3;
+  --ink: #0e1111;
+  --accent: #ff7b3e;
+  --accent-deep: #ff4d2a;
+  --accent-soft: #ffd6c2;
+  --logo-ring: rgba(255, 123, 62, 0.18);
+  --mint: #c7f4d9;
+  --violet: #2b2f8f;
+  --side: #11141a;
+  --side-ink: #f4efe6;
+  --card: #fffdf9;
+  --shadow: 0 18px 40px rgba(15, 12, 6, 0.18);
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 28px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-14: 56px;
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --radius-xl: 24px;
+
+  --text-sm: 0.9rem;
+  --text-md: 1rem;
+  --text-lg: 1.2rem;
+  --text-xl: 1.6rem;
+}

@@ -1,0 +1,67 @@
+.sidebar {
+  background: linear-gradient(160deg, #0b0c12 0%, #171a27 55%, #1d2236 100%);
+  color: var(--side-ink);
+  padding: var(--space-7) var(--space-7) var(--space-6);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: -120px auto auto -80px;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 123, 62, 0.45), transparent 70%);
+  pointer-events: none;
+}
+
+.siteLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  text-decoration: none;
+  color: var(--side-ink);
+  position: relative;
+  z-index: 1;
+}
+
+.siteLogo:focus-visible {
+  outline: 2px solid var(--accent-soft);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  flex: 0 0 auto;
+}
+
+.logoRing {
+  fill: var(--logo-ring);
+  stroke: var(--accent);
+  stroke-width: 2.6;
+}
+
+.logoPlus {
+  stroke: var(--accent-soft);
+  stroke-width: 3;
+  stroke-linecap: round;
+}
+
+.logoDot {
+  fill: var(--accent-soft);
+}
+
+.logoText {
+  font-family: "Fraunces", "Times New Roman", serif;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
