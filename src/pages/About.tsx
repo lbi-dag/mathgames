@@ -1,25 +1,19 @@
 import { Link } from "react-router-dom";
+import SidebarLayout from "../components/SidebarLayout";
 import styles from "../styles/About.module.css";
 
 export default function About() {
   return (
-    <div className={styles.page}>
-      <aside className={styles.sidebar}>
-        <Link className={styles.siteLogo} to="/" aria-label="Math Games home">
-          <svg className={styles.logoMark} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <circle className={styles.logoRing} cx="24" cy="24" r="18" />
-            <path className={styles.logoPlus} d="M24 16v16M16 24h16" />
-            <circle className={styles.logoDot} cx="34" cy="14" r="4" />
-          </svg>
-          <span className={styles.logoText}>Math Games</span>
-        </Link>
+    <SidebarLayout
+      pageClassName={styles.page}
+      contentClassName={styles.content}
+      sidebarAction={
         <Link className={styles.aboutLink} to="/">
           <span>&larr;</span>
           Back to Games
         </Link>
-      </aside>
-
-      <main className={styles.content}>
+      }
+    >
         <section className={styles.hero}>
           <div>
             <h1>About Math Games</h1>
@@ -75,7 +69,6 @@ export default function About() {
           If you have ideas for new modes or want to collaborate, drop a note any time. Math Games is built in
           the open, and it grows with the community.
         </p>
-      </main>
-    </div>
+    </SidebarLayout>
   );
 }

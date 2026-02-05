@@ -10,75 +10,14 @@
     var(--paper);
 }
 
-.sidebar {
-  background: linear-gradient(160deg, #0b0c12 0%, #171a27 55%, #1d2236 100%);
-  color: var(--side-ink);
-  padding: 42px 32px 36px;
-  position: relative;
-  overflow: hidden;
-}
-
-.sidebar::before {
-  content: "";
-  position: absolute;
-  inset: -120px auto auto -80px;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 123, 62, 0.45), transparent 70%);
-  pointer-events: none;
-}
-
-.siteLogo {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  text-decoration: none;
-  color: var(--side-ink);
-  margin-bottom: 22px;
-  position: relative;
-  z-index: 1;
-}
-
-.siteLogo:focus-visible {
-  outline: 2px solid var(--accent-soft);
-  outline-offset: 3px;
-  border-radius: 12px;
-}
-
-.logoMark {
-  width: 38px;
-  height: 38px;
-  flex: 0 0 auto;
-}
-
-.logoRing {
-  fill: var(--logo-ring);
-  stroke: var(--accent);
-  stroke-width: 2.6;
-}
-
-.logoPlus {
-  stroke: var(--accent-soft);
-  stroke-width: 3;
-  stroke-linecap: round;
-}
-
-.logoDot {
-  fill: var(--accent-soft);
-}
-
-.logoText {
-  font-family: "Fraunces", "Times New Roman", serif;
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
 .manifesto {
   font-size: 0.95rem;
   line-height: 1.6;
   max-width: 220px;
+}
+
+.sidebarLarge {
+  padding: 42px 32px 36px;
 }
 
 .manifesto strong {
@@ -302,7 +241,7 @@
     grid-template-columns: 1fr;
   }
 
-  .sidebar {
+  .sidebarLarge {
     padding: 32px 28px;
   }
 

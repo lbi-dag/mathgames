@@ -1,29 +1,26 @@
 import { Link } from "react-router-dom";
+import SidebarLayout from "../components/SidebarLayout";
 import styles from "../styles/Landing.module.css";
 
 export default function Landing() {
   return (
-    <div className={styles.page}>
-      <aside className={styles.sidebar}>
-        <Link className={styles.siteLogo} to="/" aria-label="Math Games home">
-          <svg className={styles.logoMark} viewBox="0 0 48 48" aria-hidden="true" focusable="false">
-            <circle className={styles.logoRing} cx="24" cy="24" r="18" />
-            <path className={styles.logoPlus} d="M24 16v16M16 24h16" />
-            <circle className={styles.logoDot} cx="34" cy="14" r="4" />
-          </svg>
-          <span className={styles.logoText}>Math Games</span>
-        </Link>
+    <SidebarLayout
+      pageClassName={styles.page}
+      contentClassName={styles.content}
+      sidebarClassName={styles.sidebarLarge}
+      sidebarBody={
         <div className={styles.manifesto}>
           Math Games is a free (really), curious, no-ads playground for number lovers and classroom rebels.
           Build number sense, chase streaks, and learn by doing.
         </div>
+      }
+      sidebarAction={
         <Link className={styles.aboutLink} to="/about">
           <span>?</span>
           About Math Games
         </Link>
-      </aside>
-
-      <main className={styles.content}>
+      }
+    >
         <section className={styles.hero}>
           <h1>Playful drills. Serious growth.</h1>
           <p>Short, focused math games that warm up your brain in minutes. New games drop regularly.</p>
@@ -122,7 +119,6 @@ export default function Landing() {
             </div>
           </div>
         </section>
-      </main>
-    </div>
+    </SidebarLayout>
   );
 }
