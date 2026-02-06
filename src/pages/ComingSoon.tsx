@@ -39,10 +39,6 @@ export default function ComingSoon() {
             <p>Practice spotting sequences and building rules with quick ramping challenges.</p>
           </div>
           <div className={styles.milestone}>
-            <h3>Factor Trails</h3>
-            <p>Track prime factor paths and speed through repeatable warm-up rounds.</p>
-          </div>
-          <div className={styles.milestone}>
             <h3>More to come</h3>
             <p>We are testing a few surprise formats that blend logic, speed, and number sense.</p>
           </div>

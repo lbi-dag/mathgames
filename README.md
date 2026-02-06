@@ -38,6 +38,7 @@ npm test         # run Vitest
 - `/` landing page
 - `/about` about page
 - `/games/number-sense-sprint` game
+- `/games/prime-factor-challenge` game
 - `/games/coming-soon` placeholder for upcoming games
 
 ## Status

@@ -55,6 +55,11 @@
   letter-spacing: 0.02em;
 }
 
+.thumbIcon {
+  width: 96px;
+  height: 96px;
+}
+
 .card h2 {
   margin: 0;
   font-size: var(--text-lg);
