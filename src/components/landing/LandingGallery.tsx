@@ -45,28 +45,18 @@ export default function LandingGallery() {
         </Link>
       </article>
 
-      <article className={`${styles.card} ${styles.upcoming}`} aria-label="Coming soon game">
-        <div className={`${styles.thumb} ${styles.thumbUpcoming}`} aria-hidden="true">
-          <svg viewBox="0 0 140 140" role="img" aria-label="">
-            <defs>
-              <linearGradient id="badgeGradientA" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#2b2f8f" />
-                <stop offset="100%" stopColor="#ff7b3e" />
-              </linearGradient>
-            </defs>
-            <circle cx="70" cy="70" r="52" fill="url(#badgeGradientA)" opacity="0.9" />
-            <circle cx="70" cy="70" r="38" fill="#fff7ef" />
-            <path d="M45 72h50" stroke="#2b2f8f" strokeWidth="7" strokeLinecap="round" />
-            <path d="M70 45v50" stroke="#2b2f8f" strokeWidth="7" strokeLinecap="round" />
-          </svg>
+      <article className={styles.card}>
+        <div className={styles.thumb} aria-hidden="true">
+          <span>
+            2<sup>5</sup>
+          </span>
         </div>
-        <h2>Pattern Forge</h2>
-        <p>Practice spotting sequences and building rules. Coming soon.</p>
-        <Link to="/games/coming-soon">
+        <h2>Exponent Sprint</h2>
+        <p>Start with squares and cubes, then unlock higher powers every five correct answers.</p>
+        <Link to="/games/exponent-sprint">
           <span>&#9654;</span>
-          Learn more
+          Play now
         </Link>
-        <div className={styles.tagline}>Badge preview</div>
       </article>
     </section>
   );
