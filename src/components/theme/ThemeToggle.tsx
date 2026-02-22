@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { useTheme } from "./ThemeProvider";
+import { useTheme } from "./theme-context";
 import styles from "../../styles/theme/ThemeToggle.module.css";
 import type { ThemeMode } from "./theme";
 
