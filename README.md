@@ -1,6 +1,6 @@
-# mathgames.win
+# MathGames.win
 
-React + Vite app for the mathgames.win launcher and games. 
+React + Vite app for the MathGames.win launcher and games.
 
 ## Tech Stack
 - React 19
@@ -31,7 +31,9 @@ npm test         # run Vitest
 - `src/components/` shared and landing page sections
 - `src/components/GameShell.tsx` shared gameplay UI wrapper
 - `src/game-shell/` reusable engine, RNG, difficulty, and storage modules
-- `src/games/number-sense-sprint/` game logic + tests
+- `src/games/number-sense-sprint/` game logic, definition, and tests
+- `src/games/exponent-sprint/` game logic, definition, and tests
+- `src/games/prime-factor-challenge/` game logic, definition, and tests
 - `src/styles/` CSS modules and shared tokens
 - `public/` static assets
 - `dist/` production build output (generated)
@@ -39,16 +41,12 @@ npm test         # run Vitest
 ## Game Architecture
 All active games now run through a shared `GameShell` + engine layer:
 - `GameShell` owns mode selection, timer, wrong-answer rules, score display, start/reset flow, and leaderboard display.
-- Each game only provides a `GameDefinition` implementation:
-  - `gameId`, `title`
-  - question generation by difficulty level
-  - answer evaluation
-  - question rendering
-  - optional custom answer input UI (used by Prime Factor Challenge)
+- Each game only provides a `GameDefinition` implementation (`gameId`, `title`, question generation, answer evaluation, and rendering).
+- Prime Factor Challenge uses `renderAnswerInput` for a custom prime-grid answer UI.
 - The engine handles run state transitions, seeded RNG per run (`seed = Date.now()`), and difficulty ramping:
-  - difficulty increases after a rolling threshold of 2 or 3 correct answers (chosen randomly each level-up)
-  - Sprint mode: ends on timer expiry or 3 wrong answers
-  - Survival mode: ends on first wrong answer
+- Difficulty increases after a rolling threshold of 2 or 3 correct answers (chosen randomly each level-up).
+- Sprint mode ends on timer expiry or 3 wrong answers.
+- Survival mode ends on first wrong answer.
 
 ## Scoring
 Current scoring policy is intentionally simple:
@@ -97,11 +95,7 @@ Legacy key migration runs once and maps:
 ## Add a New Game
 1. Create a game folder in `src/games/<your-game>/`.
 2. Implement game-specific logic and a `GameDefinition`.
-3. Use `GameShell` in a route page:
-   - `src/pages/<YourGame>.tsx` -> `<GameShell definition={yourDefinition} />`
+3. Use `GameShell` in a route page: `src/pages/<YourGame>.tsx` -> `<GameShell definition={yourDefinition} />`
 4. Add route wiring in `src/App.tsx`.
-5. Add tests for:
-   - question generation
-   - answer evaluation
-   - difficulty behavior (if custom)
+5. Add tests for question generation, answer evaluation, and difficulty behavior (if custom).
 6. Add launcher card/link if needed in landing components.
