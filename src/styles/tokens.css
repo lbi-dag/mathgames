@@ -1,4 +1,7 @@
 :root {
+  --font-sans: "Space Grotesk", "Segoe UI", sans-serif;
+  --font-display: "Fraunces", "Times New Roman", serif;
+
   --accent: #ff7b3e;
   --accent-deep: #ff4d2a;
   --accent-soft: #ffd6c2;

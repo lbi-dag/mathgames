@@ -60,7 +60,7 @@
 }
 
 .logoText {
-  font-family: "Fraunces", "Times New Roman", serif;
+  font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 700;
   letter-spacing: 0.02em;
