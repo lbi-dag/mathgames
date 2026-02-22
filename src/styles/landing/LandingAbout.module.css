@@ -3,7 +3,7 @@
 }
 
 .aboutCard {
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.85), rgba(255, 247, 239, 0.9));
+  background: linear-gradient(120deg, color-mix(in srgb, var(--surface) 92%, transparent), color-mix(in srgb, var(--surface-elevated) 94%, transparent));
   border-radius: var(--radius-xl);
   padding: var(--space-6) var(--space-7);
   box-shadow: var(--shadow);
@@ -19,7 +19,7 @@
 
 .aboutCard p {
   margin: 0;
-  color: #3d3a33;
+  color: var(--text-secondary);
   font-size: var(--text-md);
   line-height: 1.6;
 }
@@ -31,10 +31,10 @@
 }
 
 .highlight {
-  background: #fff9f1;
+  background: var(--surface-elevated);
   border-radius: var(--radius-md);
   padding: var(--space-4);
-  border: 1px solid rgba(255, 123, 62, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .highlight h3 {
@@ -45,7 +45,7 @@
 .highlight p {
   margin: 0;
   font-size: var(--text-sm);
-  color: #4c4a43;
+  color: var(--text-secondary);
 }
 
 @media (max-width: 520px) {

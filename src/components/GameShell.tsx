@@ -3,6 +3,7 @@ import { Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGameEngine } from "../game-shell/useGameEngine";
 import type { GameDefinition, ScorePolicy, SprintMinutes } from "../game-shell/types";
+import ThemeToggle from "./theme/ThemeToggle";
 import styles from "../styles/GameShell.module.css";
 
 type GameShellProps<Q, A, N> = {
@@ -76,6 +77,9 @@ export default function GameShell<Q, A, N>({ definition, scorePolicy }: GameShel
           </Link>
           <h1 className={styles.title}>{definition.title}</h1>
           {definition.subtitle && <p className={styles.subtitle}>{definition.subtitle}</p>}
+          <div className={styles.themeControl}>
+            <ThemeToggle />
+          </div>
         </header>
 
         <div className={styles.intro}>

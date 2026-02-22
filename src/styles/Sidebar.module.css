@@ -1,5 +1,5 @@
 .sidebar {
-  background: linear-gradient(160deg, #0b0c12 0%, #171a27 55%, #1d2236 100%);
+  background: linear-gradient(160deg, color-mix(in srgb, var(--side) 94%, #000 6%) 0%, var(--side) 55%, color-mix(in srgb, var(--side) 86%, #ffffff 14%) 100%);
   color: var(--side-ink);
   padding: var(--space-7) var(--space-7) var(--space-6);
   position: relative;
@@ -32,7 +32,7 @@
 }
 
 .siteLogo:focus-visible {
-  outline: 2px solid var(--accent-soft);
+  outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
 }

@@ -1,5 +1,6 @@
 import { type ReactNode } from "react";
 import { Link } from "react-router-dom";
+import ThemeToggle from "./theme/ThemeToggle";
 import sidebarStyles from "../styles/Sidebar.module.css";
 
 type SidebarLayoutProps = {
@@ -32,6 +33,7 @@ export default function SidebarLayout({
         </Link>
         {sidebarBody}
         {sidebarAction}
+        <ThemeToggle />
       </aside>
 
       <main className={contentClassName}>{children}</main>

@@ -3,7 +3,7 @@
   align-items: center;
   gap: var(--space-2);
   margin-top: 0;
-  color: #ffd6c2;
+  color: var(--side-muted);
   text-decoration: none;
   font-weight: 600;
   font-size: var(--text-sm);
@@ -16,7 +16,7 @@
   width: var(--space-7);
   height: var(--space-7);
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.12);
+  background: color-mix(in srgb, var(--side-ink) 18%, transparent);
 }
 
 .timeline {
@@ -31,7 +31,7 @@
 }
 
 .entry {
-  background: rgba(255, 255, 255, 0.8);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
   border-radius: var(--radius-md);
   padding: var(--space-4) var(--space-5);
   box-shadow: var(--shadow);
@@ -43,7 +43,7 @@
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: #6f6a5e;
+  color: var(--text-secondary);
 }
 
 .entry h3 {
@@ -53,16 +53,16 @@
 
 .entry p {
   margin: 0;
-  color: #4c4a43;
+  color: var(--text-secondary);
   line-height: 1.6;
   font-size: var(--text-sm);
 }
 
 .valueCard {
-  background: #fff9f1;
+  background: var(--surface-elevated);
   border-radius: var(--radius-md);
   padding: var(--space-4);
-  border: 1px solid rgba(255, 123, 62, 0.2);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
 }
 
 .valueCard h3 {
@@ -73,6 +73,6 @@
 .valueCard p {
   margin: 0;
   font-size: var(--text-sm);
-  color: #4c4a43;
+  color: var(--text-secondary);
   line-height: 1.6;
 }

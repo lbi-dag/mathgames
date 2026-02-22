@@ -14,7 +14,7 @@
 .heroCopy {
   margin: 0;
   font-size: var(--text-md);
-  color: #3c3a34;
+  color: var(--text-secondary);
   line-height: 1.7;
 }
 
@@ -34,7 +34,7 @@
 
 .cardBody {
   margin: 0;
-  color: #4c4a43;
+  color: var(--text-secondary);
   line-height: 1.6;
   font-size: var(--text-sm);
 }
@@ -47,7 +47,7 @@
 
 .bodyNote {
   font-size: var(--text-sm);
-  color: #4c4a43;
+  color: var(--text-secondary);
   line-height: 1.6;
   max-width: 620px;
 }
