@@ -3,7 +3,7 @@ import { generateQuestion, parseIntegerAnswer, type Question } from "./logic";
 
 export const numberSenseGameDefinition: GameDefinition<Question, string, number> = {
   gameId: "number-sense-sprint",
-  title: "Number Sense Sprint",
+  title: "Number Sense",
   subtitle: "Build speed and accuracy with mixed arithmetic.",
   createInitialAnswer: () => "",
   generateQuestion: ({ rng, difficultyLevel, previousQuestion }) =>

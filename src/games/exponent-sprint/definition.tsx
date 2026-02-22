@@ -3,7 +3,7 @@ import { generateQuestionForDifficulty, parseIntegerAnswer, type Question } from
 
 export const exponentGameDefinition: GameDefinition<Question, string, number> = {
   gameId: "exponent-sprint",
-  title: "Exponent Sprint",
+  title: "Exponent Practice",
   subtitle: "Race through powers with increasing exponent difficulty.",
   createInitialAnswer: () => "",
   generateQuestion: ({ rng, difficultyLevel }) => generateQuestionForDifficulty(rng, difficultyLevel ?? 1),

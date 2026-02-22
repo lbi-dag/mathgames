@@ -18,7 +18,7 @@ export default function LandingAbout() {
           </div>
           <div className={styles.highlight}>
             <h3>Short sessions</h3>
-            <p>Each game is built for 2-5 minute bursts that fit into busy days.</p>
+            <p>Choose 1, 3, or 5-minute Sprint sessions that fit into busy days.</p>
           </div>
           <div className={styles.highlight}>
             <h3>Built for flow</h3>
