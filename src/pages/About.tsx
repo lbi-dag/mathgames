@@ -39,7 +39,7 @@ export default function About() {
           <div className={styles.entry}>
             <span>2025</span>
             <h3>First game online</h3>
-            <p>The first Number Sense Sprint game, with a humble design, went online.</p>
+            <p>The first Number Sense game, with a humble design, went online.</p>
           </div>
 
           <div className={styles.entry}>
@@ -59,7 +59,7 @@ export default function About() {
           </div>
           <div className={styles.valueCard}>
             <h3>Short sessions</h3>
-            <p>Each game is built for 2-5 minute bursts that fit into busy days.</p>
+            <p>Choose 1, 3, or 5-minute Sprint sessions that fit into busy days.</p>
           </div>
           <div className={styles.valueCard}>
             <h3>Built for flow</h3>

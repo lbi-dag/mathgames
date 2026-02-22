@@ -8,7 +8,7 @@ export default function LandingGallery() {
         <div className={styles.thumb} aria-hidden="true">
           <span>&Sigma;</span>
         </div>
-        <h2>Number Sense Sprint</h2>
+        <h2>Number Sense</h2>
         <p>Race the clock through bite-sized mental math. Choose Sprint or Survival and stack your best streak.</p>
         <Link to="/games/number-sense-sprint">
           <span>&#9654;</span>
@@ -51,7 +51,7 @@ export default function LandingGallery() {
             2<sup>5</sup>
           </span>
         </div>
-        <h2>Exponent Sprint</h2>
+        <h2>Exponent Practice</h2>
         <p>Start with squares and cubes, then unlock higher powers every five correct answers.</p>
         <Link to="/games/exponent-sprint">
           <span>&#9654;</span>
