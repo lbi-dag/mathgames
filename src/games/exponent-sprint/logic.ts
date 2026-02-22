@@ -57,6 +57,12 @@ function maxExponentForCorrect(totalCorrect: number) {
   return Math.min(MAX_EXPONENT, Math.max(MIN_EXPONENT, unlocked));
 }
 
+export function maxExponentForDifficulty(difficultyLevel: number) {
+  const safeDifficulty = Math.max(1, Math.floor(difficultyLevel || 1));
+  const unlocked = STARTING_MAX_EXPONENT + (safeDifficulty - 1);
+  return Math.min(MAX_EXPONENT, Math.max(MIN_EXPONENT, unlocked));
+}
+
 function allowedPairs(maxExponent: number) {
   const pairs: ExponentPair[] = [];
   for (let exponent = MIN_EXPONENT; exponent <= maxExponent; exponent += 1) {
@@ -74,6 +80,15 @@ export function randomInt(min: number, max: number, rng: () => number = Math.ran
 
 export function generateQuestion(rng: () => number = Math.random, totalCorrect: number = 0): Question {
   const maxExponent = maxExponentForCorrect(totalCorrect);
+  return generateQuestionFromExponentLimit(rng, maxExponent);
+}
+
+export function generateQuestionForDifficulty(rng: () => number = Math.random, difficultyLevel: number = 1): Question {
+  const maxExponent = maxExponentForDifficulty(difficultyLevel);
+  return generateQuestionFromExponentLimit(rng, maxExponent);
+}
+
+function generateQuestionFromExponentLimit(rng: () => number, maxExponent: number): Question {
   const pool = allowedPairs(maxExponent);
   const fallback = pool.length > 0 ? pool : allowedPairs(STARTING_MAX_EXPONENT);
   const options = fallback.length > 0 ? fallback : allowedPairs(MIN_EXPONENT);

@@ -1,5 +1,6 @@
-import ExponentSprint from "../games/exponent-sprint/ExponentSprint";
+import GameShell from "../components/GameShell";
+import { exponentGameDefinition } from "../games/exponent-sprint/definition";
 
 export default function ExponentSprintPage() {
-  return <ExponentSprint />;
+  return <GameShell definition={exponentGameDefinition} />;
 }

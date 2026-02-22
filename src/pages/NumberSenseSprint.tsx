@@ -1,5 +1,6 @@
-import NumberSenseSprint from "../games/number-sense-sprint/NumberSenseSprint";
+import GameShell from "../components/GameShell";
+import { numberSenseGameDefinition } from "../games/number-sense-sprint/definition";
 
 export default function NumberSenseSprintPage() {
-  return <NumberSenseSprint />;
+  return <GameShell definition={numberSenseGameDefinition} />;
 }

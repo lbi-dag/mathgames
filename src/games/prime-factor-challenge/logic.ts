@@ -49,6 +49,25 @@ export function generateCompositeNumber(options: CompositeNumberOptions = {}): C
   return { number, factors };
 }
 
+export function generateCompositeNumberForDifficulty(options: { rng?: () => number; difficultyLevel?: number } = {}) {
+  const { rng = Math.random, difficultyLevel = 1 } = options;
+  const safeDifficulty = Math.max(1, Math.floor(difficultyLevel || 1));
+  const maxPoolSize = Math.min(PRIMES_UNDER_50.length, 6 + (safeDifficulty - 1) * 3);
+  const pool = PRIMES_UNDER_50.slice(0, Math.max(3, maxPoolSize));
+
+  const shuffled = [...pool];
+  for (let i = shuffled.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(rng() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+
+  const factors = shuffled.slice(0, 3).sort((a, b) => a - b);
+  return {
+    number: factors.reduce((acc, value) => acc * value, 1),
+    factors,
+  };
+}
+
 export function isCorrectSelection(selection: number[], factors: number[]) {
   if (selection.length !== factors.length) return false;
   const sortedSelection = [...selection].sort((a, b) => a - b);
