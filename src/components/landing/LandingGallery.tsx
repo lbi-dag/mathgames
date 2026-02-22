@@ -21,15 +21,15 @@ export default function LandingGallery() {
           <svg className={styles.thumbIcon} viewBox="0 0 120 120" role="img" aria-label="">
             <defs>
               <linearGradient id="primeBadgeGradient" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stopColor="#4f46e5" />
-                <stop offset="100%" stopColor="#c7f4d9" />
+                <stop offset="0%" stopColor="var(--accent-deep)" />
+                <stop offset="100%" stopColor="var(--mint)" />
               </linearGradient>
             </defs>
             <circle cx="60" cy="60" r="40" fill="url(#primeBadgeGradient)" opacity="0.9" />
-            <circle cx="60" cy="60" r="28" fill="#fff7ef" />
+            <circle cx="60" cy="60" r="28" fill="var(--surface-elevated)" />
             <path
               d="M44 64l8-14 8 14 8-14"
-              stroke="#2b2f8f"
+              stroke="var(--violet)"
               strokeWidth="6"
               strokeLinecap="round"
               strokeLinejoin="round"
