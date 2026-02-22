@@ -1,6 +1,8 @@
 import styles from "../../styles/landing/LandingAbout.module.css";
 
 export default function LandingAbout() {
+  const repositoryUrl = "https://github.com/lbi-dag/mathgames";
+
   return (
     <section className={styles.about} id="about">
       <div className={styles.aboutCard}>
@@ -25,6 +27,15 @@ export default function LandingAbout() {
             <p>Minimal friction, immediate feedback, and delightful pacing.</p>
           </div>
         </div>
+        <footer className={styles.projectMeta} aria-label="Project links">
+          <span className={styles.metaLabel}>Open source</span>
+          <a href={repositoryUrl} target="_blank" rel="noreferrer">
+            GitHub repository
+          </a>
+          <a href={`${repositoryUrl}/blob/main/LICENSE`} target="_blank" rel="noreferrer">
+            GNU AGPL v3 License
+          </a>
+        </footer>
       </div>
     </section>
   );
