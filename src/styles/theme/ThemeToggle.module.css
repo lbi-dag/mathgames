@@ -1,0 +1,30 @@
+.wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 1;
+}
+
+.label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--side-muted);
+}
+
+.select {
+  appearance: none;
+  border: 1px solid var(--border-strong);
+  border-radius: 10px;
+  background: var(--surface-elevated);
+  color: var(--text-primary);
+  padding: 8px 32px 8px 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.2;
+  cursor: pointer;
+}
+
+.select:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
