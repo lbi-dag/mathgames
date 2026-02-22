@@ -38,9 +38,9 @@
   --border-strong: rgba(17, 24, 39, 0.2);
   --focus-ring: #ff9a67;
 
-  --side: #11141a;
-  --side-ink: #f4efe6;
-  --side-muted: #ffd6c2;
+  --side: #efe2d0;
+  --side-ink: #2a2118;
+  --side-muted: #7f5533;
 
   --paper: var(--bg);
   --ink: var(--text-primary);
