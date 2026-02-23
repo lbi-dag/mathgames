@@ -45,6 +45,19 @@ export default function LandingGallery() {
         </Link>
       </article>
 
+
+      <article className={styles.card}>
+        <div className={styles.thumb} aria-hidden="true">
+          <span>(a+b)×c</span>
+        </div>
+        <h2>Equation Forge 24</h2>
+        <p>Combine four numbers with arithmetic operators and parentheses to craft exactly 24.</p>
+        <Link to="/games/equation-forge-24">
+          <span>&#9654;</span>
+          Play now
+        </Link>
+      </article>
+
       <article className={styles.card}>
         <div className={styles.thumb} aria-hidden="true">
           <span>
