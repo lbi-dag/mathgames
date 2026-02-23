@@ -11,8 +11,8 @@ Audited deployed routes on `https://mathgames.win`:
 - `/games/exponent-sprint`
 - `/games/prime-factor-challenge`
 
-## Current fonts observed in production
-Across all sampled routes, computed styles show three font stacks in use:
+## Historical observation (before refactor)
+Across sampled routes, computed styles showed three font stacks:
 
 1. `"Space Grotesk", "Segoe UI", sans-serif`
    - Primary body/UI font.
@@ -21,44 +21,27 @@ Across all sampled routes, computed styles show three font stacks in use:
 3. `Arial`
    - Appears on several native form controls and buttons in gameplay screens.
 
-## Interpretation
-The first two stacks match the intended design system in `src/index.css` and module styles:
-
-- Sans for body/UI text.
-- Serif display for major headings.
-
-The extra `Arial` usage is most likely not intentional branding. It commonly appears when native controls do not inherit the page font stack consistently.
-
-## Proposed changes
-
-### 1) Eliminate unintentional Arial fallback (recommended, low risk)
-Add explicit font inheritance for interactive controls globally:
-
-- `button, input, select, textarea { font: inherit; }`
-
-This should align control typography with Space Grotesk and remove mixed-font moments in game controls.
-
-### 2) Centralize typography tokens (recommended)
-Define explicit variables in the root theme layer and consume them everywhere:
+## Sans-only policy (current target)
+Typography is now aligned to a single sans-serif family while preserving semantic token structure:
 
 - `--font-sans: "Space Grotesk", "Segoe UI", sans-serif;`
-- `--font-display: "Fraunces", "Times New Roman", serif;`
+- `--font-display: var(--font-sans);`
 
-Then replace hard-coded stacks in module CSS with variables for consistency and easier future swaps.
+This keeps heading/body semantics intact and allows future typography shifts in one place without selector churn.
 
-### 3) Tighten Google Fonts payload (optional optimization)
-Current import pulls:
+## Implemented changes
+1. Controls inherit body font globally via `button, input, select, textarea { font: inherit; }`.
+2. Display token aliases sans (`--font-display: var(--font-sans)`).
+3. Google Fonts import is reduced to Space Grotesk only, weights `400, 600, 700`.
+4. Fraunces was removed from active CSS imports.
 
-- Fraunces: 600, 700
-- Space Grotesk: 400, 500, 600
-
-If weight 500 is not used in shipped CSS, remove it from the import URL to reduce font transfer size. Keep this only after confirming no visual regressions.
-
-### 4) Future-proof option for Phase 2+ (optional)
-Consider self-hosting WOFF2 fonts to reduce third-party dependency and improve cache control. This is optional in Phase 1.5 but can improve performance stability later.
-
-## Suggested rollout order
-1. Ship control font inheritance fix.
-2. Tokenize font stacks.
-3. Audit used weights and trim imports.
-4. Re-check all routes for consistency.
+## Validation checklist
+1. `npm run lint` passes.
+2. `npm run test` passes, including typography regression checks.
+3. `npm run build` passes.
+4. Manual route QA confirms a single sans-serif experience on:
+   - `/`
+   - `/about`
+   - `/games/number-sense-sprint`
+   - `/games/exponent-sprint`
+   - `/games/prime-factor-challenge`
