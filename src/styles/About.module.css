@@ -27,7 +27,7 @@
 .timeline h2 {
   margin: 0;
   font-size: var(--text-lg);
-  font-family: "Fraunces", "Times New Roman", serif;
+  font-family: var(--font-display);
 }
 
 .entry {

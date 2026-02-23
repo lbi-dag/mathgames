@@ -1,4 +1,8 @@
 :root {
+  --font-sans: "Space Grotesk", "Segoe UI", sans-serif;
+  /* Keep semantic heading token while aligning product typography to sans-serif. */
+  --font-display: var(--font-sans);
+
   --accent: #ff7b3e;
   --accent-deep: #ff4d2a;
   --accent-soft: #ffd6c2;
