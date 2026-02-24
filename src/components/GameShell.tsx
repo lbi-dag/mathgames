@@ -43,6 +43,10 @@ export default function GameShell<Q, A, N>({ definition, scorePolicy }: GameShel
     inputRef.current?.focus();
   }, [definition.renderAnswerInput, isRunning, state.question]);
 
+  useEffect(() => {
+    document.title = `${definition.title} | Math Games`;
+  }, [definition.title]);
+
   const introMessage =
     state.mode === "sprint"
       ? "Sprint mode ends when time runs out or after 3 wrong answers."
