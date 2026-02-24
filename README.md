@@ -34,6 +34,7 @@ npm test         # run Vitest
 - `src/games/speed-arithmetic/` game logic, definition, and tests
 - `src/games/power-blitz/` game logic, definition, and tests
 - `src/games/factor-rush/` game logic, definition, and tests
+- `src/games/target-24/` game logic, definition, and tests
 - `src/styles/` CSS modules and shared tokens
 - `public/` static assets
 - `dist/` production build output (generated)
@@ -43,6 +44,7 @@ All active games now run through a shared `GameShell` + engine layer:
 - `GameShell` owns mode selection, timer, wrong-answer rules, score display, start/reset flow, and leaderboard display.
 - Each game only provides a `GameDefinition` implementation (`gameId`, `title`, question generation, answer evaluation, and rendering).
 - Factor Rush uses `renderAnswerInput` for a custom prime-grid answer UI.
+- Target 24 uses `renderAnswerInput` for a custom expression keypad input UI.
 - The engine handles run state transitions, seeded RNG per run (`seed = Date.now()`), and difficulty ramping:
 - Difficulty increases after a rolling threshold of 2 or 3 correct answers (chosen randomly each level-up).
 - Sprint mode ends on timer expiry or 3 wrong answers.
@@ -95,7 +97,7 @@ Existing v1 leaderboard and sprint preference entries that still use old game ID
 - `/speed-arithmetic` game
 - `/factor-rush` game
 - `/power-blitz` game
-- `/games/coming-soon` placeholder for upcoming games
+- `/target-24` game
 
 Backward-compatible redirects are configured for older slugs, including:
 - `/games/number-sense-sprint` -> `/speed-arithmetic`
@@ -103,9 +105,10 @@ Backward-compatible redirects are configured for older slugs, including:
 - `/games/exponent-sprint` -> `/power-blitz`
 
 ## Game Rules Docs
-- [Speed Arithmetic Rules](doc/speed-arithmetic.md)
-- [Power Blitz Rules](doc/power-blitz.md)
-- [Factor Rush Rules](doc/factor-rush.md)
+- [Speed Arithmetic Rules](docs/gameplay/speed-arithmetic.md)
+- [Power Blitz Rules](docs/gameplay/power-blitz.md)
+- [Factor Rush Rules](docs/gameplay/factor-rush.md)
+- [Target 24 Rules](docs/gameplay/target-24.md)
 
 ## Add a New Game
 1. Create a game folder in `src/games/<your-game>/`.

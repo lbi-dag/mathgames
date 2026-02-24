@@ -1,6 +1,6 @@
 # Factor Rush Rules
 
-[Back to README](../README.md)
+[Back to README](../../README.md)
 
 ## Objective
 Given a target composite number, select the 3 prime factors that multiply to that target.

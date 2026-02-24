@@ -60,7 +60,7 @@ export default function Target24AnswerInput({ value, onChange, onSubmit, disable
         onChange={(event) => onChange(event.target.value)}
         onKeyDown={handleInputKeyDown}
         disabled={disabled}
-        placeholder="Example: (8-3)*(7-1)"
+        placeholder="Type your expression, then tap Submit Answer or press Enter"
         aria-label="Expression input"
       />
 
@@ -86,11 +86,11 @@ export default function Target24AnswerInput({ value, onChange, onSubmit, disable
           Clear
         </button>
         <button type="button" className={styles.submitButton} onClick={onSubmit} disabled={disabled}>
-          Submit
+          Submit Answer
         </button>
       </div>
 
-      <p className={styles.helpText}>Touch or click keypad buttons, or type and press Enter to submit.</p>
+      <p className={styles.helpText}>Use the keypad or keyboard, then tap Submit Answer or press Enter.</p>
     </div>
   );
 }

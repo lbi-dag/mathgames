@@ -1,6 +1,6 @@
 # Speed Arithmetic Rules
 
-[Back to README](../README.md)
+[Back to README](../../README.md)
 
 ## Objective
 Solve as many arithmetic questions as possible with speed and accuracy.

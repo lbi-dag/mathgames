@@ -1,6 +1,5 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
-import ComingSoon from "./pages/ComingSoon";
 import FactorRush from "./pages/FactorRush";
 import Landing from "./pages/Landing";
 import PowerBlitz from "./pages/PowerBlitz";
@@ -26,7 +25,6 @@ export default function App() {
         <Route path="/games/speed-arithmetic" element={<Navigate to="/speed-arithmetic" replace />} />
         <Route path="/games/factor-rush" element={<Navigate to="/factor-rush" replace />} />
         <Route path="/games/power-blitz" element={<Navigate to="/power-blitz" replace />} />
-        <Route path="/games/coming-soon" element={<ComingSoon />} />
       </Routes>
     </BrowserRouter>
   );

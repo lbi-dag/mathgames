@@ -1,6 +1,6 @@
 # Power Blitz Rules
 
-[Back to README](../README.md)
+[Back to README](../../README.md)
 
 ## Objective
 Solve exponent expressions (`base^exponent`) as quickly and accurately as possible.
