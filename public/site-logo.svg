@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="Math Games logo">
+  <circle cx="24" cy="24" r="18" fill="rgba(255, 123, 62, 0.18)" stroke="#ff7b3e" stroke-width="2.6" />
+  <path d="M24 16v16M16 24h16" fill="none" stroke="#ffd6c2" stroke-width="3" stroke-linecap="round" />
+  <circle cx="34" cy="14" r="4" fill="#ffd6c2" />
+</svg>
