@@ -5,7 +5,7 @@ export function LandingSidebarBody() {
   return (
     <div className={styles.manifesto}>
       Math Games is a free (really), curious, no-ads playground for number lovers and classroom rebels. Build
-      number sense, chase streaks, and learn by doing.
+      fast arithmetic reflexes, chase streaks, and learn by doing.
     </div>
   );
 }

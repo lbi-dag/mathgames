@@ -1,4 +1,4 @@
-# Prime Factor Challenge Rules
+# Factor Rush Rules
 
 [Back to README](../README.md)
 
@@ -27,4 +27,4 @@ Given a target composite number, select the 3 prime factors that multiply to tha
 
 ## Scoring and Best Score
 - Current score policy: `score = total correct answers`.
-- Best score is saved locally by key: `prime-factor-challenge|mode`.
+- Best score is saved locally by key: `factor-rush|mode`.

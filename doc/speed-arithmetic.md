@@ -1,17 +1,18 @@
-# Exponent Practice Rules
+# Speed Arithmetic Rules
 
 [Back to README](../README.md)
 
 ## Objective
-Solve exponent expressions (`base^exponent`) as quickly and accurately as possible.
+Solve as many arithmetic questions as possible with speed and accuracy.
 
-## Question Format
-- Base range: 2 to 9
-- Exponent range: starts at 2 to 3, then expands with difficulty
-- Only questions with answers up to 10,000 are used
+## Question Types
+- Addition (`a + b`)
+- Subtraction (`a - b`, generated so answers are non-negative)
+- Single-digit multiplication (`a x b`)
+- Multi-digit by single-digit multiplication
 
 ## Answer Rules
-- Enter a whole number answer.
+- Enter a whole number.
 - Blank, decimal, or non-numeric input is invalid and does not submit a scored attempt.
 - Correct answer: score increases by 1.
 - Wrong answer: score does not increase.
@@ -23,8 +24,8 @@ Solve exponent expressions (`base^exponent`) as quickly and accurately as possib
 ## Difficulty
 - Questions are generated from deterministic seeded RNG for each run.
 - Difficulty level increases after rolling thresholds of 2 or 3 correct answers.
-- As difficulty rises, the maximum allowed exponent increases (up to 9).
+- Higher difficulty increases number ranges for addition/subtraction/multiplication.
 
 ## Scoring and Best Score
 - Current score policy: `score = total correct answers`.
-- Best score is saved locally by key: `exponent-sprint|mode`.
+- Best score is saved locally by key: `speed-arithmetic|mode`.

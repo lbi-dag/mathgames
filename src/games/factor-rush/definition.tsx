@@ -5,7 +5,7 @@ import {
   PRIMES_UNDER_50,
   type CompositeQuestion,
 } from "./logic";
-import styles from "./PrimeFactorChallenge.module.css";
+import styles from "./FactorRush.module.css";
 
 type PrimeSelectionAnswer = number[];
 
@@ -19,9 +19,9 @@ function togglePrimeSelection(selection: PrimeSelectionAnswer, prime: number) {
   return [...selection, prime].sort((a, b) => a - b);
 }
 
-export const primeFactorGameDefinition: GameDefinition<CompositeQuestion, PrimeSelectionAnswer, PrimeSelectionAnswer> = {
-  gameId: "prime-factor-challenge",
-  title: "Prime Factor Challenge",
+export const factorRushGameDefinition: GameDefinition<CompositeQuestion, PrimeSelectionAnswer, PrimeSelectionAnswer> = {
+  gameId: "factor-rush",
+  title: "Factor Rush",
   subtitle: "Pick the 3 primes that multiply into the target value.",
   createInitialAnswer: () => [],
   generateQuestion: ({ rng, difficultyLevel }) =>

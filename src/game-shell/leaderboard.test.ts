@@ -1,5 +1,7 @@
 import { describe, expect, test } from "vitest";
 import {
+  LEADERBOARD_STORAGE_KEY,
+  SPRINT_PREFS_STORAGE_KEY,
   getBestScore,
   getSprintMinutesForGame,
   readLeaderboard,
@@ -24,17 +26,17 @@ function createMockStorage(initialEntries: Record<string, string> = {}) {
 describe("leaderboard storage", () => {
   test("stores highest score per game and mode", () => {
     const storage = createMockStorage();
-    expect(getBestScore("exponent-sprint", "sprint", storage)).toBe(0);
+    expect(getBestScore("power-blitz", "sprint", storage)).toBe(0);
 
-    saveBestScore("exponent-sprint", "sprint", 9, storage);
-    saveBestScore("exponent-sprint", "sprint", 7, storage);
-    expect(getBestScore("exponent-sprint", "sprint", storage)).toBe(9);
+    saveBestScore("power-blitz", "sprint", 9, storage);
+    saveBestScore("power-blitz", "sprint", 7, storage);
+    expect(getBestScore("power-blitz", "sprint", storage)).toBe(9);
 
-    saveBestScore("exponent-sprint", "survival", 4, storage);
-    expect(getBestScore("exponent-sprint", "survival", storage)).toBe(4);
+    saveBestScore("power-blitz", "survival", 4, storage);
+    expect(getBestScore("power-blitz", "survival", storage)).toBe(4);
 
-    resetBestScore("exponent-sprint", "survival", storage);
-    expect(getBestScore("exponent-sprint", "survival", storage)).toBe(0);
+    resetBestScore("power-blitz", "survival", storage);
+    expect(getBestScore("power-blitz", "survival", storage)).toBe(0);
   });
 
   test("migrates legacy best keys one time into v1 schema", () => {
@@ -48,19 +50,45 @@ describe("leaderboard storage", () => {
     const data = readLeaderboard(storage);
     expect(data.version).toBe(1);
     expect(data.migratedLegacyKeys).toBe(true);
-    expect(data.scores["exponent-sprint|sprint"]).toBe(6);
-    expect(data.scores["number-sense-sprint|sprint"]).toBe(8);
-    expect(data.scores["number-sense-sprint|survival"]).toBe(5);
+    expect(data.scores["power-blitz|sprint"]).toBe(6);
+    expect(data.scores["speed-arithmetic|sprint"]).toBe(8);
+    expect(data.scores["speed-arithmetic|survival"]).toBe(5);
+  });
+
+  test("normalizes existing v1 leaderboard entries from old game IDs", () => {
+    const storage = createMockStorage({
+      [LEADERBOARD_STORAGE_KEY]: JSON.stringify({
+        version: 1,
+        scores: {
+          "number-sense-sprint|sprint": 11,
+          "prime-factor-challenge|survival": 3,
+          "exponent-sprint|sprint": 7,
+        },
+        migratedLegacyKeys: true,
+      }),
+    });
+
+    const data = readLeaderboard(storage);
+    expect(data.scores["speed-arithmetic|sprint"]).toBe(11);
+    expect(data.scores["factor-rush|survival"]).toBe(3);
+    expect(data.scores["power-blitz|sprint"]).toBe(7);
   });
 });
 
 describe("sprint duration preferences", () => {
   test("persists preferred sprint minutes per game", () => {
-    const storage = createMockStorage();
-    expect(getSprintMinutesForGame("number-sense-sprint", storage)).toBe(1);
+    const storage = createMockStorage({
+      [SPRINT_PREFS_STORAGE_KEY]: JSON.stringify({
+        version: 1,
+        byGame: {
+          "number-sense-sprint": 5,
+        },
+      }),
+    });
+    expect(getSprintMinutesForGame("speed-arithmetic", storage)).toBe(5);
 
-    setSprintMinutesForGame("number-sense-sprint", 5, storage);
-    expect(getSprintMinutesForGame("number-sense-sprint", storage)).toBe(5);
-    expect(getSprintMinutesForGame("exponent-sprint", storage)).toBe(1);
+    setSprintMinutesForGame("speed-arithmetic", 3, storage);
+    expect(getSprintMinutesForGame("speed-arithmetic", storage)).toBe(3);
+    expect(getSprintMinutesForGame("power-blitz", storage)).toBe(1);
   });
 });
