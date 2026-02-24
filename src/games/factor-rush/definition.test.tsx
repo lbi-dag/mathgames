@@ -1,14 +1,14 @@
 import { describe, expect, test } from "vitest";
 import { createSeededRng } from "../../game-shell/rng";
-import { primeFactorGameDefinition } from "./definition";
+import { factorRushGameDefinition } from "./definition";
 
-describe("prime factor game definition", () => {
+describe("factor rush game definition", () => {
   test("early difficulty stays within starter prime pool", () => {
     const rng = createSeededRng(15);
     const allowed = new Set([2, 3, 5, 7, 11, 13]);
 
     for (let i = 0; i < 25; i += 1) {
-      const question = primeFactorGameDefinition.generateQuestion({
+      const question = factorRushGameDefinition.generateQuestion({
         rng,
         difficultyLevel: 1,
         previousQuestion: null,
@@ -24,7 +24,7 @@ describe("prime factor game definition", () => {
     let sawLargePrime = false;
 
     for (let i = 0; i < 40; i += 1) {
-      const question = primeFactorGameDefinition.generateQuestion({
+      const question = factorRushGameDefinition.generateQuestion({
         rng,
         difficultyLevel: 4,
         previousQuestion: null,

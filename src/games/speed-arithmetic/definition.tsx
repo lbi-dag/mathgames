@@ -1,12 +1,13 @@
 import type { GameDefinition } from "../../game-shell/types";
-import { generateQuestionForDifficulty, parseIntegerAnswer, type Question } from "./logic";
+import { generateQuestion, parseIntegerAnswer, type Question } from "./logic";
 
-export const exponentGameDefinition: GameDefinition<Question, string, number> = {
-  gameId: "exponent-sprint",
-  title: "Exponent Practice",
-  subtitle: "Race through powers with increasing exponent difficulty.",
+export const speedArithmeticGameDefinition: GameDefinition<Question, string, number> = {
+  gameId: "speed-arithmetic",
+  title: "Speed Arithmetic",
+  subtitle: "Build speed and accuracy with mixed arithmetic.",
   createInitialAnswer: () => "",
-  generateQuestion: ({ rng, difficultyLevel }) => generateQuestionForDifficulty(rng, difficultyLevel ?? 1),
+  generateQuestion: ({ rng, difficultyLevel, previousQuestion }) =>
+    generateQuestion(rng, null, difficultyLevel ?? 1) ?? previousQuestion ?? generateQuestion(rng, null, 1),
   evaluateAnswer: ({ question, answer }) => {
     const parsed = parseIntegerAnswer(answer);
     if (parsed === null) {
@@ -26,15 +27,7 @@ export const exponentGameDefinition: GameDefinition<Question, string, number> = 
       normalizedAnswer: parsed,
     };
   },
-  renderQuestion: (question) => {
-    if (!question) return "Press Start";
-    return (
-      <>
-        <span>{question.base}</span>
-        <sup>{question.exponent}</sup>
-      </>
-    );
-  },
+  renderQuestion: (question) => question?.text ?? "Press Start",
   getCorrectAnswerLabel: (question) => String(question.answer),
   getQuestionLabel: (question) => question.text,
 };

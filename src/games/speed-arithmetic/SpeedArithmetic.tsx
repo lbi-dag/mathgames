@@ -2,7 +2,7 @@ import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } fro
 import { Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { evaluateAnswer, generateQuestion, type Question, type Stats } from "./logic";
-import styles from "../../styles/NumberSenseSprint.module.css";
+import styles from "../../styles/SpeedArithmetic.module.css";
 
 type ModeKey = "sprint" | "survival";
 
@@ -64,7 +64,7 @@ function readStoredBestScore(mode: ModeKey) {
   return Math.max(baseBest, legacyBest);
 }
 
-export default function NumberSenseSprint() {
+export default function SpeedArithmetic() {
   const [currentMode, setCurrentMode] = useState<ModeKey>("sprint");
   const [stats, setStats] = useState<Stats>({ score: 0, streak: 0, totalAnswered: 0, totalCorrect: 0 });
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
@@ -286,7 +286,7 @@ export default function NumberSenseSprint() {
             <span>&larr;</span>
             Back to games
           </Link>
-          <h1 className={styles.title}>Number Sense Sprint</h1>
+          <h1 className={styles.title}>Speed Arithmetic</h1>
         </header>
         <div className={styles.intro}>
           <div className={styles.modeRow}>

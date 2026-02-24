@@ -27,6 +27,12 @@ const DEFAULT_SPRINT_PREFS: SprintPrefsV1 = {
   byGame: {},
 };
 
+const GAME_ID_ALIASES: Record<string, string> = {
+  "number-sense-sprint": "speed-arithmetic",
+  "prime-factor-challenge": "factor-rush",
+  "exponent-sprint": "power-blitz",
+};
+
 function getStorage(storage?: StorageLike) {
   if (storage) return storage;
   if (typeof window === "undefined") return null;
@@ -40,8 +46,50 @@ function parseInteger(value: string | null) {
   return Math.max(0, parsed);
 }
 
+function normalizeGameId(gameId: string) {
+  return GAME_ID_ALIASES[gameId] ?? gameId;
+}
+
 function makeLeaderboardEntryKey(gameId: string, mode: GameMode) {
-  return `${gameId}|${mode}`;
+  return `${normalizeGameId(gameId)}|${mode}`;
+}
+
+function normalizeLeaderboardScores(scores: Record<string, number>) {
+  const normalized: Record<string, number> = {};
+
+  Object.entries(scores).forEach(([key, value]) => {
+    const safeScore = Math.max(0, Number(value) || 0);
+    const [rawGameId, rawMode] = key.split("|");
+    if ((rawMode !== "sprint" && rawMode !== "survival") || !rawGameId) {
+      normalized[key] = Math.max(normalized[key] ?? 0, safeScore);
+      return;
+    }
+
+    const normalizedKey = makeLeaderboardEntryKey(rawGameId, rawMode);
+    normalized[normalizedKey] = Math.max(normalized[normalizedKey] ?? 0, safeScore);
+  });
+
+  return normalized;
+}
+
+function normalizeSprintPrefsByGame(byGame: Record<string, SprintMinutes>) {
+  const normalized: Record<string, SprintMinutes> = {};
+
+  Object.entries(byGame).forEach(([gameId, value]) => {
+    const normalizedGameId = normalizeGameId(gameId);
+    if (gameId === normalizedGameId) {
+      normalized[normalizedGameId] = value;
+    }
+  });
+
+  Object.entries(byGame).forEach(([gameId, value]) => {
+    const normalizedGameId = normalizeGameId(gameId);
+    if (!(normalizedGameId in normalized)) {
+      normalized[normalizedGameId] = value;
+    }
+  });
+
+  return normalized;
 }
 
 function saveLeaderboard(data: LeaderboardV1, storage?: StorageLike) {
@@ -68,13 +116,13 @@ function migrateLegacyIfNeeded(data: LeaderboardV1, storage?: StorageLike) {
 
   const next: LeaderboardV1 = {
     version: 1,
-    scores: { ...data.scores },
+    scores: normalizeLeaderboardScores(data.scores),
     migratedLegacyKeys: true,
   };
 
   const exponentSprintBest = parseInteger(target.getItem("exponentSprintBestScore"));
   if (exponentSprintBest > 0) {
-    const key = makeLeaderboardEntryKey("exponent-sprint", "sprint");
+    const key = makeLeaderboardEntryKey("power-blitz", "sprint");
     next.scores[key] = Math.max(next.scores[key] ?? 0, exponentSprintBest);
   }
 
@@ -83,13 +131,13 @@ function migrateLegacyIfNeeded(data: LeaderboardV1, storage?: StorageLike) {
     parseInteger(target.getItem("numberSenseSprintBestScore")),
   );
   if (numberSenseSprintBest > 0) {
-    const key = makeLeaderboardEntryKey("number-sense-sprint", "sprint");
+    const key = makeLeaderboardEntryKey("speed-arithmetic", "sprint");
     next.scores[key] = Math.max(next.scores[key] ?? 0, numberSenseSprintBest);
   }
 
   const numberSenseSurvivalBest = parseInteger(target.getItem("numberSenseBest:survival"));
   if (numberSenseSurvivalBest > 0) {
-    const key = makeLeaderboardEntryKey("number-sense-sprint", "survival");
+    const key = makeLeaderboardEntryKey("speed-arithmetic", "survival");
     next.scores[key] = Math.max(next.scores[key] ?? 0, numberSenseSurvivalBest);
   }
 
@@ -109,9 +157,7 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
       if (candidate.version === 1 && candidate.scores && typeof candidate.scores === "object") {
         parsed = {
           version: 1,
-          scores: Object.fromEntries(
-            Object.entries(candidate.scores).map(([key, value]) => [key, Math.max(0, Number(value) || 0)]),
-          ),
+          scores: normalizeLeaderboardScores(candidate.scores as Record<string, number>),
           migratedLegacyKeys: Boolean(candidate.migratedLegacyKeys),
         };
       }
@@ -180,7 +226,7 @@ export function readSprintPrefs(storage?: StorageLike): SprintPrefsV1 {
       }),
     ) as Record<string, SprintMinutes>;
 
-    return { version: 1, byGame };
+    return { version: 1, byGame: normalizeSprintPrefsByGame(byGame) };
   } catch {
     return { ...DEFAULT_SPRINT_PREFS };
   }
@@ -188,16 +234,17 @@ export function readSprintPrefs(storage?: StorageLike): SprintPrefsV1 {
 
 export function getSprintMinutesForGame(gameId: string, storage?: StorageLike): SprintMinutes {
   const prefs = readSprintPrefs(storage);
-  return prefs.byGame[gameId] ?? 1;
+  return prefs.byGame[normalizeGameId(gameId)] ?? 1;
 }
 
 export function setSprintMinutesForGame(gameId: string, minutes: SprintMinutes, storage?: StorageLike) {
   const prefs = readSprintPrefs(storage);
+  const normalizedGameId = normalizeGameId(gameId);
   const next: SprintPrefsV1 = {
     version: 1,
     byGame: {
       ...prefs.byGame,
-      [gameId]: minutes,
+      [normalizedGameId]: minutes,
     },
   };
   saveSprintPrefs(next, storage);

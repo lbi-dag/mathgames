@@ -8,9 +8,9 @@ export default function LandingGallery() {
         <div className={styles.thumb} aria-hidden="true">
           <span>&Sigma;</span>
         </div>
-        <h2>Number Sense</h2>
+        <h2>Speed Arithmetic</h2>
         <p>Race the clock through bite-sized mental math. Choose Sprint or Survival and stack your best streak.</p>
-        <Link to="/games/number-sense-sprint">
+        <Link to="/speed-arithmetic">
           <span>&#9654;</span>
           Play now
         </Link>
@@ -37,9 +37,9 @@ export default function LandingGallery() {
             />
           </svg>
         </div>
-        <h2>Prime Factor Challenge</h2>
+        <h2>Factor Rush</h2>
         <p>Pick the three primes that multiply into the target number before time runs out.</p>
-        <Link to="/games/prime-factor-challenge">
+        <Link to="/factor-rush">
           <span>&#9654;</span>
           Play now
         </Link>
@@ -63,9 +63,9 @@ export default function LandingGallery() {
             2<sup>5</sup>
           </span>
         </div>
-        <h2>Exponent Practice</h2>
-        <p>Start with squares and cubes, then unlock higher powers every five correct answers.</p>
-        <Link to="/games/exponent-sprint">
+        <h2>Power Blitz</h2>
+        <p>Start with squares and cubes, then race through higher powers as difficulty ramps up.</p>
+        <Link to="/power-blitz">
           <span>&#9654;</span>
           Play now
         </Link>

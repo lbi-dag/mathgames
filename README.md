@@ -31,9 +31,9 @@ npm test         # run Vitest
 - `src/components/` shared and landing page sections
 - `src/components/GameShell.tsx` shared gameplay UI wrapper
 - `src/game-shell/` reusable engine, RNG, difficulty, and storage modules
-- `src/games/number-sense-sprint/` game logic, definition, and tests
-- `src/games/exponent-sprint/` game logic, definition, and tests
-- `src/games/prime-factor-challenge/` game logic, definition, and tests
+- `src/games/speed-arithmetic/` game logic, definition, and tests
+- `src/games/power-blitz/` game logic, definition, and tests
+- `src/games/factor-rush/` game logic, definition, and tests
 - `src/styles/` CSS modules and shared tokens
 - `public/` static assets
 - `dist/` production build output (generated)
@@ -42,7 +42,7 @@ npm test         # run Vitest
 All active games now run through a shared `GameShell` + engine layer:
 - `GameShell` owns mode selection, timer, wrong-answer rules, score display, start/reset flow, and leaderboard display.
 - Each game only provides a `GameDefinition` implementation (`gameId`, `title`, question generation, answer evaluation, and rendering).
-- Prime Factor Challenge uses `renderAnswerInput` for a custom prime-grid answer UI.
+- Factor Rush uses `renderAnswerInput` for a custom prime-grid answer UI.
 - The engine handles run state transitions, seeded RNG per run (`seed = Date.now()`), and difficulty ramping:
 - Difficulty increases after a rolling threshold of 2 or 3 correct answers (chosen randomly each level-up).
 - Sprint mode ends on timer expiry or 3 wrong answers.
@@ -60,9 +60,9 @@ Leaderboard key: `mathgames.leaderboard`
 {
   "version": 1,
   "scores": {
-    "number-sense-sprint|sprint": 17,
-    "number-sense-sprint|survival": 9,
-    "exponent-sprint|sprint": 14
+    "speed-arithmetic|sprint": 17,
+    "speed-arithmetic|survival": 9,
+    "power-blitz|sprint": 14
   },
   "migratedLegacyKeys": true
 }
@@ -73,24 +73,39 @@ Sprint preference key: `mathgames.sprintPrefs`
 {
   "version": 1,
   "byGame": {
-    "number-sense-sprint": 3,
-    "exponent-sprint": 1
+    "speed-arithmetic": 3,
+    "power-blitz": 1
   }
 }
 ```
 
 Legacy key migration runs once and maps:
-- `exponentSprintBestScore` -> `exponent-sprint|sprint`
-- `numberSenseBest:sprint` + `numberSenseSprintBestScore` -> `number-sense-sprint|sprint` (max)
-- `numberSenseBest:survival` -> `number-sense-sprint|survival`
+- `exponentSprintBestScore` -> `power-blitz|sprint`
+- `numberSenseBest:sprint` + `numberSenseSprintBestScore` -> `speed-arithmetic|sprint` (max)
+- `numberSenseBest:survival` -> `speed-arithmetic|survival`
+
+Existing v1 leaderboard and sprint preference entries that still use old game IDs are normalized automatically:
+- `number-sense-sprint` -> `speed-arithmetic`
+- `prime-factor-challenge` -> `factor-rush`
+- `exponent-sprint` -> `power-blitz`
 
 ## Routes
 - `/` landing page
 - `/about` about page
-- `/games/number-sense-sprint` game
-- `/games/exponent-sprint` game
-- `/games/prime-factor-challenge` game
+- `/speed-arithmetic` game
+- `/factor-rush` game
+- `/power-blitz` game
 - `/games/coming-soon` placeholder for upcoming games
+
+Backward-compatible redirects are configured for older slugs, including:
+- `/games/number-sense-sprint` -> `/speed-arithmetic`
+- `/games/prime-factor-challenge` -> `/factor-rush`
+- `/games/exponent-sprint` -> `/power-blitz`
+
+## Game Rules Docs
+- [Speed Arithmetic Rules](doc/speed-arithmetic.md)
+- [Power Blitz Rules](doc/power-blitz.md)
+- [Factor Rush Rules](doc/factor-rush.md)
 
 ## Add a New Game
 1. Create a game folder in `src/games/<your-game>/`.

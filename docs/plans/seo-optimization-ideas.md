@@ -6,9 +6,9 @@ This document captures SEO improvements to consider after the Phase 1 baseline m
 Add route-specific `<title>`, description, canonical, and social metadata for:
 - `/`
 - `/about`
-- `/games/number-sense`
-- `/games/exponent-practice`
-- `/games/prime-factor-challenge`
+- `/speed-arithmetic`
+- `/power-blitz`
+- `/factor-rush`
 
 ### Why
 - Improves relevance for specific search intent.
