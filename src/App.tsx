@@ -5,6 +5,7 @@ import ExponentSprint from "./pages/ExponentSprint";
 import Landing from "./pages/Landing";
 import NumberSenseSprint from "./pages/NumberSenseSprint";
 import PrimeFactorChallenge from "./pages/PrimeFactorChallenge";
+import Target24 from "./pages/Target24";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Route path="/games/exponent-sprint" element={<ExponentSprint />} />
         <Route path="/games/number-sense-sprint" element={<NumberSenseSprint />} />
         <Route path="/games/prime-factor-challenge" element={<PrimeFactorChallenge />} />
+        <Route path="/target-24" element={<Target24 />} />
         <Route path="/games/coming-soon" element={<ComingSoon />} />
       </Routes>
     </BrowserRouter>

@@ -47,6 +47,18 @@ export default function LandingGallery() {
 
       <article className={styles.card}>
         <div className={styles.thumb} aria-hidden="true">
+          <span>24</span>
+        </div>
+        <h2>Target 24</h2>
+        <p>Present 4 numbers; use +, -, *, / and parentheses to make 24.</p>
+        <Link to="/target-24">
+          <span>&#9654;</span>
+          Play now
+        </Link>
+      </article>
+
+      <article className={styles.card}>
+        <div className={styles.thumb} aria-hidden="true">
           <span>
             2<sup>5</sup>
           </span>
