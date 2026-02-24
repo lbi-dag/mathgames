@@ -29,7 +29,7 @@ Example: `(8 - 3) * (7 - 1)`
 - The scoreboard shows current score, total answered, streak, best score, and wrong attempts.
 - Leaderboard keys continue using `${gameId}|${mode}` with `gameId = target-24`.
 
-## Keyboard-first interaction
-- Type expressions directly in the input field.
-- Press `Enter` to submit.
-- Quick operator buttons are available as optional helpers.
+## Input interaction
+- Mouse/touch-friendly keypad includes digits, operators, and parentheses for expression building.
+- Backspace and clear controls are available without requiring keyboard input.
+- Keyboard entry still works, and `Enter` submits the expression.

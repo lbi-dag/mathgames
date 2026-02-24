@@ -19,30 +19,36 @@
   outline-offset: 2px;
 }
 
-.operators {
+.keypad {
   display: grid;
-  grid-template-columns: repeat(4, minmax(44px, 1fr));
+  grid-template-columns: repeat(4, minmax(54px, 1fr));
   gap: var(--space-2);
 }
 
-.operatorButton {
+.keypadButton {
   border: 1px solid var(--border-strong);
   background: var(--surface-elevated);
   color: var(--ink);
   border-radius: var(--radius-sm);
-  min-height: 44px;
-  font-weight: 600;
-}
-
-.helpText {
-  margin: 0;
-  color: var(--ink-muted);
-  font-size: var(--text-xs);
+  min-height: 48px;
+  font-size: var(--text-md);
+  font-weight: 700;
 }
 
 .actions {
-  display: flex;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.secondaryButton {
+  border: 1px solid var(--border-strong);
+  background: var(--surface-elevated);
+  color: var(--ink);
+  border-radius: var(--radius-pill);
+  min-height: 44px;
+  padding: 0 var(--space-3);
+  font-weight: 700;
 }
 
 .submitButton {
@@ -51,6 +57,12 @@
   color: var(--accent-ink);
   border-radius: var(--radius-pill);
   min-height: 44px;
-  padding: 0 var(--space-4);
+  padding: 0 var(--space-3);
   font-weight: 700;
+}
+
+.helpText {
+  margin: 0;
+  color: var(--ink-muted);
+  font-size: var(--text-xs);
 }
