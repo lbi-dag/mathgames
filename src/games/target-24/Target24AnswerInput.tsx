@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useEffect, useRef } from "react";
+import { type KeyboardEvent } from "react";
 import styles from "./Target24AnswerInput.module.css";
 
 type Target24AnswerInputProps = {
@@ -8,21 +8,39 @@ type Target24AnswerInputProps = {
   disabled: boolean;
 };
 
-const QUICK_OPERATORS = ["+", "-", "*", "/"] as const;
+const EXPRESSION_KEYS = [
+  "7",
+  "8",
+  "9",
+  "+",
+  "4",
+  "5",
+  "6",
+  "-",
+  "1",
+  "2",
+  "3",
+  "*",
+  "(",
+  "0",
+  ")",
+  "/",
+] as const;
 
 export default function Target24AnswerInput({ value, onChange, onSubmit, disabled }: Target24AnswerInputProps) {
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (!disabled) {
-      inputRef.current?.focus();
-    }
-  }, [disabled]);
-
-  const appendOperator = (operator: (typeof QUICK_OPERATORS)[number]) => {
+  const appendToken = (token: string) => {
     if (disabled) return;
-    onChange(`${value}${operator}`);
-    inputRef.current?.focus();
+    onChange(`${value}${token}`);
+  };
+
+  const handleBackspace = () => {
+    if (disabled || value.length === 0) return;
+    onChange(value.slice(0, -1));
+  };
+
+  const handleClear = () => {
+    if (disabled || value.length === 0) return;
+    onChange("");
   };
 
   const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -34,7 +52,6 @@ export default function Target24AnswerInput({ value, onChange, onSubmit, disable
   return (
     <div className={styles.answerForm}>
       <input
-        ref={inputRef}
         type="text"
         className={styles.answerInput}
         autoComplete="off"
@@ -46,25 +63,34 @@ export default function Target24AnswerInput({ value, onChange, onSubmit, disable
         placeholder="Example: (8-3)*(7-1)"
         aria-label="Expression input"
       />
-      <div className={styles.operators}>
-        {QUICK_OPERATORS.map((operator) => (
+
+      <div className={styles.keypad}>
+        {EXPRESSION_KEYS.map((token) => (
           <button
-            key={operator}
+            key={token}
             type="button"
-            className={styles.operatorButton}
+            className={styles.keypadButton}
             disabled={disabled}
-            onClick={() => appendOperator(operator)}
+            onClick={() => appendToken(token)}
           >
-            {operator}
+            {token}
           </button>
         ))}
       </div>
-      <p className={styles.helpText}>Keyboard first: type your expression and press Enter to submit.</p>
+
       <div className={styles.actions}>
+        <button type="button" className={styles.secondaryButton} onClick={handleBackspace} disabled={disabled || !value}>
+          Backspace
+        </button>
+        <button type="button" className={styles.secondaryButton} onClick={handleClear} disabled={disabled || !value}>
+          Clear
+        </button>
         <button type="button" className={styles.submitButton} onClick={onSubmit} disabled={disabled}>
-          Submit Expression
+          Submit
         </button>
       </div>
+
+      <p className={styles.helpText}>Touch or click keypad buttons, or type and press Enter to submit.</p>
     </div>
   );
 }
