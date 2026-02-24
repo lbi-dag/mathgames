@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { numberSenseGameDefinition } from "./definition";
+import { speedArithmeticGameDefinition } from "./definition";
 
 const baseQuestion = {
   text: "4 + 5",
@@ -7,9 +7,9 @@ const baseQuestion = {
   type: "add" as const,
 };
 
-describe("number sense game definition", () => {
+describe("speed arithmetic game definition", () => {
   test("keeps integer-answer compatibility", () => {
-    const result = numberSenseGameDefinition.evaluateAnswer({
+    const result = speedArithmeticGameDefinition.evaluateAnswer({
       question: baseQuestion,
       answer: "9",
     });
@@ -17,7 +17,7 @@ describe("number sense game definition", () => {
   });
 
   test("invalid input is ignored with validation message", () => {
-    const result = numberSenseGameDefinition.evaluateAnswer({
+    const result = speedArithmeticGameDefinition.evaluateAnswer({
       question: baseQuestion,
       answer: "2.5",
     });

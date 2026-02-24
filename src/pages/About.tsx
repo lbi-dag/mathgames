@@ -39,7 +39,7 @@ export default function About() {
           <div className={styles.entry}>
             <span>2025</span>
             <h3>First game online</h3>
-            <p>The first Number Sense game, with a humble design, went online.</p>
+            <p>The first Speed Arithmetic game, with a humble design, went online.</p>
           </div>
 
           <div className={styles.entry}>

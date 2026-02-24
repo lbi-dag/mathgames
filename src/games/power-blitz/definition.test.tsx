@@ -1,9 +1,9 @@
 import { describe, expect, test } from "vitest";
-import { exponentGameDefinition } from "./definition";
+import { powerBlitzGameDefinition } from "./definition";
 
-describe("exponent game definition", () => {
+describe("power blitz game definition", () => {
   test("difficulty level 1 maps to starter exponents", () => {
-    const question = exponentGameDefinition.generateQuestion({
+    const question = powerBlitzGameDefinition.generateQuestion({
       rng: () => 0.999,
       difficultyLevel: 1,
       previousQuestion: null,
@@ -12,7 +12,7 @@ describe("exponent game definition", () => {
   });
 
   test("higher difficulty unlocks exponent 9 ceiling", () => {
-    const question = exponentGameDefinition.generateQuestion({
+    const question = powerBlitzGameDefinition.generateQuestion({
       rng: () => 0.999,
       difficultyLevel: 7,
       previousQuestion: null,

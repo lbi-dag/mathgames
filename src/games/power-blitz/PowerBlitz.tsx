@@ -2,7 +2,7 @@ import { type FormEvent, useCallback, useEffect, useMemo, useRef, useState } fro
 import { Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { evaluateAnswer, generateQuestion, type Question, type Stats } from "./logic";
-import styles from "../../styles/ExponentSprint.module.css";
+import styles from "../../styles/PowerBlitz.module.css";
 
 type HistoryEntry = {
   id: number;
@@ -21,7 +21,7 @@ function readStoredBestScore() {
   return stored ? parseInt(stored, 10) || 0 : 0;
 }
 
-export default function ExponentSprint() {
+export default function PowerBlitz() {
   const [stats, setStats] = useState<Stats>({ score: 0, streak: 0, totalAnswered: 0, totalCorrect: 0 });
   const [currentQuestion, setCurrentQuestion] = useState<Question | null>(null);
   const [history, setHistory] = useState<HistoryEntry[]>([]);
@@ -177,7 +177,7 @@ export default function ExponentSprint() {
             <span>&larr;</span>
             Back to games
           </Link>
-          <h1 className={styles.title}>Exponent Sprint</h1>
+          <h1 className={styles.title}>Power Blitz</h1>
           <p className={styles.subtitle}>Race through powers with bases below 10.</p>
         </header>
 

@@ -15,8 +15,9 @@ Align product language with the unified mode model:
 
 1. **Inventory and decide final naming map**
    - Confirm target names (example candidates):
-     - `Number Sense Sprint` -> `Number Sense`
-     - `Exponent Sprint` -> `Exponent Trainer` or `Exponent Practice`
+     - `Number Sense` -> `Speed Arithmetic`
+     - `Prime Factor Challenge` -> `Factor Rush`
+     - `Exponent Practice` -> `Power Blitz`
    - Ensure names are consistent across page titles, cards, and metadata.
 
 2. **Update game definitions (display text first)**

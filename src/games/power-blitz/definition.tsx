@@ -1,13 +1,12 @@
 import type { GameDefinition } from "../../game-shell/types";
-import { generateQuestion, parseIntegerAnswer, type Question } from "./logic";
+import { generateQuestionForDifficulty, parseIntegerAnswer, type Question } from "./logic";
 
-export const numberSenseGameDefinition: GameDefinition<Question, string, number> = {
-  gameId: "number-sense-sprint",
-  title: "Number Sense",
-  subtitle: "Build speed and accuracy with mixed arithmetic.",
+export const powerBlitzGameDefinition: GameDefinition<Question, string, number> = {
+  gameId: "power-blitz",
+  title: "Power Blitz",
+  subtitle: "Race through powers with increasing exponent difficulty.",
   createInitialAnswer: () => "",
-  generateQuestion: ({ rng, difficultyLevel, previousQuestion }) =>
-    generateQuestion(rng, null, difficultyLevel ?? 1) ?? previousQuestion ?? generateQuestion(rng, null, 1),
+  generateQuestion: ({ rng, difficultyLevel }) => generateQuestionForDifficulty(rng, difficultyLevel ?? 1),
   evaluateAnswer: ({ question, answer }) => {
     const parsed = parseIntegerAnswer(answer);
     if (parsed === null) {
@@ -27,7 +26,15 @@ export const numberSenseGameDefinition: GameDefinition<Question, string, number>
       normalizedAnswer: parsed,
     };
   },
-  renderQuestion: (question) => question?.text ?? "Press Start",
+  renderQuestion: (question) => {
+    if (!question) return "Press Start";
+    return (
+      <>
+        <span>{question.base}</span>
+        <sup>{question.exponent}</sup>
+      </>
+    );
+  },
   getCorrectAnswerLabel: (question) => String(question.answer),
   getQuestionLabel: (question) => question.text,
 };

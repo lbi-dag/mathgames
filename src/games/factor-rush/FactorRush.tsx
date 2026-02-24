@@ -10,9 +10,9 @@ import {
   isCorrectSelection,
   PRIMES_UNDER_50,
 } from "./logic";
-import styles from "./PrimeFactorChallenge.module.css";
+import styles from "./FactorRush.module.css";
 
-export default function PrimeFactorChallenge() {
+export default function FactorRush() {
   const [question, setQuestion] = useState<CompositeQuestion>(() => generateCompositeNumber({ roundIndex: 0 }));
   const [selectedPrimes, setSelectedPrimes] = useState<Set<number>>(new Set());
   const [gameState, setGameState] = useState<GameState>("idle");
@@ -122,7 +122,7 @@ export default function PrimeFactorChallenge() {
             <span>&larr;</span>
             Back to games
           </Link>
-          <h1 className={styles.title}>Prime Factor Challenge</h1>
+          <h1 className={styles.title}>Factor Rush</h1>
         </header>
 
         <div className={styles.intro}>
