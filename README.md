@@ -31,8 +31,8 @@ npm test         # run Vitest
 - `src/components/` shared and landing page sections
 - `src/components/GameShell.tsx` shared gameplay UI wrapper
 - `src/game-shell/` reusable engine, RNG, difficulty, and storage modules
-- `src/games/number-sense-sprint/` game logic, definition, and tests
-- `src/games/exponent-sprint/` game logic, definition, and tests
+- `src/games/number-sense/` game logic, definition, and tests
+- `src/games/exponent-practice/` game logic, definition, and tests
 - `src/games/prime-factor-challenge/` game logic, definition, and tests
 - `src/styles/` CSS modules and shared tokens
 - `public/` static assets
@@ -91,6 +91,11 @@ Legacy key migration runs once and maps:
 - `/games/exponent-sprint` game
 - `/games/prime-factor-challenge` game
 - `/games/coming-soon` placeholder for upcoming games
+
+## Game Rules Docs
+- [Number Sense Rules](doc/number-sense.md)
+- [Exponent Practice Rules](doc/exponent-practice.md)
+- [Prime Factor Challenge Rules](doc/prime-factor-challenge.md)
 
 ## Add a New Game
 1. Create a game folder in `src/games/<your-game>/`.
