@@ -35,5 +35,6 @@ export interface GameDefinition<Q, A, N = unknown> {
     onChange: (next: A) => void;
     onSubmit: () => void;
     disabled: boolean;
+    question: Q | null;
   }) => ReactNode;
 }

@@ -200,6 +200,7 @@ export default function GameShell<Q, A, N>({ definition, scorePolicy }: GameShel
               onChange: setAnswer,
               onSubmit: submitAnswer,
               disabled: !isRunning,
+              question: state.question,
             })}
           </div>
         )}
