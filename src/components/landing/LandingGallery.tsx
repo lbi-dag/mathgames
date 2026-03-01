@@ -59,6 +59,18 @@ export default function LandingGallery() {
 
       <article className={styles.card}>
         <div className={styles.thumb} aria-hidden="true">
+          <span>A+</span>
+        </div>
+        <h2>A+ Number Sense</h2>
+        <p>Practice UIL Number Sense with +5/-4 scoring, fractions, and 80 mental math categories.</p>
+        <Link to="/number-sense">
+          <span>&#9654;</span>
+          Play now
+        </Link>
+      </article>
+
+      <article className={styles.card}>
+        <div className={styles.thumb} aria-hidden="true">
           <span>
             2<sup>5</sup>
           </span>
