@@ -52,7 +52,7 @@ export function generateCompositeNumber(options: CompositeNumberOptions = {}): C
 export function generateCompositeNumberForDifficulty(options: { rng?: () => number; difficultyLevel?: number } = {}) {
   const { rng = Math.random, difficultyLevel = 1 } = options;
   const safeDifficulty = Math.max(1, Math.floor(difficultyLevel || 1));
-  const maxPoolSize = Math.min(PRIMES_UNDER_50.length, 6 + (safeDifficulty - 1) * 3);
+  const maxPoolSize = Math.min(PRIMES_UNDER_50.length, 5 + (safeDifficulty - 1) * 2);
   const pool = PRIMES_UNDER_50.slice(0, Math.max(3, maxPoolSize));
 
   const shuffled = [...pool];

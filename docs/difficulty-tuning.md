@@ -65,16 +65,18 @@ Players pick 3 prime factors from a grid of primes under 50: `[2, 3, 5, 7, 11, 1
 
 | Level | Pool Size | Available Primes | Largest Possible Product |
 |---|---|---|---|
-| 1 | 6 | 2, 3, 5, 7, 11, 13 | 5 × 11 × 13 = 715 |
-| 2 | 9 | …through 23 | 13 × 19 × 23 = 5,681 |
-| 3 | 12 | …through 37 | 29 × 31 × 37 = 33,263 |
-| 4+ | 15 (all) | …through 47 | 37 × 43 × 47 = 74,863 |
+| 1 | 5 | 2, 3, 5, 7, 11 | 5 × 7 × 11 = 385 |
+| 2 | 7 | …through 17 | 11 × 13 × 17 = 2,431 |
+| 3 | 9 | …through 23 | 17 × 19 × 23 = 7,429 |
+| 4 | 11 | …through 31 | 23 × 29 × 31 = 20,677 |
+| 5 | 13 | …through 41 | 31 × 37 × 41 = 46,957 |
+| 6+ | 15 (all) | …through 47 | 37 × 43 × 47 = 74,863 |
 
-**Formula**: `poolSize = min(15, 6 + (L-1) × 3)`
+**Formula**: `poolSize = min(15, 5 + (L-1) × 2)`
 
-**Tuning knobs**: The base pool size (6), step size (3), and the prime list itself.
+**Tuning knobs**: The base pool size (5), step size (2), and the prime list itself.
 
-**Saturation**: At level 4 the full prime set is available. Levels 5+ are identical to level 4.
+**Saturation**: At level 6 the full prime set is available. Levels 7+ are identical to level 6. Products stay under 10,000 through level 3.
 
 ---
 
@@ -88,22 +90,21 @@ Players compute base^exponent. Bases range 2–9, answers capped at 10,000.
 
 | Level | Max Exponent | Example Hardest Question | Answer |
 |---|---|---|---|
-| 1 | 3 | 9³ | 729 |
-| 2 | 4 | 9⁴ | 6,561 |
-| 3 | 5 | 8⁵ | 32,768 — *excluded (>10k)* |
-| 3 | 5 | 6⁵ | 7,776 |
-| 4 | 6 | 4⁶ | 4,096 |
-| 5 | 7 | 3⁷ | 2,187 |
-| 6 | 8 | 3⁸ | 6,561 |
-| 7 | 9 | 2⁹ | 512 |
+| 1–2 | 3 | 9³ | 729 |
+| 3 | 4 | 9⁴ | 6,561 |
+| 4 | 5 | 6⁵ | 7,776 |
+| 5–6 | 6 | 4⁶ | 4,096 |
+| 7 | 7 | 3⁷ | 2,187 |
+| 8 | 8 | 3⁸ | 6,561 |
+| 9+ | 9 | 2⁹ | 512 |
 
-**Formula**: `maxExponent = min(9, 3 + (L-1))`
+**Formula**: `maxExponent = min(9, 3 + floor((L-1) × ¾))`
 
-Pairs are pre-computed and filtered to answer ≤ 10,000. Higher exponents don't always mean harder questions — 2⁹ = 512 is easier than 9³ = 729. The pool just gets more varied.
+Pairs are pre-computed and filtered to answer ≤ 10,000. Higher exponents don't always mean harder questions — 2⁹ = 512 is easier than 9³ = 729. The pool just gets more varied. The ¾ multiplier creates plateau levels (1–2, 5–6) where difficulty holds steady.
 
-**Tuning knobs**: `STARTING_MAX_EXPONENT` (3), `MAX_EXPONENT` (9), `MAX_ANSWER` (10,000), and base range (2–9).
+**Tuning knobs**: `STARTING_MAX_EXPONENT` (3), `MAX_EXPONENT` (9), `MAX_ANSWER` (10,000), base range (2–9), and the ¾ ramp multiplier.
 
-**Saturation**: At level 8 all exponents 2–9 are unlocked. Levels 9+ are identical to level 8.
+**Saturation**: At level 9 all exponents 2–9 are unlocked. Levels 10+ are identical to level 9.
 
 **Note**: The file also has a legacy `generateQuestion(rng, totalCorrect)` path that ramps by correct-answer count directly (5 per step). The engine uses `generateQuestionForDifficulty` instead.
 
@@ -136,11 +137,11 @@ Players combine 4 numbers with +, -, ×, ÷ to make exactly 24. Only solvable se
 | Game | Saturates At | Engine Levels 1→Saturation | ~Correct Answers to Saturate |
 |---|---|---|---|
 | Speed Arithmetic | Level 6 | 5 level-ups | ~12–15 |
-| Factor Rush | Level 4 | 3 level-ups | ~7–9 |
-| Power Blitz | Level 8 | 7 level-ups | ~17–21 |
+| Factor Rush | Level 6 | 5 level-ups | ~12–15 |
+| Power Blitz | Level 9 | 8 level-ups | ~19–24 |
 | Target 24 | Level 5 | 4 level-ups | ~10–12 |
 
-Factor Rush saturates fastest — after ~8 correct answers, all primes are in play. Power Blitz has the longest ramp. Speed Arithmetic and Target 24 are in the middle.
+All four games now ramp at a similar pace. Factor Rush and Speed Arithmetic share the same saturation point. Power Blitz has the longest ramp due to the ¾ exponent multiplier. Target 24 saturates fastest but its difficulty ceiling (4 numbers up to 20) is inherently constrained.
 
 ## Calibration Considerations
 
