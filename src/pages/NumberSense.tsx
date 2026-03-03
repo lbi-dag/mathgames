@@ -1,6 +1,18 @@
-import GameShell from "../components/GameShell";
-import { numberSenseGameDefinition, numberSenseScorePolicy } from "../games/number-sense/definition";
+import ExamShell from "../components/ExamShell";
+import {
+  generateNumberSenseExamSet,
+  numberSenseExamScorePolicy,
+  numberSenseGameDefinition,
+} from "../games/number-sense/definition";
 
 export default function NumberSensePage() {
-  return <GameShell definition={numberSenseGameDefinition} scorePolicy={numberSenseScorePolicy} />;
+  return (
+    <ExamShell
+      definition={numberSenseGameDefinition}
+      scorePolicy={numberSenseExamScorePolicy}
+      totalQuestions={80}
+      durationSec={600}
+      generateQuestionSet={generateNumberSenseExamSet}
+    />
+  );
 }

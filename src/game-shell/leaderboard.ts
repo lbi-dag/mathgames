@@ -58,15 +58,23 @@ function normalizeLeaderboardScores(scores: Record<string, number>) {
   const normalized: Record<string, number> = {};
 
   Object.entries(scores).forEach(([key, value]) => {
-    const safeScore = Math.max(0, Number(value) || 0);
+    const rawScore = Number(value) || 0;
     const [rawGameId, rawMode] = key.split("|");
-    if ((rawMode !== "sprint" && rawMode !== "survival") || !rawGameId) {
+    if ((rawMode !== "sprint" && rawMode !== "survival" && rawMode !== "exam") || !rawGameId) {
+      const safeScore = Math.max(0, rawScore);
       normalized[key] = Math.max(normalized[key] ?? 0, safeScore);
       return;
     }
 
+    const isExam = rawMode === "exam";
+    const safeScore = isExam ? Math.floor(rawScore) : Math.max(0, rawScore);
     const normalizedKey = makeLeaderboardEntryKey(rawGameId, rawMode);
-    normalized[normalizedKey] = Math.max(normalized[normalizedKey] ?? 0, safeScore);
+    const existing = normalized[normalizedKey];
+    if (existing === undefined) {
+      normalized[normalizedKey] = safeScore;
+    } else {
+      normalized[normalizedKey] = Math.max(existing, safeScore);
+    }
   });
 
   return normalized;
@@ -176,13 +184,20 @@ export function getBestScore(gameId: string, mode: GameMode, storage?: StorageLi
   return data.scores[makeLeaderboardEntryKey(gameId, mode)] ?? 0;
 }
 
-export function saveBestScore(gameId: string, mode: GameMode, score: number, storage?: StorageLike) {
-  const safeScore = Math.max(0, Math.floor(score));
+export function saveBestScore(
+  gameId: string,
+  mode: GameMode,
+  score: number,
+  storage?: StorageLike,
+  options?: { allowNegative?: boolean },
+) {
+  const allowNegative = options?.allowNegative ?? false;
+  const safeScore = allowNegative ? Math.floor(score) : Math.max(0, Math.floor(score));
   const data = readLeaderboard(storage);
   const entryKey = makeLeaderboardEntryKey(gameId, mode);
-  const currentBest = data.scores[entryKey] ?? 0;
+  const currentBest = data.scores[entryKey] ?? (allowNegative ? -Infinity : 0);
   if (safeScore <= currentBest) {
-    return { updated: false as const, bestScore: currentBest };
+    return { updated: false as const, bestScore: currentBest === -Infinity ? 0 : currentBest };
   }
 
   const next: LeaderboardV1 = {
