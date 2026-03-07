@@ -212,7 +212,9 @@ export function useExamEngine<Q, A, N>({
   }, [definition, scorePolicy, state.phase, state.slots]);
 
   // Keep the ref in sync for auto-submit
-  submitExamRef.current = submitExam;
+  useEffect(() => {
+    submitExamRef.current = submitExam;
+  }, [submitExam]);
 
   const resetBest = useCallback(() => {
     resetBestScore(definition.gameId, "exam");
