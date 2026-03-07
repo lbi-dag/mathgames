@@ -1,12 +1,15 @@
 .page {
+  --_exam-gold: #d4a843;
+  --_exam-gold-deep: #b8912e;
+  --_exam-indigo: #1e2466;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: var(--space-6) var(--space-4);
   background:
-    radial-gradient(circle at 10% 15%, rgba(145, 215, 255, 0.45), transparent 55%),
-    radial-gradient(circle at 85% 10%, rgba(255, 203, 130, 0.45), transparent 55%),
+    radial-gradient(circle at 10% 15%, rgba(30, 36, 102, 0.2), transparent 55%),
+    radial-gradient(circle at 85% 10%, rgba(212, 168, 67, 0.3), transparent 55%),
     var(--paper);
 }
 
@@ -31,6 +34,7 @@
   font-family: var(--font-display);
   font-size: clamp(2rem, 3vw, 2.6rem);
   margin: 0;
+  color: var(--_exam-indigo);
 }
 
 .subtitle {
@@ -44,7 +48,7 @@
   align-items: center;
   gap: var(--space-2);
   font-size: var(--text-sm);
-  color: var(--accent-deep);
+  color: var(--_exam-indigo);
   text-decoration: none;
   font-weight: 600;
 }
@@ -70,7 +74,8 @@
   display: grid;
   gap: var(--space-3);
   padding: var(--space-4);
-  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  background: color-mix(in srgb, var(--_exam-gold) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--_exam-gold) 25%, transparent);
   border-radius: var(--radius-md);
 }
 
@@ -93,12 +98,12 @@
   border: none;
   border-radius: 999px;
   padding: var(--space-3) var(--space-6);
-  background: var(--accent-deep);
+  background: var(--_exam-gold-deep);
   color: #ffffff;
   font-size: var(--text-sm);
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 6px 18px rgba(79, 70, 229, 0.28);
+  box-shadow: 0 6px 18px rgba(184, 145, 46, 0.35);
 }
 
 .primaryAction:disabled {
@@ -157,8 +162,8 @@
 }
 
 .timerPill {
-  background: color-mix(in srgb, var(--accent) 18%, var(--surface));
-  color: var(--accent-deep);
+  background: color-mix(in srgb, var(--_exam-gold) 18%, var(--surface));
+  color: var(--_exam-gold-deep);
 }
 
 .timerAlert {
@@ -180,7 +185,8 @@
 .questionArea {
   text-align: center;
   padding: var(--space-5) var(--space-4);
-  background: color-mix(in srgb, var(--accent) 18%, var(--surface));
+  background: color-mix(in srgb, var(--_exam-indigo) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--_exam-indigo) 15%, transparent);
   border-radius: var(--radius-md);
   display: grid;
   gap: var(--space-2);
@@ -286,7 +292,8 @@
   display: grid;
   gap: var(--space-3);
   padding: var(--space-4);
-  background: color-mix(in srgb, var(--accent) 14%, var(--surface));
+  background: color-mix(in srgb, var(--_exam-gold) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--_exam-gold) 25%, transparent);
   border-radius: var(--radius-md);
 }
 
@@ -376,6 +383,24 @@
 .confirmMessage {
   margin: 0;
   color: var(--text-secondary);
+}
+
+/* Dark theme overrides */
+:global([data-theme="dark"]) .title {
+  color: var(--_exam-gold);
+}
+
+:global([data-theme="dark"]) .backLink {
+  color: var(--_exam-gold);
+}
+
+:global([data-theme="dark"]) .primaryAction {
+  background: var(--_exam-gold-deep);
+  box-shadow: 0 6px 18px rgba(184, 145, 46, 0.25);
+}
+
+:global([data-theme="dark"]) .timerPill {
+  color: var(--_exam-gold);
 }
 
 @media (max-width: 520px) {

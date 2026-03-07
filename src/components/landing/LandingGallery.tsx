@@ -57,10 +57,11 @@ export default function LandingGallery() {
         </Link>
       </article>
 
-      <article className={styles.card}>
-        <div className={styles.thumb} aria-hidden="true">
+      <article className={`${styles.card} ${styles.featured}`}>
+        <div className={`${styles.thumb} ${styles.thumbFeatured}`} aria-hidden="true">
           <span>A+</span>
         </div>
+        <div className={styles.featuredBadge}>UIL Exam</div>
         <h2>A+ Number Sense</h2>
         <p>Practice UIL Number Sense with +5/-4 scoring, fractions, and 80 mental math categories.</p>
         <Link to="/number-sense">
