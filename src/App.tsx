@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import About from "./pages/About";
 import FactorRush from "./pages/FactorRush";
 import Landing from "./pages/Landing";
+import NumberSense from "./pages/NumberSense";
 import PowerBlitz from "./pages/PowerBlitz";
 import SpeedArithmetic from "./pages/SpeedArithmetic";
 import Target24 from "./pages/Target24";
@@ -16,6 +17,7 @@ export default function App() {
         <Route path="/factor-rush" element={<FactorRush />} />
         <Route path="/power-blitz" element={<PowerBlitz />} />
         <Route path="/target-24" element={<Target24 />} />
+        <Route path="/number-sense" element={<NumberSense />} />
 
         <Route path="/games/number-sense-sprint" element={<Navigate to="/speed-arithmetic" replace />} />
         <Route path="/games/prime-factor-challenge" element={<Navigate to="/factor-rush" replace />} />

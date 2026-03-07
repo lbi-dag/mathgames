@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://mathgames.win/</loc>
+    <loc>https://mathgm.org/</loc>
   </url>
   <url>
-    <loc>https://mathgames.win/about</loc>
+    <loc>https://mathgm.org/about</loc>
   </url>
   <url>
-    <loc>https://mathgames.win/speed-arithmetic</loc>
+    <loc>https://mathgm.org/speed-arithmetic</loc>
   </url>
   <url>
-    <loc>https://mathgames.win/power-blitz</loc>
+    <loc>https://mathgm.org/power-blitz</loc>
   </url>
   <url>
-    <loc>https://mathgames.win/factor-rush</loc>
+    <loc>https://mathgm.org/factor-rush</loc>
   </url>
   <url>
-    <loc>https://mathgames.win/games/coming-soon</loc>
+    <loc>https://mathgm.org/target-24</loc>
+  </url>
+  <url>
+    <loc>https://mathgm.org/number-sense</loc>
   </url>
 </urlset>

@@ -29,15 +29,19 @@ export const target24GameDefinition: GameDefinition<Target24Question, string, st
       };
     }
 
+    const displayValue = Number.isInteger(result.value)
+      ? String(result.value)
+      : result.value.toFixed(2);
+
     return {
       kind: "wrong",
-      normalizedAnswer: answer.trim(),
+      normalizedAnswer: `${answer.trim()} (= ${displayValue}, target is 24)`,
     };
   },
   renderQuestion: (question) => (question ? formatNumbersForPrompt(question) : "Press Start"),
   getCorrectAnswerLabel: () => "A valid expression that evaluates to 24",
   getQuestionLabel: (question) => question.numbers.join(", "),
-  renderAnswerInput: ({ value, onChange, onSubmit, disabled }) => (
-    <Target24AnswerInput value={value} onChange={onChange} onSubmit={onSubmit} disabled={disabled} />
+  renderAnswerInput: ({ value, onChange, onSubmit, disabled, question }) => (
+    <Target24AnswerInput value={value} onChange={onChange} onSubmit={onSubmit} disabled={disabled} question={question} />
   ),
 };

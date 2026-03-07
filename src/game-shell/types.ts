@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export type GameMode = "sprint" | "survival";
+export type GameMode = "sprint" | "survival" | "exam";
 export type SprintMinutes = 1 | 3 | 5;
 export type RunPhase = "idle" | "running" | "ended";
 
@@ -19,6 +19,12 @@ export type ScorePolicy = (ctx: {
   timeLeftSec: number | null;
 }) => number;
 
+export type ExamScorePolicy = {
+  correct: number;
+  wrong: number;
+  blank: number;
+};
+
 export interface GameDefinition<Q, A, N = unknown> {
   gameId: string;
   title: string;
@@ -35,5 +41,6 @@ export interface GameDefinition<Q, A, N = unknown> {
     onChange: (next: A) => void;
     onSubmit: () => void;
     disabled: boolean;
+    question: Q | null;
   }) => ReactNode;
 }

@@ -118,6 +118,66 @@
   letter-spacing: 0.08em;
 }
 
+/* Featured (Number Sense) card */
+.featured {
+  --_exam-gold: #d4a843;
+  --_exam-gold-deep: #b8912e;
+  --_exam-indigo: #1e2466;
+  border: 1.5px solid var(--_exam-gold);
+}
+
+.featured:hover {
+  box-shadow: 0 24px 50px color-mix(in srgb, var(--_exam-gold) 28%, transparent);
+}
+
+.featuredBadge {
+  align-self: flex-start;
+  background: var(--_exam-gold);
+  color: #1a1a2e;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 2px 10px;
+  border-radius: 999px;
+}
+
+.thumbFeatured {
+  background:
+    linear-gradient(145deg, rgba(212, 168, 67, 0.25), rgba(212, 168, 67, 0.05)),
+    radial-gradient(circle at 20% 30%, rgba(30, 36, 102, 0.3), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(212, 168, 67, 0.35), transparent 60%),
+    var(--surface-elevated);
+}
+
+.thumbFeatured::after {
+  background: color-mix(in srgb, var(--_exam-gold) 18%, var(--surface));
+}
+
+.thumbFeatured span {
+  color: var(--_exam-indigo);
+}
+
+.featured a {
+  color: var(--_exam-indigo);
+}
+
+.featured a span {
+  background: color-mix(in srgb, var(--_exam-gold) 35%, var(--surface));
+}
+
+:global([data-theme="dark"]) .thumbFeatured span {
+  color: var(--_exam-gold);
+}
+
+:global([data-theme="dark"]) .featured a {
+  color: var(--_exam-gold);
+}
+
+:global([data-theme="dark"]) .featuredBadge {
+  background: color-mix(in srgb, var(--_exam-gold) 85%, transparent);
+}
+
 @media (max-width: 520px) {
   .card {
     padding: var(--space-4);
