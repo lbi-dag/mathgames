@@ -4,6 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "generate:site-assets": "node scripts/generate-site-assets.mjs",
+    "predev": "npm run generate:site-assets",
+    "prebuild": "npm run generate:site-assets",
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",

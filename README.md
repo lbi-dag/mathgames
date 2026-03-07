@@ -1,6 +1,6 @@
-# MathGames.win
+# Math Games
 
-React + Vite app for the MathGames.win launcher and games.
+React + Vite app for the Math Games launcher and games.
 
 ## Tech Stack
 - React 19
@@ -15,6 +15,16 @@ React + Vite app for the MathGames.win launcher and games.
 npm install
 npm run dev
 ```
+
+## Domain Configuration
+Primary site metadata is controlled by root env values:
+
+```bash
+VITE_SITE_NAME=Math Games
+VITE_SITE_URL=https://mathgames.win
+```
+
+Override `VITE_SITE_URL` in Cloudflare Pages if you want a different primary canonical domain for a deployment.
 
 ## Scripts
 ```bash
@@ -98,6 +108,7 @@ Existing v1 leaderboard and sprint preference entries that still use old game ID
 - `/factor-rush` game
 - `/power-blitz` game
 - `/target-24` game
+- `/number-sense` game
 
 Backward-compatible redirects are configured for older slugs, including:
 - `/games/number-sense-sprint` -> `/speed-arithmetic`

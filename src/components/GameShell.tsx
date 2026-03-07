@@ -3,6 +3,7 @@ import { Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useGameEngine } from "../game-shell/useGameEngine";
 import type { GameDefinition, ScorePolicy, SprintMinutes } from "../game-shell/types";
+import { usePageMetadata } from "../site/usePageMetadata";
 import ThemeToggle from "./theme/ThemeToggle";
 import styles from "../styles/GameShell.module.css";
 
@@ -33,6 +34,7 @@ function normalizeAnswerDisplay(value: unknown) {
 export default function GameShell<Q, A, N>({ definition, scorePolicy }: GameShellProps<Q, A, N>) {
   const { state, answer, setAnswer, bestScore, startRun, submitAnswer, setMode, setSprintMinutes, resetBestForMode } =
     useGameEngine({ definition, scorePolicy });
+  usePageMetadata({ title: definition.title });
 
   const inputRef = useRef<HTMLInputElement>(null);
   const isRunning = state.phase === "running";
@@ -42,10 +44,6 @@ export default function GameShell<Q, A, N>({ definition, scorePolicy }: GameShel
     if (!isRunning || definition.renderAnswerInput) return;
     inputRef.current?.focus();
   }, [definition.renderAnswerInput, isRunning, state.question]);
-
-  useEffect(() => {
-    document.title = `${definition.title} | Math Games`;
-  }, [definition.title]);
 
   const introMessage =
     state.mode === "sprint"

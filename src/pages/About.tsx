@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import SidebarLayout from "../components/SidebarLayout";
+import { usePageMetadata } from "../site/usePageMetadata";
 import pageShell from "../styles/PageShell.module.css";
 import pageContent from "../styles/PageContent.module.css";
 import styles from "../styles/About.module.css";
 
 export default function About() {
+  usePageMetadata({ title: "About Math Games", pathname: "/about" });
+
   return (
     <SidebarLayout
       pageClassName={pageShell.pageShell}
@@ -20,9 +23,9 @@ export default function About() {
           <div>
             <h1 className={pageContent.heroTitle}>About Math Games</h1>
             <p className={pageContent.heroCopy}>
-              Math Games started as a tiny challenge: make practice feel as satisfying as play. What began as
-              a weekend experiment in small classrooms has grown into a growing collection of micro-games that
-              reward curiosity, speed, and grit.
+              The project started as a tiny challenge: make practice feel as satisfying as play. What began as
+              a weekend experiment in small classrooms has grown into a collection of micro-games that reward
+              curiosity, speed, and grit.
             </p>
           </div>
           <div className={pageContent.card}>
@@ -68,7 +71,7 @@ export default function About() {
         </section>
 
         <p className={pageContent.bodyNote}>
-          If you have ideas for new modes or want to collaborate, drop a note any time. Math Games is built in
+          If you have ideas for new modes or want to collaborate, drop a note any time. The project is built in
           the open, and it grows with the community.
         </p>
     </SidebarLayout>

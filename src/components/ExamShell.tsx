@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Timer, Trophy } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useExamEngine } from "../game-shell/useExamEngine";
 import type { Rng } from "../game-shell/rng";
 import type { ExamScorePolicy, GameDefinition } from "../game-shell/types";
+import { usePageMetadata } from "../site/usePageMetadata";
 import ThemeToggle from "./theme/ThemeToggle";
 import styles from "../styles/ExamShell.module.css";
 
@@ -43,10 +44,7 @@ export default function ExamShell<Q, A, N>({
   } = useExamEngine({ definition, scorePolicy, totalQuestions, durationSec, generateQuestionSet });
 
   const [showConfirm, setShowConfirm] = useState(false);
-
-  useEffect(() => {
-    document.title = `${definition.title} | Math Games`;
-  }, [definition.title]);
+  usePageMetadata({ title: definition.title });
 
   const isRunning = state.phase === "running";
   const isEnded = state.phase === "ended";
