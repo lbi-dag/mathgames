@@ -1,0 +1,422 @@
+.page {
+  --_exam-gold: #d4a843;
+  --_exam-gold-deep: #b8912e;
+  --_exam-indigo: #1e2466;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-4);
+  background:
+    radial-gradient(circle at 10% 15%, rgba(30, 36, 102, 0.2), transparent 55%),
+    radial-gradient(circle at 85% 10%, rgba(212, 168, 67, 0.3), transparent 55%),
+    var(--paper);
+}
+
+.card {
+  width: 100%;
+  max-width: 780px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: var(--space-6);
+  display: grid;
+  gap: var(--space-5);
+}
+
+.header {
+  text-align: center;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  margin: 0;
+  color: var(--_exam-indigo);
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-md);
+}
+
+.backLink {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--_exam-indigo);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.backLink span {
+  display: inline-flex;
+  width: var(--space-7);
+  height: var(--space-7);
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--accent) 18%, var(--surface));
+}
+
+.themeControl {
+  display: flex;
+  justify-content: center;
+}
+
+/* Intro / Idle */
+.intro {
+  text-align: center;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--_exam-gold) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--_exam-gold) 25%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.introMessage {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.primaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-6);
+  background: var(--_exam-gold-deep);
+  color: #ffffff;
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(184, 145, 46, 0.35);
+}
+
+.primaryAction:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-6);
+  background: color-mix(in srgb, var(--text-primary) 16%, var(--surface));
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.dangerAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-3) var(--space-6);
+  background: color-mix(in srgb, var(--error) 16%, var(--surface));
+  color: var(--error);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* Stats row */
+.statsRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.statPill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: color-mix(in srgb, var(--text-primary) 8%, var(--surface));
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+  font-size: var(--text-sm);
+  font-weight: 600;
+}
+
+.timerPill {
+  background: color-mix(in srgb, var(--_exam-gold) 18%, var(--surface));
+  color: var(--_exam-gold-deep);
+}
+
+.timerAlert {
+  color: var(--error);
+  background: color-mix(in srgb, var(--error) 16%, var(--surface));
+}
+
+.statIcon {
+  width: 20px;
+  height: 20px;
+}
+
+.timerText {
+  font-weight: 700;
+  font-size: var(--text-md);
+}
+
+/* Question area */
+.questionArea {
+  text-align: center;
+  padding: var(--space-5) var(--space-4);
+  background: color-mix(in srgb, var(--_exam-indigo) 8%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--_exam-indigo) 15%, transparent);
+  border-radius: var(--radius-md);
+  display: grid;
+  gap: var(--space-2);
+}
+
+.questionLabel {
+  margin: 0;
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.questionText {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 2.6rem);
+  font-weight: 700;
+  color: var(--violet);
+}
+
+/* Navigation row */
+.navRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+.navBtn {
+  border: none;
+  border-radius: 999px;
+  padding: var(--space-2) var(--space-5);
+  background: color-mix(in srgb, var(--text-primary) 12%, var(--surface));
+  color: var(--text-primary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.navBtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Input area */
+.inputArea {
+  display: grid;
+  gap: var(--space-3);
+}
+
+/* Question grid */
+.questionGrid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: var(--space-1);
+}
+
+.gridCell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  cursor: pointer;
+  background: color-mix(in srgb, var(--text-primary) 8%, var(--surface));
+  color: var(--text-secondary);
+  transition: background 0.1s ease;
+}
+
+.gridCell:hover {
+  background: color-mix(in srgb, var(--text-primary) 16%, var(--surface));
+}
+
+.gridCellCurrent {
+  background: var(--accent-deep);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.3);
+}
+
+.gridCellCurrent:hover {
+  background: var(--accent-deep);
+}
+
+.gridCellAnswered {
+  background: color-mix(in srgb, var(--success) 22%, var(--surface));
+  color: var(--success);
+}
+
+/* Submit row */
+.submitRow {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-3);
+}
+
+/* Ended phase — results */
+.resultsSummary {
+  text-align: center;
+  display: grid;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  background: color-mix(in srgb, var(--_exam-gold) 12%, var(--surface));
+  border: 1px solid color-mix(in srgb, var(--_exam-gold) 25%, transparent);
+  border-radius: var(--radius-md);
+}
+
+.scoreDisplay {
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 700;
+  margin: 0;
+  color: var(--violet);
+}
+
+.scoreMeta {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+}
+
+.resultsList {
+  font-size: var(--text-sm);
+  max-height: 400px;
+  overflow-y: auto;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 92%, var(--text-primary));
+  padding: var(--space-3);
+  display: grid;
+  gap: var(--space-1);
+}
+
+.resultEntry {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: var(--space-2);
+  align-items: baseline;
+  padding: var(--space-1) 0;
+}
+
+.resultIcon {
+  font-weight: 700;
+  width: 20px;
+  text-align: center;
+}
+
+.resultCorrect {
+  color: var(--success);
+}
+
+.resultWrong {
+  color: var(--error);
+}
+
+.resultBlank {
+  color: var(--text-secondary);
+}
+
+.resultDetail {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+}
+
+/* Confirmation overlay */
+.confirmOverlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.confirmCard {
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  max-width: 400px;
+  width: 90%;
+  display: grid;
+  gap: var(--space-4);
+  text-align: center;
+}
+
+.confirmTitle {
+  margin: 0;
+  font-size: var(--text-lg);
+  font-weight: 700;
+}
+
+.confirmMessage {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+/* Dark theme overrides */
+:global([data-theme="dark"]) .title {
+  color: var(--_exam-gold);
+}
+
+:global([data-theme="dark"]) .backLink {
+  color: var(--_exam-gold);
+}
+
+:global([data-theme="dark"]) .primaryAction {
+  background: var(--_exam-gold-deep);
+  box-shadow: 0 6px 18px rgba(184, 145, 46, 0.25);
+}
+
+:global([data-theme="dark"]) .timerPill {
+  color: var(--_exam-gold);
+}
+
+@media (max-width: 520px) {
+  .card {
+    padding: var(--space-4);
+  }
+
+  .questionGrid {
+    grid-template-columns: repeat(8, 1fr);
+  }
+
+  .questionText {
+    font-size: 1.8rem;
+  }
+
+  .title {
+    font-size: var(--text-xl);
+  }
+}

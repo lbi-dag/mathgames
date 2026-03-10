@@ -9,8 +9,8 @@ export default function LandingAbout() {
         <div>
           <h2>About Math Games</h2>
           <p>
-            Math Games is a tiny studio focused on fast, satisfying practice loops. No ads, no tracking, just
-            playful drills that keep your brain sharp and your streaks alive.
+            Math Games is an open math practice project focused on fast, satisfying practice loops. No ads, no
+            tracking, just playful drills that keep your brain sharp and your streaks alive.
           </p>
         </div>
         <div className={styles.aboutHighlights}>

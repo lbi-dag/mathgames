@@ -59,7 +59,7 @@ function maxExponentForCorrect(totalCorrect: number) {
 
 export function maxExponentForDifficulty(difficultyLevel: number) {
   const safeDifficulty = Math.max(1, Math.floor(difficultyLevel || 1));
-  const unlocked = STARTING_MAX_EXPONENT + (safeDifficulty - 1);
+  const unlocked = STARTING_MAX_EXPONENT + Math.floor((safeDifficulty - 1) * 3 / 4);
   return Math.min(MAX_EXPONENT, Math.max(MIN_EXPONENT, unlocked));
 }
 

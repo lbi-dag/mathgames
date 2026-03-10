@@ -1,7 +1,7 @@
 # AGENTS.md
 
 ## Project Overview
-MathGames.win is a math competition platform inspired by Lichess, beginning with fast solo gameplay and evolving toward trusted global competition and identity-based progression.
+MathGames is a math competition platform inspired by Lichess, beginning with fast solo gameplay and evolving toward trusted global competition and identity-based progression.
 
 The platform is intentionally being built in structured phases. This document defines persistent architectural rules and current project constraints. All implementation decisions must respect these invariants.
 

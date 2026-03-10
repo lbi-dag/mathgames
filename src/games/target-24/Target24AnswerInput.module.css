@@ -19,18 +19,45 @@
   outline-offset: 2px;
 }
 
-.keypad {
+.numberRow {
   display: grid;
   grid-template-columns: repeat(4, minmax(54px, 1fr));
   gap: var(--space-2);
 }
 
-.keypadButton {
+.numberButton {
+  border: 2px solid var(--accent);
+  background: var(--surface-elevated);
+  color: var(--ink);
+  border-radius: var(--radius-sm);
+  min-height: 52px;
+  font-size: var(--text-lg);
+  font-weight: 700;
+  transition: opacity 0.15s, background 0.15s;
+}
+
+.numberButton:not(:disabled):hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.numberButtonUsed {
+  opacity: 0.3;
+  border-color: var(--border-strong);
+}
+
+.operatorRow {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(40px, 1fr));
+  gap: var(--space-2);
+}
+
+.operatorButton {
   border: 1px solid var(--border-strong);
   background: var(--surface-elevated);
   color: var(--ink);
   border-radius: var(--radius-sm);
-  min-height: 48px;
+  min-height: 44px;
   font-size: var(--text-md);
   font-weight: 700;
 }
@@ -59,10 +86,4 @@
   min-height: 44px;
   padding: 0 var(--space-3);
   font-weight: 700;
-}
-
-.helpText {
-  margin: 0;
-  color: var(--ink-muted);
-  font-size: var(--text-xs);
 }

@@ -7,9 +7,12 @@ import {
   LandingSidebarBody,
 } from "../components/landing/LandingSidebar";
 import { landingSidebarClassName } from "../components/landing/LandingSidebarClassName";
+import { usePageMetadata } from "../site/usePageMetadata";
 import pageShell from "../styles/PageShell.module.css";
 
 export default function Landing() {
+  usePageMetadata({ pathname: "/" });
+
   return (
     <SidebarLayout
       pageClassName={pageShell.pageShell}

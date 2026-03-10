@@ -14,7 +14,7 @@ describe("power blitz game definition", () => {
   test("higher difficulty unlocks exponent 9 ceiling", () => {
     const question = powerBlitzGameDefinition.generateQuestion({
       rng: () => 0.999,
-      difficultyLevel: 7,
+      difficultyLevel: 9,
       previousQuestion: null,
     });
     expect(question.exponent).toBe(9);
