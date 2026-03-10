@@ -73,6 +73,34 @@ describe("leaderboard storage", () => {
     expect(data.scores["factor-rush|survival"]).toBe(3);
     expect(data.scores["power-blitz|sprint"]).toBe(7);
   });
+
+  test("preserves signed exam scores while clamping non-exam scores", () => {
+    const storage = createMockStorage({
+      [LEADERBOARD_STORAGE_KEY]: JSON.stringify({
+        version: 1,
+        scores: {
+          "number-sense|exam": -18,
+          "speed-arithmetic|sprint": -5,
+        },
+        migratedLegacyKeys: true,
+      }),
+    });
+
+    const data = readLeaderboard(storage);
+    expect(data.scores["number-sense|exam"]).toBe(-18);
+    expect(data.scores["speed-arithmetic|sprint"]).toBe(0);
+  });
+
+  test("stores the highest signed exam score", () => {
+    const storage = createMockStorage();
+
+    saveBestScore("number-sense", "exam", -12, storage, { allowNegative: true });
+    saveBestScore("number-sense", "exam", -20, storage, { allowNegative: true });
+    expect(getBestScore("number-sense", "exam", storage)).toBe(-12);
+
+    saveBestScore("number-sense", "exam", 6, storage, { allowNegative: true });
+    expect(getBestScore("number-sense", "exam", storage)).toBe(6);
+  });
 });
 
 describe("sprint duration preferences", () => {

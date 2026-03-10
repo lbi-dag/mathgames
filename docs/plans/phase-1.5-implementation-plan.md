@@ -10,13 +10,14 @@ Already implemented:
 - Shared `GameShell` flow for sprint/survival games
 - Shared `ExamShell` and exam engine for A+ Number Sense
 - Deterministic seeded generation inside engine/game logic
+- Shared session helpers that centralize run/exam seed creation and exam slot generation
 - Versioned local leaderboard and sprint preference storage
 - Legacy game ID migrations
 - Static metadata and generated sitemap/robots flow
 - Passing test suite and production build
 
 Current validation baseline as of March 10, 2026:
-- `npm test`: 103 tests passing
+- `npm test`: 109 tests passing
 - `npm run build`: passing
 
 ## Phase 1.5 Exit Criteria
