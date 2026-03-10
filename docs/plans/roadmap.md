@@ -153,3 +153,22 @@ The product is considered viable and complete at the end of Phase 3 if:
 - Rating system drives return engagement.
 
 Real-time multiplayer is not required for success.
+
+## Framework Recommendation
+### Summary
+Next.js is not required by any current roadmap phase. It may become optional in Phase 3 if server-rendered authenticated pages become strategically valuable, but it is not a prerequisite for shipping the product through Phase 3.
+
+### Recommendation by Phase
+- Phase 1: Stay on the current static client architecture. A Vite + React SPA is the correct fit for Cloudflare Pages, deterministic local play, and zero backend dependency.
+- Phase 2: Keep the frontend lightweight and add backend capability with Cloudflare Workers + KV or D1. This phase needs API/runtime support, not a framework migration.
+- Phase 3: Re-evaluate only if SSR, server-managed auth flows, or highly dynamic account pages justify the complexity. Even then, Next.js is optional, not required.
+
+### Preferred Alternatives
+- Vite + React Router + Cloudflare Workers: Best default path with the least migration risk.
+- Vite + Hono on Workers: Good if the API surface grows and needs cleaner routing or middleware.
+- React Router framework mode or Remix on Cloudflare: Better fit than Next.js if a full-stack React framework becomes useful while staying aligned with Workers.
+- Next.js on Cloudflare: Consider only if Phase 3 benefits clearly outweigh migration cost and hosting complexity.
+
+### Decision Rule
+- Do not migrate frameworks to unlock Phase 2.
+- Only consider a framework migration in Phase 3 if it solves a concrete problem that the existing Vite + Workers architecture cannot solve cleanly enough.
