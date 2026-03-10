@@ -63,7 +63,7 @@ export default function LandingGallery() {
         </div>
         <div className={styles.featuredBadge}>UIL Exam</div>
         <h2>A+ Number Sense</h2>
-        <p>Practice UIL Number Sense with +5/-4 scoring, fractions, and 80 mental math categories.</p>
+        <p>Practice UIL Number Sense with +5/-4 scoring, free navigation, and a full 80-question exam.</p>
         <Link to="/number-sense">
           <span>&#9654;</span>
           Play now

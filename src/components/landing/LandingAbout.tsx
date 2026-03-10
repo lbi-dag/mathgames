@@ -20,7 +20,7 @@ export default function LandingAbout() {
           </div>
           <div className={styles.highlight}>
             <h3>Short sessions</h3>
-            <p>Choose 1, 3, or 5-minute Sprint sessions that fit into busy days.</p>
+            <p>Choose Sprint, Survival, or a 10-minute exam format that fits into busy days.</p>
           </div>
           <div className={styles.highlight}>
             <h3>Built for flow</h3>
