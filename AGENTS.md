@@ -39,7 +39,8 @@ Sprint and survival are the default shared modes for arcade-style games. `exam` 
 Consult these before changing architecture or roadmap assumptions:
 
 - `docs/plans/roadmap.md` for phase boundaries and long-term direction
-- `README.md` for current project structure, routes, storage schema, and scripts
+- `README.md` for current project structure, routes, and scripts
+- `docs/storage.md` for local storage keys, schema, and migration behavior
 - `docs/difficulty-tuning.md` for shared and per-game difficulty behavior
 - `docs/gameplay/*.md` for current player-facing rules
 - `docs/plans/*.md` for active implementation plans and product follow-ups

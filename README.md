@@ -85,43 +85,15 @@ Current scoring is mode-dependent and remains injectable:
 
 Scoring is injected through shared policy types, so policy changes do not require UI rewrites.
 
-## Local Storage Schema (versioned)
-Leaderboard key: `mathgames.leaderboard`
-```json
-{
-  "version": 1,
-  "scores": {
-    "speed-arithmetic|sprint": 17,
-    "speed-arithmetic|survival": 9,
-    "power-blitz|sprint": 14,
-    "number-sense|exam": 312
-  },
-  "migratedLegacyKeys": true
-}
-```
+## Local Storage
+Versioned browser storage is documented in [docs/storage.md](docs/storage.md).
 
-Sprint preference key: `mathgames.sprintPrefs`
-```json
-{
-  "version": 1,
-  "byGame": {
-    "speed-arithmetic": 3,
-    "power-blitz": 1
-  }
-}
-```
+Current keys:
+- `mathgames.leaderboard` for best scores by `${gameId}|${mode}`
+- `mathgames.sprintPrefs` for per-game sprint duration
+- `mathgames.ui.theme` for shell theme preference
 
-Legacy key migration runs once and maps:
-- `exponentSprintBestScore` -> `power-blitz|sprint`
-- `numberSenseBest:sprint` + `numberSenseSprintBestScore` -> `speed-arithmetic|sprint` (max)
-- `numberSenseBest:survival` -> `speed-arithmetic|survival`
-
-Existing v1 leaderboard and sprint preference entries that still use old game IDs are normalized automatically:
-- `number-sense-sprint` -> `speed-arithmetic`
-- `prime-factor-challenge` -> `factor-rush`
-- `exponent-sprint` -> `power-blitz`
-
-Exam best scores reuse the same versioned leaderboard store and are written under `number-sense|exam`.
+Exam best scores reuse the leaderboard store and are written under `number-sense|exam`.
 
 ## Routes
 - `/` landing page
