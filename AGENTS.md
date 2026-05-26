@@ -47,6 +47,15 @@ Consult these before changing architecture or roadmap assumptions:
 
 If a doc conflicts with the code, do not guess. Reconcile the discrepancy explicitly.
 
+## Common Commands
+```bash
+npm run dev       # Vite dev server
+npm run build     # TypeScript type-check + Vite production build
+npm run lint      # ESLint
+npm test          # Vitest test suite
+npx vitest run src/game-shell/engine.test.ts   # Run a single test file
+```
+
 ## Architectural Invariants
 These rules must not be violated.
 
@@ -127,6 +136,13 @@ Rules:
 - No direct leaderboard manipulation outside `src/game-shell/`.
 - No per-game duplication of run/exam lifecycle logic.
 - Do not hardcode canonical domains in page components when `src/site/` already owns that concern.
+
+## Styling
+- Use CSS Modules (`*.module.css`) for component styling.
+- Shared design tokens live in `src/styles/tokens.css`.
+- Theme state is expressed with a `[data-theme]` attribute on `<html>`.
+- Colors, spacing, and radii should use CSS custom properties where practical.
+- Preserve the existing Space Grotesk visual direction unless a task explicitly changes the brand system.
 
 ## Adding Or Changing Games
 ### Arcade-style game
