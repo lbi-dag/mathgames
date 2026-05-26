@@ -172,6 +172,9 @@ Before advancing beyond Phase 1.5:
 
 ## How To Work In This Repo
 When implementing work:
+- Consult `docs/plans/backlog-sequence.md` when choosing the next task.
+- Work the highest unfinished issue in the sequence unless the user explicitly chooses another task.
+- After completing an issue, update the sequence if priorities changed.
 - Refer to `docs/plans/roadmap.md`, not a stale roadmap path.
 - Preserve deterministic engine design.
 - Preserve storage migrations and redirects.
