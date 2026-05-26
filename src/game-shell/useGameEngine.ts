@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useReducer, useRef, useState } from "react";
-import { advanceDifficultyOnCorrect, createInitialDifficultyState } from "./difficulty";
+import { advanceDifficultyOnCorrect } from "./difficulty";
 import {
   createInitialGameEngineState,
   gameEngineReducer,
@@ -13,8 +13,9 @@ import {
   saveBestScore,
   setSprintMinutesForGame,
 } from "./leaderboard";
-import { createSeedFromTimestamp, createSeededRng, type Rng } from "./rng";
+import { createSeededRng, type Rng } from "./rng";
 import { defaultScorePolicy } from "./scorePolicy";
+import { createRunSession } from "./session";
 import type { GameDefinition, GameMode, ScorePolicy, SprintMinutes } from "./types";
 
 type UseGameEngineOptions<Q, A, N> = {
@@ -88,7 +89,7 @@ export function useGameEngine<Q, A, N>({
   );
 
   const [answer, setAnswer] = useState<A>(() => definition.createInitialAnswer());
-  const rngRef = useRef<Rng>(() => Math.random());
+  const rngRef = useRef<Rng>(createSeededRng(0));
   const phaseRef = useRef(state.phase);
 
   useEffect(() => {
@@ -125,21 +126,14 @@ export function useGameEngine<Q, A, N>({
   const startRun = useCallback(() => {
     if (state.phase === "running") return;
 
-    const seed = createSeedFromTimestamp(Date.now());
-    const rng = createSeededRng(seed);
-    rngRef.current = rng;
-    const difficultyState = createInitialDifficultyState(rng, definition.initialDifficulty ?? 1);
-    const initialQuestion = definition.generateQuestion({
-      rng,
-      difficultyLevel: difficultyState.level,
-      previousQuestion: null,
-    });
+    const runSession = createRunSession(definition);
+    rngRef.current = runSession.rng;
     dispatch({
       type: "START_RUN",
-      seed,
-      initialQuestion,
-      initialDifficultyLevel: difficultyState.level,
-      nextDifficultyThreshold: difficultyState.nextThreshold,
+      seed: runSession.seed,
+      initialQuestion: runSession.initialQuestion,
+      initialDifficultyLevel: runSession.initialDifficultyLevel,
+      nextDifficultyThreshold: runSession.nextDifficultyThreshold,
       message: createStartMessage(state.mode, state.sprintMinutes),
     });
     setAnswer(definition.createInitialAnswer());

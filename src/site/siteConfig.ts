@@ -1,5 +1,5 @@
 const DEFAULT_SITE_NAME = "Math Games";
-const DEFAULT_SITE_URL = "https://mathgames.win";
+const DEFAULT_SITE_URL = "https://mathgm.org";
 const DEFAULT_HOME_TITLE = "Free Mental Math Games";
 
 function normalizeSiteUrl(value: string) {

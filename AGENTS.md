@@ -1,152 +1,179 @@
 # AGENTS.md
 
 ## Project Overview
-MathGames is a math competition platform inspired by Lichess, beginning with fast solo gameplay and evolving toward trusted global competition and identity-based progression.
+MathGames is a math competition platform inspired by Lichess. It is being built in deliberate phases:
 
-The platform is intentionally being built in structured phases. This document defines persistent architectural rules and current project constraints. All implementation decisions must respect these invariants.
+- Phase 1: fun, fast solo play
+- Phase 2: trusted validation and global visibility
+- Phase 3: identity, history, and retention
+
+The product must be viable at the end of Phase 3 even if multiplayer is never built.
 
 ## Current Phase
 ### Phase 1.5 - Soloist Foundation
-We are currently in **Phase 1 (client-only)** with architecture hardened for future Phase 2 server validation.
+The repository is still in the client-only solo phase, but the architecture is already being hardened for later validation and richer game formats.
 
-### Characteristics
-- Fully client-side (Cloudflare Pages).
-- No backend calls.
-- No authentication.
-- Local leaderboard only.
-- Deterministic seeded game engine.
-- Unified GameShell for all games.
-- Score = number of correct answers (for now).
+### Phase 1.5 characteristics
+- Fully client-side on Cloudflare Pages
+- No backend calls
+- No authentication
+- Local leaderboard only
+- Deterministic seeded run/exam generation
+- Shared engine infrastructure in `src/game-shell/`
+- Shared UI shells for both timed runs and exam flows
+- Current shipped game set:
+  - `speed-arithmetic`
+  - `factor-rush`
+  - `power-blitz`
+  - `target-24`
+  - `number-sense`
 
-## Roadmap Summary
-### Phase 1 - Soloist
-- Local gameplay only.
-- Local leaderboard.
-- Seeded deterministic runs.
-- No backend.
+### Mode model in this phase
+- `sprint`: timed, 1 / 3 / 5 minutes
+- `survival`: untimed, ends on first wrong answer
+- `exam`: fixed-length assessment flow for standards-aligned experiences such as A+ Number Sense
 
-### Phase 2 - Trusted Referee
-- Global leaderboard.
-- Lightweight server validation.
-- Anonymous identity.
-- Players online counter.
-- No login yet.
+Sprint and survival are the default shared modes for arcade-style games. `exam` is an allowed Phase 1.5 exception when the format itself is the product.
 
-### Phase 3 - Persona
-- User accounts.
-- Persistent profiles.
-- Rating system (Math Elo).
-- Performance history.
-- Verified runs.
+## Source Of Truth Docs
+Consult these before changing architecture or roadmap assumptions:
 
-Multiplayer is intentionally excluded from the current product plan.
+- `docs/plans/roadmap.md` for phase boundaries and long-term direction
+- `README.md` for current project structure, routes, and scripts
+- `docs/storage.md` for local storage keys, schema, and migration behavior
+- `docs/difficulty-tuning.md` for shared and per-game difficulty behavior
+- `docs/gameplay/*.md` for current player-facing rules
+- `docs/plans/*.md` for active implementation plans and product follow-ups
+
+If a doc conflicts with the code, do not guess. Reconcile the discrepancy explicitly.
 
 ## Architectural Invariants
-These rules must NOT be violated.
+These rules must not be violated.
 
-### 1. Game Engine Separation
-- All gameplay flows through `src/game-shell/`.
-- UI components must not contain game logic.
-- Each game must implement `GameDefinition`.
-- Engine must remain a pure reducer where possible.
+### 1. Engine Separation
+- All gameplay and exam state flows through `src/game-shell/`.
+- UI components must not contain core game logic.
+- Arcade-style games must use the shared reducer/engine path.
+- Exam-style games must use the shared exam engine path.
+- Each game must implement a typed definition contract instead of bypassing shared lifecycle infrastructure.
 
 ### 2. Determinism
-- Each run must use a seeded RNG.
-- RNG must be consumed only by engine logic.
-- Rendering must not alter RNG state.
-- Engine must be replayable in future server environments.
+- Every run or exam must be generated from a seed.
+- RNG must be consumed only by engine or generator logic.
+- Rendering must never advance RNG state.
+- Generated question sequences must remain replayable in a future server-validation environment.
 
 ### 3. Scoring Policy
-- Current scoring = number of correct answers.
-- Scoring must remain injectable via `ScorePolicy`.
-- UI must not depend on scoring formula details.
+- Sprint and survival games currently score by correct answers.
+- Alternative scoring, such as Number Sense `+5 / -4 / 0`, must remain injectable through policy objects.
+- UI must not hardcode scoring formulas.
 
-### 4. Leaderboard Keys
-Leaderboard key format must remain:
+### 4. Leaderboard Identity
+- Leaderboard identity must remain stable and versioned.
+- Run-mode leaderboard key format remains:
 
 `${gameId}|${mode}`
 
-Sprint duration is NOT part of leaderboard key.
+- Sprint duration is not part of the leaderboard key.
+- Exam modes may store against the same stable `(gameId|exam)` identity pattern.
 
-### 5. Storage
+### 5. Storage And Migration
 - All local storage must be versioned.
 - Migrations must preserve user data.
-- Schema changes must not silently break older data.
+- Renames of game IDs, modes, or storage keys require explicit migration logic.
+- Schema changes must not silently strand existing scores or preferences.
+
+### 6. Static-Site Discipline
+- Keep the app deployable as a static client build in Phase 1.5.
+- Site metadata and canonical URLs must stay environment-driven.
+- Do not introduce server dependencies to solve documentation, SEO, or routing problems that can be handled statically.
 
 ## Phase Constraints
 ### Until Phase 2
-The following are NOT allowed:
+Do not introduce:
 - Backend APIs
+- Global leaderboards
 - Global stats
-- Authentication
 - Remote score submission
-- Anti-cheat logic
+- Authentication
+- Anti-cheat or server trust logic
+- Cross-device persistence
 
 ### Until Phase 3
-The following are NOT allowed:
+Do not introduce:
 - Login flows
-- User database
+- User profiles
 - Rating persistence
-- Profile pages
+- Personal dashboards
+- Historical account data
 
 ## Directory Responsibilities
 ```text
 src/
-  game-shell/   -> engine, RNG, difficulty, scoring, leaderboard utilities
-  games/        -> per-game definitions (no engine duplication)
-  components/   -> reusable UI
-  pages/        -> thin routing layers
+  game-shell/   -> engine, exam engine, RNG, difficulty, scoring, storage
+  games/        -> per-game definitions and pure game logic
+  components/   -> reusable shells and presentation components
+  pages/        -> thin route-level wrappers
+  site/         -> metadata and canonical site configuration
   styles/       -> visual styling only
+docs/
+  gameplay/     -> player-facing rules
+  plans/        -> roadmap and implementation plans
+scripts/        -> static asset generation and repo utilities
 ```
 
 Rules:
 - No gameplay logic in `pages/`.
-- No direct leaderboard manipulation outside `game-shell/`.
-- No per-game duplication of lifecycle logic.
+- No direct leaderboard manipulation outside `src/game-shell/`.
+- No per-game duplication of run/exam lifecycle logic.
+- Do not hardcode canonical domains in page components when `src/site/` already owns that concern.
 
-## Adding a New Game
-1. Implement `GameDefinition`.
-2. Use `<GameShell definition={...} />`.
-3. Add page under `src/pages/`.
-4. Add tests if generation logic is non-trivial.
-5. Ensure difficulty-level mapping is deterministic.
+## Adding Or Changing Games
+### Arcade-style game
+1. Implement the game in `src/games/<game-id>/`.
+2. Export a typed `GameDefinition`.
+3. Render it through `<GameShell definition={...} />`.
+4. Add a thin page under `src/pages/`.
+5. Add tests for generation, answer evaluation, and any non-trivial difficulty behavior.
 
-No game may bypass the shared engine.
+### Exam-style game
+1. Keep generation and evaluation logic pure and deterministic.
+2. Reuse the shared exam engine and shell rather than building a one-off flow.
+3. Keep scoring policy injectable.
+4. Add tests for exam generation, navigation/scoring behavior, and storage.
+
+No game may bypass the shared engine layer.
 
 ## Coding Guidelines
 - Use TypeScript strictly.
-- Prefer explicit types over implicit inference for engine state.
-- Keep reducers pure.
+- Prefer explicit types for engine and storage state.
+- Keep reducers and evaluators pure.
 - Add tests for:
   - State transitions
-  - Difficulty ramp behavior
-  - Leaderboard read/write
-  - Scoring policy
+  - Difficulty behavior
+  - Exam scoring where applicable
+  - Leaderboard/storage read-write and migration
+  - Scoring policies
 - Avoid unnecessary dependencies.
 
-## Phase Transition Rules
-### Before moving to Phase 2
-- Engine must be deterministic.
-- Seed replay must be stable.
-- Difficulty ramp must be tested.
-- No hidden UI-engine coupling.
-
-### Before moving to Phase 3
-- Global leaderboard must be stable.
-- Abuse manageable.
-- Server validation architecture proven.
+## Phase 1.5 Exit Criteria
+Before advancing beyond Phase 1.5:
+- Shared run and exam flows are stable.
+- Deterministic engine tests pass.
+- Seed-based generation is stable enough for future replay validation.
+- Local leaderboard and preferences survive migrations.
+- No hidden UI-engine coupling remains.
+- Product and architecture docs describe the current repo accurately.
 
 ## Product Philosophy
 - Phase 1 = Fun
 - Phase 2 = Trust
 - Phase 3 = Retention
 
-The product must be viable and complete at the end of Phase 3 even if no multiplayer is ever built.
-
-## How to Work With Codex
+## How To Work In This Repo
 When implementing work:
-- Refer to the phase roadmap in `docs/roadmap.md`.
-- Do not introduce features from future phases.
+- Refer to `docs/plans/roadmap.md`, not a stale roadmap path.
 - Preserve deterministic engine design.
-- Do not remove version migrations.
+- Preserve storage migrations and redirects.
 - Refactor rather than rewrite when possible.
+- Treat existing docs as part of the product surface and keep them aligned with the code.

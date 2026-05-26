@@ -4,11 +4,11 @@ import {
   createInitialExamState,
   examEngineReducer,
   type ExamEngineState,
-  type ExamQuestionSlot,
   type ExamResult,
 } from "./exam-engine";
 import { getBestScore, resetBestScore, saveBestScore } from "./leaderboard";
-import { createSeedFromTimestamp, createSeededRng, type Rng } from "./rng";
+import type { Rng } from "./rng";
+import { createExamSession } from "./session";
 import type { ExamScorePolicy, GameDefinition } from "./types";
 
 type UseExamEngineOptions<Q, A, N> = {
@@ -32,14 +32,6 @@ type UseExamEngineResult<Q> = {
   submitExam: () => void;
   resetBest: () => void;
 };
-
-function getDifficultyForPosition(index: number, totalQuestions: number): number {
-  const fraction = index / totalQuestions;
-  if (fraction < 0.25) return index < totalQuestions * 0.125 ? 1 : 2;
-  if (fraction < 0.5) return 3;
-  if (fraction < 0.75) return 4;
-  return index < totalQuestions * 0.875 ? 5 : 6;
-}
 
 export function useExamEngine<Q, A, N>({
   definition,
@@ -77,44 +69,16 @@ export function useExamEngine<Q, A, N>({
     if (state.phase === "running") return;
 
     submittedRef.current = false;
-    const seed = createSeedFromTimestamp(Date.now());
-    const rng = createSeededRng(seed);
-
-    let slots: ExamQuestionSlot<Q>[];
-
-    if (generateQuestionSet) {
-      // Use game-specific structured exam generation
-      slots = generateQuestionSet(rng, totalQuestions).map(({ question, difficulty }) => ({
-        question,
-        answer: "",
-        status: "blank" as const,
-        difficulty,
-      }));
-    } else {
-      // Fallback: generic position-based generation
-      slots = [];
-      let previousQuestion: Q | null = null;
-      for (let i = 0; i < totalQuestions; i++) {
-        const difficulty = getDifficultyForPosition(i, totalQuestions);
-        const question = definition.generateQuestion({
-          rng,
-          difficultyLevel: difficulty,
-          previousQuestion,
-        });
-        slots.push({
-          question,
-          answer: "",
-          status: "blank",
-          difficulty,
-        });
-        previousQuestion = question;
-      }
-    }
+    const examSession = createExamSession({
+      definition,
+      totalQuestions,
+      generateQuestionSet,
+    });
 
     dispatch({
       type: "EXAM_START",
-      slots,
-      seed,
+      slots: examSession.slots,
+      seed: examSession.seed,
       durationSec,
     });
   }, [definition, durationSec, generateQuestionSet, state.phase, totalQuestions]);

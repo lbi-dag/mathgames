@@ -9,18 +9,30 @@ This document defines the staged evolution of the platform through Phase 3. Real
 ### Goal
 Deliver a polished, fast, addictive solo math experience with clean architecture and zero backend dependency.
 
+### Phase 1.5 Clarification
+The current repository sits in a Phase 1.5 state:
+- still fully client-only
+- still no global trust or identity features
+- but already hardened for future validation and for multiple solo formats
+
+This means Phase 1 is no longer limited to one shell or one scoring shape. The default solo loop is still arcade play, but exam-style solo experiences are also allowed when the format itself is the product.
+
 ### Hosting
 Cloudflare Pages (static).
 
 ### Core Features
 #### Gameplay
-- Unified GameShell architecture.
-- Two modes available for all games:
+- Shared solo shell architecture:
+  - `GameShell` for arcade run modes
+  - `ExamShell` for fixed-length exam flows
+- Arcade modes available for all standard games:
   - Sprint (timed): 1 / 3 / 5 minutes. Ends on time = 0 OR 3 wrong answers.
   - Survival (untimed): Ends on first wrong answer.
-- Score = number of correct answers.
-- Difficulty increases every 2 or 3 correct answers (randomized per level).
-- Seeded RNG per run (deterministic within run, different across sessions).
+- Exam mode is allowed for games that are naturally assessment-based.
+- Sprint/survival score = number of correct answers.
+- Alternative scoring is allowed if it remains injectable and mode-specific.
+- Difficulty increases every 2 or 3 correct answers (randomized per level) for adaptive run-mode games.
+- Seeded RNG per run or exam (deterministic within a session, different across sessions).
 
 #### Leaderboard
 - Local best score per `(gameId, mode)` stored in versioned localStorage.
@@ -31,7 +43,17 @@ Cloudflare Pages (static).
 - All gameplay logic runs through `src/game-shell/`.
 - Each game implements `GameDefinition`.
 - UI does not embed game logic.
-- Engine must remain deterministic.
+- Deterministic generation remains mandatory across both run and exam paths.
+- Storage keys and migrations must remain stable.
+
+#### Shipped Phase 1.5 Solo Formats
+- Arcade run games:
+  - Speed Arithmetic
+  - Factor Rush
+  - Power Blitz
+  - Target 24
+- Exam game:
+  - A+ Number Sense
 
 ### Daily Challenge (Optional Phase 1 Enhancement)
 - Seed = `YYYY-MM-DD`.
@@ -45,9 +67,10 @@ Cloudflare Pages (static).
 - No cross-device persistence.
 
 ### Exit Criteria
-- All games run through unified GameShell.
+- Shared run and exam shells are stable.
 - Deterministic engine tests pass.
 - Local leaderboard works consistently.
+- Product docs match the implemented architecture.
 
 ## Phase 2 - The Trusted Referee (Global Stats and Lightweight Validation)
 ### Goal
@@ -139,7 +162,7 @@ Multiplayer is optional future expansion, not required for product success.
 
 ## Architectural Invariants Across All Phases
 - Game engine must remain deterministic.
-- RNG must be seeded per run.
+- RNG must be seeded per run or exam.
 - Game logic must remain separate from UI.
 - Leaderboard keys must remain stable.
 - Backward compatibility for stored data must be preserved via versioning.
@@ -153,3 +176,22 @@ The product is considered viable and complete at the end of Phase 3 if:
 - Rating system drives return engagement.
 
 Real-time multiplayer is not required for success.
+
+## Framework Recommendation
+### Summary
+Next.js is not required by any current roadmap phase. It may become optional in Phase 3 if server-rendered authenticated pages become strategically valuable, but it is not a prerequisite for shipping the product through Phase 3.
+
+### Recommendation by Phase
+- Phase 1: Stay on the current static client architecture. A Vite + React SPA is the correct fit for Cloudflare Pages, deterministic local play, and zero backend dependency.
+- Phase 2: Keep the frontend lightweight and add backend capability with Cloudflare Workers + KV or D1. This phase needs API/runtime support, not a framework migration.
+- Phase 3: Re-evaluate only if SSR, server-managed auth flows, or highly dynamic account pages justify the complexity. Even then, Next.js is optional, not required.
+
+### Preferred Alternatives
+- Vite + React Router + Cloudflare Workers: Best default path with the least migration risk.
+- Vite + Hono on Workers: Good if the API surface grows and needs cleaner routing or middleware.
+- React Router framework mode or Remix on Cloudflare: Better fit than Next.js if a full-stack React framework becomes useful while staying aligned with Workers.
+- Next.js on Cloudflare: Consider only if Phase 3 benefits clearly outweigh migration cost and hosting complexity.
+
+### Decision Rule
+- Do not migrate frameworks to unlock Phase 2.
+- Only consider a framework migration in Phase 3 if it solves a concrete problem that the existing Vite + Workers architecture cannot solve cleanly enough.

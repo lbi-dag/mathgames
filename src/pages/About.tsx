@@ -47,10 +47,10 @@ export default function About() {
 
           <div className={styles.entry}>
             <span>Now</span>
-            <h3>Growing the arcade</h3>
+            <h3>Growing the solo library</h3>
             <p>
-              New games are in the pipeline, each built to spotlight a single math habit so players can feel
-              mastery in minutes.
+              The platform now mixes quick arcade loops with exam-style practice, with each format designed to
+              sharpen a different kind of mental math confidence.
             </p>
           </div>
         </section>
@@ -62,7 +62,7 @@ export default function About() {
           </div>
           <div className={styles.valueCard}>
             <h3>Short sessions</h3>
-            <p>Choose 1, 3, or 5-minute Sprint sessions that fit into busy days.</p>
+            <p>Choose Sprint, Survival, or a 10-minute exam format that fits into busy days.</p>
           </div>
           <div className={styles.valueCard}>
             <h3>Built for flow</h3>

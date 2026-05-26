@@ -4,7 +4,7 @@ export default function LandingHero() {
   return (
     <section className={styles.hero}>
       <h1>Playful drills. Serious growth.</h1>
-      <p>Short, focused math games that warm up your brain in minutes. New games drop regularly.</p>
+      <p>Arcade sprints, survival runs, and exam-style practice that warm up your brain in minutes.</p>
     </section>
   );
 }

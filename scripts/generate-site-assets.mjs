@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = fileURLToPath(new URL("../", import.meta.url));
 const dotenvPath = new URL("../.env", import.meta.url);
 
-const DEFAULT_SITE_URL = "https://mathgames.win";
+const DEFAULT_SITE_URL = "https://mathgm.org";
 const ROUTES = [
   "/",
   "/about",

@@ -1,7 +1,8 @@
 import { describe, expect, test } from "vitest";
+import { createSeededRng } from "../../game-shell/rng";
 import { formatRational, gcd, isWithin5Percent, parseRational, rationalsEqual, reduce } from "./parsing";
 import { evaluateAnswer, generateQuestion } from "./logic";
-import { GENERATORS, pickAndGenerate } from "./generators";
+import { GENERATORS, generateExamSet, pickAndGenerate } from "./generators";
 
 function createRng(values: number[]) {
   let index = 0;
@@ -221,5 +222,24 @@ describe("generateQuestion", () => {
     const q = generateQuestion(rng, 5);
     expect(q.text).toBeTruthy();
     expect(q.answer).toBeDefined();
+  });
+});
+
+describe("generateExamSet", () => {
+  test("same seed yields the same exam sequence", () => {
+    const first = generateExamSet(createSeededRng(20260310), 80);
+    const second = generateExamSet(createSeededRng(20260310), 80);
+
+    expect(second).toEqual(first);
+  });
+
+  test("places approximate questions at every tenth slot only", () => {
+    const exam = generateExamSet(createSeededRng(42), 80);
+
+    exam.forEach(({ question }, index) => {
+      const shouldBeApproximate = (index + 1) % 10 === 0;
+      expect(question.isApproximate).toBe(shouldBeApproximate);
+      expect(question.text.startsWith("*")).toBe(shouldBeApproximate);
+    });
   });
 });
