@@ -83,4 +83,26 @@ describe("gameEngineReducer", () => {
     expect(next.score).toBe(0);
     expect(next.feedback.message).toBe("Invalid input");
   });
+
+  test("uses the supplied next question without generating a replacement", () => {
+    const state = startRunningState("sprint");
+    const suppliedQuestion = { label: "9 + 9", answer: 18 };
+    const next = gameEngineReducer(state, {
+      type: "SUBMIT_RESOLVED",
+      isCorrect: true,
+      normalizedAnswer: 4,
+      scoreDelta: 1,
+      nextQuestion: suppliedQuestion,
+      nextDifficultyLevel: 2,
+      nextDifficultyThreshold: 4,
+      questionLabel: "2 + 2",
+      correctAnswerLabel: "4",
+      correctMessage: "Correct!",
+      wrongMessage: "Missed",
+    });
+
+    expect(next.question).toBe(suppliedQuestion);
+    expect(next.difficultyLevel).toBe(2);
+    expect(next.nextDifficultyThreshold).toBe(4);
+  });
 });

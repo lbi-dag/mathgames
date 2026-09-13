@@ -112,6 +112,18 @@ function saveSprintPrefs(data: SprintPrefsV1, storage?: StorageLike) {
   target.setItem(SPRINT_PREFS_STORAGE_KEY, JSON.stringify(data));
 }
 
+function hasUnsupportedLeaderboardSchema(storage?: StorageLike) {
+  const raw = getStorage(storage)?.getItem(LEADERBOARD_STORAGE_KEY);
+  if (!raw) return false;
+
+  try {
+    const candidate = JSON.parse(raw) as { version?: unknown } | null;
+    return typeof candidate === "object" && candidate !== null && candidate.version !== undefined && candidate.version !== 1;
+  } catch {
+    return false;
+  }
+}
+
 function migrateLegacyIfNeeded(data: LeaderboardV1, storage?: StorageLike) {
   if (data.migratedLegacyKeys) {
     return data;
@@ -158,6 +170,7 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
 
   const raw = target.getItem(LEADERBOARD_STORAGE_KEY);
   let parsed: LeaderboardV1 = { ...DEFAULT_LEADERBOARD };
+  let canPersistMigration = true;
 
   if (raw) {
     try {
@@ -168,6 +181,8 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
           scores: normalizeLeaderboardScores(candidate.scores as Record<string, number>),
           migratedLegacyKeys: Boolean(candidate.migratedLegacyKeys),
         };
+      } else if (candidate.version !== undefined) {
+        canPersistMigration = false;
       }
     } catch {
       parsed = { ...DEFAULT_LEADERBOARD };
@@ -175,7 +190,9 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
   }
 
   const migrated = migrateLegacyIfNeeded(parsed, target);
-  saveLeaderboard(migrated, target);
+  if (canPersistMigration) {
+    saveLeaderboard(migrated, target);
+  }
   return migrated;
 }
 
@@ -193,6 +210,9 @@ export function saveBestScore(
 ) {
   const allowNegative = options?.allowNegative ?? false;
   const safeScore = allowNegative ? Math.floor(score) : Math.max(0, Math.floor(score));
+  if (hasUnsupportedLeaderboardSchema(storage)) {
+    return { updated: false as const, bestScore: 0 };
+  }
   const data = readLeaderboard(storage);
   const entryKey = makeLeaderboardEntryKey(gameId, mode);
   const currentBest = data.scores[entryKey] ?? (allowNegative ? -Infinity : 0);
@@ -212,6 +232,7 @@ export function saveBestScore(
 }
 
 export function resetBestScore(gameId: string, mode: GameMode, storage?: StorageLike) {
+  if (hasUnsupportedLeaderboardSchema(storage)) return;
   const data = readLeaderboard(storage);
   const entryKey = makeLeaderboardEntryKey(gameId, mode);
   if (!(entryKey in data.scores)) return;

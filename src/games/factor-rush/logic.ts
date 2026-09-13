@@ -32,11 +32,15 @@ const COMPOSITE_QUESTIONS: CompositeQuestion[] = (() => {
 })();
 
 export function generateCompositeNumber(options: CompositeNumberOptions = {}): CompositeQuestion {
-  const { rng = Math.random, roundIndex } = options;
+  const { rng, roundIndex } = options;
   if (roundIndex !== undefined) {
     const safeIndex = Math.max(0, Math.min(Math.floor(roundIndex), COMPOSITE_QUESTIONS.length - 1));
     const question = COMPOSITE_QUESTIONS[safeIndex];
     return { number: question.number, factors: [...question.factors] };
+  }
+
+  if (!rng) {
+    throw new Error("Factor Rush random generation requires an engine-owned RNG.");
   }
 
   const primes = [...PRIMES_UNDER_50];
@@ -49,8 +53,8 @@ export function generateCompositeNumber(options: CompositeNumberOptions = {}): C
   return { number, factors };
 }
 
-export function generateCompositeNumberForDifficulty(options: { rng?: () => number; difficultyLevel?: number } = {}) {
-  const { rng = Math.random, difficultyLevel = 1 } = options;
+export function generateCompositeNumberForDifficulty(options: { rng: () => number; difficultyLevel?: number }) {
+  const { rng, difficultyLevel = 1 } = options;
   const safeDifficulty = Math.max(1, Math.floor(difficultyLevel || 1));
   const maxPoolSize = Math.min(PRIMES_UNDER_50.length, 5 + (safeDifficulty - 1) * 2);
   const pool = PRIMES_UNDER_50.slice(0, Math.max(3, maxPoolSize));
@@ -83,4 +87,3 @@ export function formatTime(seconds: number) {
   const secs = seconds % 60;
   return `${mins}:${secs.toString().padStart(2, "0")}`;
 }
-
