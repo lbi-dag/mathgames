@@ -87,6 +87,20 @@ describe("leaderboard storage", () => {
     expect(storage.getItem(LEADERBOARD_STORAGE_KEY)).toBe(unsupportedPayload);
   });
 
+  test("does not mutate an unsupported leaderboard schema version", () => {
+    const unsupportedPayload = JSON.stringify({
+      version: 2,
+      scores: { "power-blitz|sprint": 12 },
+      futureMetadata: { source: "future-release" },
+    });
+    const storage = createMockStorage({ [LEADERBOARD_STORAGE_KEY]: unsupportedPayload });
+
+    expect(saveBestScore("power-blitz", "sprint", 13, storage)).toEqual({ updated: false, bestScore: 0 });
+    resetBestScore("power-blitz", "sprint", storage);
+
+    expect(storage.getItem(LEADERBOARD_STORAGE_KEY)).toBe(unsupportedPayload);
+  });
+
   test("normalizes existing v1 leaderboard entries from old game IDs", () => {
     const storage = createMockStorage({
       [LEADERBOARD_STORAGE_KEY]: JSON.stringify({
