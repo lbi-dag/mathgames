@@ -54,12 +54,12 @@ function multiDigitTimesSingleRange(difficulty: number) {
   return { firstMin, firstMax, secondMin, secondMax };
 }
 
-export function randomInt(min: number, max: number, rng: () => number = Math.random) {
+export function randomInt(min: number, max: number, rng: () => number) {
   return Math.floor(rng() * (max - min + 1)) + min;
 }
 
 export function generateQuestion(
-  rng: () => number = Math.random,
+  rng: () => number,
   forcedType: QuestionType | null = null,
   difficulty: number = 1,
 ): Question {

@@ -4,6 +4,15 @@ import { formatRational, gcd, isWithin5Percent, parseRational, rationalsEqual, r
 import { evaluateAnswer, generateQuestion } from "./logic";
 import { GENERATORS, generateExamSet, pickAndGenerate } from "./generators";
 
+function expectEvaluationNotToAffectGeneration(question: Parameters<typeof evaluateAnswer>[0], answer: string) {
+  const afterEvaluation = createSeededRng(20260320);
+  const untouched = createSeededRng(20260320);
+
+  evaluateAnswer(question, answer);
+
+  expect(generateQuestion(afterEvaluation, 4)).toEqual(generateQuestion(untouched, 4));
+}
+
 function createRng(values: number[]) {
   let index = 0;
   return () => {
@@ -169,6 +178,17 @@ describe("evaluateAnswer", () => {
     const q = { text: "2 + 3", answer: { num: 5, den: 1 }, isApproximate: false, answerFormat: "integer" as const, category: "addition" };
     expect(evaluateAnswer(q, "").kind).toBe("invalid");
     expect(evaluateAnswer(q, "abc").kind).toBe("invalid");
+  });
+
+  test("exact and approximate evaluation leave a seeded generator untouched", () => {
+    expectEvaluationNotToAffectGeneration(
+      { text: "2 + 3", answer: { num: 5, den: 1 }, isApproximate: false, answerFormat: "integer", category: "addition" },
+      "5",
+    );
+    expectEvaluationNotToAffectGeneration(
+      { text: "*100 x 100", answer: { num: 10000, den: 1 }, isApproximate: true, answerFormat: "integer", category: "approximate" },
+      "12000",
+    );
   });
 });
 
