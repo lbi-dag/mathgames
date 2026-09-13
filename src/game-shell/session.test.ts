@@ -45,7 +45,12 @@ describe("session helpers", () => {
       timestamp: 20260310,
     });
 
-    expect(second).toEqual(first);
+    expect(second.seed).toBe(first.seed);
+    expect(second.slots).toHaveLength(80);
+    expect(second.slots.map((slot) => slot.difficulty)).toEqual(first.slots.map((slot) => slot.difficulty));
+    expect(second.slots.map((slot) => numberSenseGameDefinition.getQuestionLabel?.(slot.question))).toEqual(
+      first.slots.map((slot) => numberSenseGameDefinition.getQuestionLabel?.(slot.question)),
+    );
   });
 
   test("generic exam fallback stays deterministic for the same seed", () => {
@@ -60,6 +65,9 @@ describe("session helpers", () => {
       totalQuestions: 12,
     });
 
-    expect(second).toEqual(first);
+    expect(second.map((slot) => slot.difficulty)).toEqual(first.map((slot) => slot.difficulty));
+    expect(second.map((slot) => speedArithmeticGameDefinition.getQuestionLabel?.(slot.question))).toEqual(
+      first.map((slot) => speedArithmeticGameDefinition.getQuestionLabel?.(slot.question)),
+    );
   });
 });

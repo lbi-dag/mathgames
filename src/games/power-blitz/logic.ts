@@ -74,16 +74,16 @@ function allowedPairs(maxExponent: number) {
   return pairs;
 }
 
-export function randomInt(min: number, max: number, rng: () => number = Math.random) {
+export function randomInt(min: number, max: number, rng: () => number) {
   return Math.floor(rng() * (max - min + 1)) + min;
 }
 
-export function generateQuestion(rng: () => number = Math.random, totalCorrect: number = 0): Question {
+export function generateQuestion(rng: () => number, totalCorrect: number = 0): Question {
   const maxExponent = maxExponentForCorrect(totalCorrect);
   return generateQuestionFromExponentLimit(rng, maxExponent);
 }
 
-export function generateQuestionForDifficulty(rng: () => number = Math.random, difficultyLevel: number = 1): Question {
+export function generateQuestionForDifficulty(rng: () => number, difficultyLevel: number = 1): Question {
   const maxExponent = maxExponentForDifficulty(difficultyLevel);
   return generateQuestionFromExponentLimit(rng, maxExponent);
 }
