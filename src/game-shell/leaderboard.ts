@@ -158,6 +158,7 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
 
   const raw = target.getItem(LEADERBOARD_STORAGE_KEY);
   let parsed: LeaderboardV1 = { ...DEFAULT_LEADERBOARD };
+  let canPersistMigration = true;
 
   if (raw) {
     try {
@@ -168,6 +169,8 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
           scores: normalizeLeaderboardScores(candidate.scores as Record<string, number>),
           migratedLegacyKeys: Boolean(candidate.migratedLegacyKeys),
         };
+      } else if (candidate.version !== undefined) {
+        canPersistMigration = false;
       }
     } catch {
       parsed = { ...DEFAULT_LEADERBOARD };
@@ -175,7 +178,9 @@ export function readLeaderboard(storage?: StorageLike): LeaderboardV1 {
   }
 
   const migrated = migrateLegacyIfNeeded(parsed, target);
-  saveLeaderboard(migrated, target);
+  if (canPersistMigration) {
+    saveLeaderboard(migrated, target);
+  }
   return migrated;
 }
 
