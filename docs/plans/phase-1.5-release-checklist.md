@@ -71,15 +71,24 @@ canonical destination.
 
 Repeat this for Speed Arithmetic, Factor Rush, Power Blitz, and Target 24.
 
-- [ ] Start a **Sprint** run, choose a duration, submit an answer, and confirm
-  the timer, wrong-answer limit, and score display match the selected mode.
-- [ ] Start a **Survival** run, submit an answer, and confirm the UI describes
-  the one-wrong-answer rule.
+- [ ] Choose a duration and start a **Sprint** run. Answer at least one
+  question correctly, then finish the run by timer expiry or three wrong
+  answers. Confirm the timer, wrong-answer limit, and final score match the
+  selected mode.
+- [ ] Start a **Survival** run, answer at least one question correctly, then
+  submit a wrong answer. Confirm that it ends the run with a positive score.
+- [ ] Record the positive best in each mode. Reload, select each mode again,
+  and verify both recorded bests persist. Scores are saved when a run ends;
+  starting a run or submitting an answer alone does not verify persistence.
 - [ ] Change the Sprint duration, reload, and confirm that game retains its
   preferred duration.
 - [ ] Confirm best score is displayed for the active `(gameId, mode)` only;
   changing the Sprint duration does not create a separate best.
-- [ ] Use **Reset Best** and confirm only the active game and mode is reset.
+- [ ] Before using **Reset Best**, establish and record nonzero bests in the
+  selected game/mode, its other mode, and another game. Reset the selected
+  best, then reload and verify it is zero while both other recorded bests
+  remain unchanged. Re-establish these nonzero controls before each reset
+  check; an all-zero profile cannot demonstrate reset isolation.
 
 ## 5. A+ Number Sense exam flow
 

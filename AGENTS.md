@@ -187,6 +187,16 @@ Before advancing beyond Phase 1.5:
 - Phase 3 = Retention
 
 ## How To Work In This Repo
+
+### Pull Requests Required For Main
+
+- Every Codex session must land changes on `main` only through a GitHub pull request targeting `main`. This applies to code, tests, documentation, configuration, and agent instructions.
+- Before editing, check the current branch and working-tree status. Create or switch to a task branch, or use an isolated worktree, preserving existing uncommitted work.
+- Commit and push changes only on the task branch. Never commit directly to `main`, push directly to `main`, or merge/cherry-pick task changes into local `main` as a shortcut.
+- Run the appropriate validation and open a PR with a concise description and verification results. Merge through the PR workflow only when authorized and required checks and reviews are satisfied; do not bypass branch protections.
+- A request to "merge" means merge the PR, not perform a local merge into `main`. After the PR is merged, update local `main` by fast-forwarding from `origin/main`.
+- If PR creation or merging is unavailable, leave the work on its task branch and report the blocker. Do not fall back to landing changes directly on `main`.
+
 When implementing work:
 - Consult `docs/plans/backlog-sequence.md` when choosing the next task.
 - Work the highest unfinished issue in the sequence unless the user explicitly chooses another task.
